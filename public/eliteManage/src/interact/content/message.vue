@@ -59,7 +59,7 @@
 			toClose()
 			{
 				var _this = this;
-				this.timer = setTimeout(()=>{_this.toshow=false;},2000);
+				this.timer = setTimeout(()=>{_this.toshow=false;},3000);
 			},
 			keep()
 			{
