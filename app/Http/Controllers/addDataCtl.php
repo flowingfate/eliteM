@@ -16,15 +16,16 @@ class addDataCtl extends Controller
     public function index()
     {
         $school = ['北大','清华','人大','北邮','北航','中科院','央财','北理','北科','北郊','复旦','同济'];
+        $direction = ['设计','艺术','java','经济','管理','网络安全','电子','交互','心理学','机械','自动化','物流','影视'];
 
         // 添加学员数据
         for($i=1;$i<=36;$i++)
         {
             $arr = [
                 'username'=>'student'.$i,
-                'name'=>'熊孩'.$i,
+                'name'=>'学员'.$i,
                 'school'=>$school[rand(0,11)],
-                'direction'=>'吹牛'
+                'direction'=>$direction[rand(0,12)]
             ];
 
             Student::create($arr);
@@ -35,7 +36,7 @@ class addDataCtl extends Controller
         {
             $arr = [
                 'username'=>'teacher'.$i,
-                'name'=>'大牛'.$i,
+                'name'=>'导师'.$i,
                 'school'=>$school[rand(0,11)],
                 'laboratory'=>'实验室'.$i,
                 'email'=>(168610+$i).'@163.com'
@@ -58,8 +59,8 @@ class addDataCtl extends Controller
             [
                 'teacher_id'=>$m2m->teacher_id,
                 'student_id'=>$m2m->student_id,
-                'discribe'=>'没事儿干',
-                'mission'=>'敞开睡',
+                'discribe'=>'指导学生完成学习任务',
+                'mission'=>'读论文+做作品',
                 'progress'=>rand(0,1),
                 'up_time'=>date('Y-m-d H:i:s'),
                 'work_time'=>rand(1,10)
