@@ -1,0 +1,8 @@
+/vendor
+/node_modules
+/public/storage
+/public/eliteManage/node_modules
+/.phpintel
+Homestead.yaml
+Homestead.json
+.env
