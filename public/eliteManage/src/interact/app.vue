@@ -22,6 +22,11 @@
 		vuex:
 		{
 			getters: { role: ({role})=>{return role;} }
+		},
+		ready()
+		{
+			// console.dir(JSON.parse(JSON.stringify(data)));
 		}
+
 	}
 </script>

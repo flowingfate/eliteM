@@ -67,7 +67,10 @@ Route::group(['middleware' => ['web','cors']], function ()
 			
 			Route::any('personalInfo','StudentCtl@personalInfo');
 			Route::any('modifyPersonalInfo','StudentCtl@modifyPersonalInfo');
-			Route::any('modifyPassword','StudentCtl@modifyPassword');		});
+			Route::any('modifyPassword','StudentCtl@modifyPassword');
+
+			Route::get('subjects', 'SubjectCtl@subjects');
+		});
 	});
 
 });

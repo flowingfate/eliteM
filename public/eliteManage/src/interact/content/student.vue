@@ -30,9 +30,9 @@
 			{
 				latestTask:'最新任务',
 				infoModify:'修改信息',
-				wisdomLibrary:'访问智库'
+				library:'访问智库'
 			},
-			nowMenu:'latestTask'
+			nowMenu:'library'
 		}},
 		vuex:
 		{
@@ -43,7 +43,7 @@
 			menu:require('./menu.vue'),
 			latestTask:require('./student/latestTask.vue'),
 			infoModify:require('./student/infoModify.vue'),
-			wisdomLibrary:require('./student/wisdomLibrary.vue')
+			library:require('./student/library/index.vue')
 		}
 	}
 </script>

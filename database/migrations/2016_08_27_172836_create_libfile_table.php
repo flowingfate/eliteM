@@ -15,9 +15,12 @@ class CreateLibfileTable extends Migration
         Schema::create('libfile', function (Blueprint $table) {
             $table->increments('id');
             $table->string('subject2_id');
-            $table->string('name');
+            $table->string('origin_name');
+            $table->string('saved_name');
+            $table->string('author')->nullable();
+            $table->text('description')->nullable();
             $table->string('type');
-            // $table->string('size');
+            $table->string('size')->nullable();
             
             $table->timestamps();
         });

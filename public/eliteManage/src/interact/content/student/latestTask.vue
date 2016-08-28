@@ -111,7 +111,7 @@
 					_this.nowtasks = data.nowtasks;
 					_this.histasks = data.histasks;
 				},
-				error:()=>{ alert('something goes wrong!'); }
+				error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }
 			});
 		}
 	}

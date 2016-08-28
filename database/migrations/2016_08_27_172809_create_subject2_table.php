@@ -18,6 +18,7 @@ class CreateSubject2Table extends Migration
             $table->string('number')->unique();
             $table->string('title')->unique();
             $table->string('img_url')->nullable();
+            $table->string('keywords')->nullable();
             $table->text('profile')->nullable();
             
             $table->timestamps();

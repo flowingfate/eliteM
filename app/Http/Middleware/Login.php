@@ -15,10 +15,10 @@ class Login
      */
     public function handle($request, Closure $next)
     {
-        if(!session('user'))
-        {
-            return response('未登陆');
-        }
+        // if(!session('user'))
+        // {
+        //     return response('未登陆');
+        // }
 
         return $next($request);
     }

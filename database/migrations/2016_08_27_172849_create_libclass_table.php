@@ -16,6 +16,7 @@ class CreateLibclassTable extends Migration
             $table->increments('id');
             $table->string('subject2_id');
             $table->string('url');
+            $table->string('time')->nullable();
             $table->string('img_url')->nullable();
             
             $table->timestamps();

@@ -19,7 +19,7 @@
 				</option>
 			</select>
 			<div class="ui left pointing label" style="line-height:24px; font-size:14px;">
-				直接输入过滤词就可以查看你感兴趣的人
+				<span>直接输入过滤词，查看你感兴趣的人</span>
 			</div>
 		</div>
 	</div>
@@ -32,7 +32,7 @@
 			options:
 			{
 				student: {name:'姓名',id:'编号',school:'学校',teachers:'导师',direction:'方向'},
-				teacher: {name:'姓名',id:'编号',school:'学校',laboratory:'实验室'}
+				teacher: {name:'姓 名',id:'编 号',school:'学 校',laboratory:'实验室'},
 			}
 		}},
 		props:
