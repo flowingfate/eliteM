@@ -69,8 +69,6 @@ class LoginCtl extends Controller
 		{
 			session(['user'=>$role,'captcha'=>null]);
 
-            // if($role=='vindicator') return redirect('/');
-            // 可以考虑单开路由
 			return redirect('manage/'.$role.'/'.$user->id);
 		}
 		else return back()->withErrors(['密码错误，请重新输入！'])->withInput()->with('captcha',true);

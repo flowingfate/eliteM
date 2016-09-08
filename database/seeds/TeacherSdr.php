@@ -28,7 +28,7 @@ class TeacherSdr extends Seeder
         }
 
         $firstTeacher = Teacher::first();
-        $firstTeacher->name = 'teacher';
+        $firstTeacher->username = 'teacher';
         $firstTeacher->save();
     }
 }

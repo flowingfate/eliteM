@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title','登录')
+@section('title','菁英启航')
 
 @section('content')
 	<div id="interact">
@@ -12,7 +12,9 @@
     		role:"{{$role}}",
     		id:{{$id}},
     		route:"{{url('/')}}"
-    	}
+    	};
+
+        $.ajaxSetup({headers:{'X-CSRF-TOKEN':"{{csrf_token()}}"}});
     </script>
     <script src="{{asset('eliteManage/dist/app.js')}}"></script>
 @endsection

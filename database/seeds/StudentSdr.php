@@ -28,7 +28,7 @@ class StudentSdr extends Seeder
         }
 
         $firstStudent = Student::first();
-        $firstStudent->name = 'student';
-        $firstStutend->save();
+        $firstStudent->username = 'student';
+        $firstStudent->save();
     }
 }
