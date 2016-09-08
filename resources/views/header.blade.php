@@ -6,7 +6,7 @@
 				<i class="big user icon"></i>
 				<span>Hello,
 					<?php
-						$arr = ['admin'=>'管理员','teacher'=>'导师','student'=>'学员'];
+						$arr = ['admin'=>'管理员','teacher'=>'导师','student'=>'学员','vindicator'=>'运营维护者'];
 						echo $arr[$role];
 					?>
 				</span>

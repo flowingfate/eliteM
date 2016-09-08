@@ -156,7 +156,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /**
+         * Packages added by myself
+         */
         Mews\Captcha\CaptchaServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class,
 
     ],
 

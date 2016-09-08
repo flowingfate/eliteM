@@ -11,12 +11,6 @@
 	box-shadow: 0 0 10px rgba(0,0,0,0.1);
 	position: relative;
 }
-.v-message
-{
-	position:fixed; width:100%; left:0; bottom: 0; background-color:rgba(0,0,0,0.2);
-	padding:10px 30px; text-align:right;height: 60px; transition: 0.3s ease-in-out;opacity:1;
-}
-.v-message span { font-size:18px; line-height:40px; padding-right:10px; color:#DB2828; }
 .photo
 {
 	text-align: center;
@@ -30,19 +24,21 @@
 
 @section('content')
 
-	@if(session('errMsg'))
-		<div class="v-message">
-			<button class="ui icon circular button right floated red">
-				<i class="icon remove"></i>
-			</button>
-			<span>{{session('errMsg')}}</span>
+	@if(count($errors)>0)
+		<div class="ui error message" style="margin:20px 50px;">
+			<i class="close icon"></i>
+			<div class="header"> 您填写的登录数据存在一些问题 </div>
+			<ul class="list">
+				@foreach ($errors->all() as $error)
+	                <li>{{ $error }}</li>
+	            @endforeach
+			</ul>
 		</div>
 		<script type="text/javascript">
-			$(document).ready(function(){ 
-				$('.v-message button').click(function(){$('.v-message').css({height:0,opacity:0});}); 
-			});
+			$(document).ready(function(){$('.message .close').on('click', function(){$(this).closest('.message').transition('fade');});});
 		</script>
 	@endif
+		
 
 	<div class="loginBox" style="padding-top:1px;">
 		<div class="photo">
@@ -50,31 +46,35 @@
 				style="font-size:96px; padding:32px;margin:0;"></i>
 		</div>
 		<div style="padding:16px 16px 40px; margin-top:90px;">
-			<form class="ui form" action="{{url('login/'.$role)}}" method="post">
+			<form class="ui form attached fluid" action="{{url('login/'.$role)}}" method="post">
 				{{ csrf_field() }}
 				<div class="fields">
 					<div class="field sixteen wide">
-						<input type="text" name="username" placeholder="用户名">
+						<input type="text" name="username" placeholder="用户名" value="{{old('username')}}">
 					</div>
 				</div>
 				<div class="fields">
 					<div class="field sixteen wide">
-						<input type="text" name="password" placeholder="密码">
+						<input type="text" name="password" placeholder="密码" value="{{old('password')}}">
 					</div>
 				</div>
-				<div class="fields">
-					<div class="field nine wide">
-						<input type="text" name="captcha" placeholder="验证码">
+
+				@if(session('captcha'))
+					<div class="fields">
+						<div class="field nine wide">
+							<input type="text" name="captcha" placeholder="验证码">
+						</div>
+						<div class="field seven wide captcha" >
+							<img src="{{url('code')}}" onclick="this.src='{{ url('code') }}?r='+Math.random();" />
+						</div>
 					</div>
-					<div class="field seven wide captcha" >
-						<img src="{{url('code')}}" onclick="this.src='{{ url('code') }}?r='+Math.random();" />
-					</div>
-				</div>
+				@endif
+
 				<button class="ui animated fade orange fluid button" tabindex="0" type="submit">
 					<div class="visible content">登录账户</div>
 					<div class="hidden content">
 						<?php
-							$arr = ['admin'=>'管理员','teacher'=>'导师','student'=>'学员'];
+							$arr = ['admin'=>'管理员','teacher'=>'导师','student'=>'学员','vindicator'=>'运营维护者'];
 							echo $arr[$role];
 						?>
 					</div>
@@ -83,3 +83,4 @@
 		</div>
 	</div>
 @endsection
+

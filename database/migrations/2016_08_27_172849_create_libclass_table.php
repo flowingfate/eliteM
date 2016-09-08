@@ -15,9 +15,11 @@ class CreateLibclassTable extends Migration
         Schema::create('libclass', function (Blueprint $table) {
             $table->increments('id');
             $table->string('subject2_id');
+            $table->string('title');
             $table->string('url');
             $table->string('time')->nullable();
             $table->string('img_url')->nullable();
+            $table->string('saved_name')->nullable();
             
             $table->timestamps();
         });

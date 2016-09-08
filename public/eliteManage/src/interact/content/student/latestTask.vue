@@ -16,7 +16,7 @@
 	<div class="panel">
 		<div class="ui segment">
 			<template v-for="teacher in teachers">
-				<div class="ui horizontal list">
+				<div class="ui horizontal list" style="display:block;">
 					<div class="item">
 						<i class="user circular icon"></i>
 						<div class="content"><span v-text="'导师：'+teacher.name"></span></div>

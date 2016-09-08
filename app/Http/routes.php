@@ -13,8 +13,8 @@
 
 Route::group(['middleware' => ['web','cors']], function () 
 {
-	Route::get('/',function(){return view('welcome');});
-	Route::get('addDatas','addDataCtl@index');
+	Route::get('/',function(){return view('test');});
+	Route::get('test','TestCtl@delTry');
 
 	Route::any('login/{role}','LoginCtl@index');
 	Route::get('quit/{role}','LoginCtl@quit');
@@ -62,17 +62,40 @@ Route::group(['middleware' => ['web','cors']], function ()
 		// 学员相关路由
 		Route::group(['prefix'=>'student'],function()
 		{
-			// 学生可以通过关联关系来找到老师和任务信息
 			Route::any('relatedInfo','StudentCtl@relatedInfo');
 			
 			Route::any('personalInfo','StudentCtl@personalInfo');
 			Route::any('modifyPersonalInfo','StudentCtl@modifyPersonalInfo');
 			Route::any('modifyPassword','StudentCtl@modifyPassword');
 
-			Route::get('subjects', 'SubjectCtl@subjects');
+			Route::any('subject1s', 'SubjectCtl@subject1s');
+			Route::any('subject2', 'SubjectCtl@subject2');
+			Route::any('getfile/{id}', 'LibfileCtl@download');
+		});
+
+		// 运营维护相关路由
+		Route::group(['prefix'=>'vindicator'],function()
+		{
+			Route::any('subject1s', 'SubjectCtl@subject1s');
+			Route::any('subject2', 'SubjectCtl@subject2');
+
+			Route::any('addSub1', 'SubjectCtl@addSub1');
+			Route::any('chSub1', 'SubjectCtl@chSub1');
+			Route::any('rmSub1', 'SubjectCtl@rmSub1');
+
+			Route::any('addSub2', 'SubjectCtl@addSub2');
+			Route::any('rmSub2', 'SubjectCtl@rmSub2');
+			Route::any('chSub2', 'SubjectCtl@chSub2');
+
+			Route::any('addFile', 'LibfileCtl@addFile');
+			Route::any('chFile', 'LibfileCtl@chFile');
+			Route::any('rmFile', 'LibfileCtl@rmFile');
+
+			Route::any('addClass', 'LibclassCtl@addClass');
+			Route::any('chClass', 'LibclassCtl@chClass');
+			Route::any('rmClass', 'LibclassCtl@rmClass');
 		});
 	});
-
 });
 /*
 |--------------------------------------------------------------------------

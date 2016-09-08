@@ -20,7 +20,7 @@ class CreateLibfileTable extends Migration
             $table->string('author')->nullable();
             $table->text('description')->nullable();
             $table->string('type');
-            $table->string('size')->nullable();
+            $table->string('size');
             
             $table->timestamps();
         });

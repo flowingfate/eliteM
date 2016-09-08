@@ -2,8 +2,8 @@
 * { font-family: 'PingFang SC','微软雅黑' ;}
 .v-message
 {
-	position:fixed; width:100%; left:0; bottom: 0; background-color:rgba(0,0,0,0.2);
-	padding:10px 30px; text-align:right;
+	position:fixed; width:100%; left:0; bottom:50%; background-color:rgba(0,0,0,0.2);
+	padding:10px 30px; text-align:right; overflow:hidden;
 	span{ font-size:18px; line-height:40px; padding-right:10px;}
 	span.ok { color:#22BA45; }
 	span.err { color:#DB2828; }
@@ -59,7 +59,7 @@
 			toClose()
 			{
 				var _this = this;
-				this.timer = setTimeout(()=>{_this.toshow=false;},3000);
+				this.timer = setTimeout(()=>{_this.toshow=false;},2000);
 			},
 			keep()
 			{

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Libclass extends Model
 {
-    protected $table = 'libfile';
+    protected $table = 'libclass';
 
     protected $guarded = ['id'];  //设置不可被批量赋值的属性
 

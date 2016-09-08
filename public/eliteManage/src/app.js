@@ -8,6 +8,7 @@ Vue.config.debug = true;
 Vue.use(VueRouter)
 
 // 创建路由
+/*
 const router = new VueRouter();
 const App = Vue.extend(
 {
@@ -18,16 +19,21 @@ const App = Vue.extend(
 	}
 });
 router.start(App, '#interact');
+*/
 
 
-/*
 module.exports = new Vue(
 {
   el: '#interact',
   store:actStore,
   components: 
   {
-    interact: require('./components/app.vue')
+    interact: require('./interact/app.vue')
   }
 })
-*/
+
+
+
+
+
+

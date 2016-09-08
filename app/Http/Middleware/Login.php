@@ -15,6 +15,10 @@ class Login
      */
     public function handle($request, Closure $next)
     {
+        // 出了验证是否已经登录，还要验证登录的身份是否相符
+        // 否则学员登录之后也可以访问或通过作弊来访问admin和teacher
+        // ！！！！！！！！！！！！！！！！
+        // ！！！！！！！！！！！！！！！！
         // if(!session('user'))
         // {
         //     return response('未登陆');
