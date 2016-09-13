@@ -74,7 +74,7 @@
 			loadData()
 			{
 				var _this = this;
-				var route = this.route+'/student/subject1s';
+				var route = this.route+'/subject1s';
 				$.ajax(
 				{
 					type:'GET', url:route,

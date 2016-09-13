@@ -20,7 +20,13 @@ class CreatStudentTable extends Migration
             $table->string('school')->nullable();
             $table->string('direction')->nullable();
             $table->string('comment')->nullable();
-            $table->boolean('isfinish')->default(false);
+
+            $table->string('email')->nullable()->unique();
+            $table->string('phone')->nullable()->unique();
+            $table->string('wechat')->nullable()->unique();
+            $table->string('qq')->nullable()->unique();
+
+            // 不再这里标记结项了
             
             $table->timestamps();
         });

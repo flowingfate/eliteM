@@ -21,7 +21,11 @@ class StudentSdr extends Seeder
                 'username'=>'student'.$i,
                 'name'=>'学员'.$i,
                 'school'=>$school[rand(0,11)],
-                'direction'=>$direction[rand(0,12)]
+                'direction'=>$direction[rand(0,12)],
+                'email'=>(168610+$i).'@163.com',
+                'phone'=>(23991281824+$i),
+                'wechat'=>(123238126+$i),
+                'qq'=>(83782312+$i)
             ];
 
             Student::create($arr);

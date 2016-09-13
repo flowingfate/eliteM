@@ -21,7 +21,8 @@ class TeacherSdr extends Seeder
                 'name'=>'导师'.$i,
                 'school'=>$school[rand(0,11)],
                 'laboratory'=>'实验室'.$i,
-                'email'=>(168610+$i).'@163.com'
+                'email'=>(168610+$i).'@163.com',
+                'qq'=>(83782312+$i)
             ];
 
             Teacher::create($arr);

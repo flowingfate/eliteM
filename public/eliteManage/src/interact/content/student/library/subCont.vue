@@ -59,7 +59,7 @@
 			            <div class="description" v-text="file.description"></div>
 			        </div>
 			        <div class="extra content">
-			            <a :href="route+'/student/getfile/'+file.id" 
+			            <a :href="route+'/getfile/'+file.id" 
 			            	class="ui basic green fluid button">下载</a>
 			        </div>
 			    </div>
@@ -105,7 +105,7 @@
 			{
 				if( this.id == -1 ) return false;
 				var _this = this;
-				var route = this.route+'/student/subject2';
+				var route = this.route+'/subject2';
 				$.ajax(
 				{
 					type:'GET', url:route, data:{ id:this.id },

@@ -2,7 +2,8 @@
 * { font-family: 'PingFang SC','微软雅黑' ;}
 .v-message
 {
-	position:fixed; width:100%; left:0; bottom:50%; background-color:rgba(0,0,0,0.2);
+	position:fixed; width:100%; left:0; bottom:50%;  z-index:10000;
+	background-color:rgba(0,0,0,0.2);
 	padding:10px 30px; text-align:right; overflow:hidden;
 	span{ font-size:18px; line-height:40px; padding-right:10px;}
 	span.ok { color:#22BA45; }

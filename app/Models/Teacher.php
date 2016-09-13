@@ -17,11 +17,16 @@ class Teacher extends Model
 
     public function students()
     {
-    	return $this->belongsToMany('App\Models\Student','teacher_student','teacher_id','student_id');
+    	return $this->belongsToMany('App\Models\Student','teacher_student','teacher_id','student_id')->withPivot('finish');
     }
 
     public function tasks()
     {
     	return $this->hasMany('App\Models\Task','teacher_id','id');
+    }
+
+    public function m2ms()
+    {
+        return $this->hasMany('App\Models\M2m','teacher_id','id');
     }
 }

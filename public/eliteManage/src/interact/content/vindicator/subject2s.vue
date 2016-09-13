@@ -86,7 +86,7 @@
 			addSub2()
 			{
 				var _this = this;
-				var route = this.route+'/vindicator/addSub2';
+				var route = this.route+'/addSub2';
 				var data = this.addSubject2;
 				Object.assign(data,{subject1_id:this.belongto});
 
@@ -109,7 +109,7 @@
 				if(!flag) return false;
 
 				var _this = this;
-				var route = this.route+'/vindicator/rmSub2';
+				var route = this.route+'/rmSub2';
 				var data = {id:id};
 
 				$.ajax(

@@ -193,7 +193,7 @@
 			classModify()
 			{
 				var _this = this;
-				var route = this.route+'/vindicator/chClass';
+				var route = this.route+'/chClass';
 				var data = new FormData(); data.append('id',this.editClass.id);
 
 				var flag = true , eClass = this.editClass;
@@ -226,7 +226,7 @@
 			classRm(index,id)
 			{
 				var _this = this;
-				var route = this.route+'/vindicator/rmClass';
+				var route = this.route+'/rmClass';
 				var data = {id:id};
 
 				$.ajax(
@@ -242,7 +242,7 @@
 			classAdd()
 			{
 				var _this = this;
-				var route = this.route+'/vindicator/addClass';
+				var route = this.route+'/addClass';
 				var data = new FormData();
 
 				var add=this.addClass;  var img=this.addImg;

@@ -162,7 +162,7 @@
 			fileModify()
 			{
 				var _this = this;
-				var route = this.route+'/vindicator/chFile';
+				var route = this.route+'/chFile';
 				var data = this.editFile;
 				var file = this.files[this.editIndex];
 				if(data.description==file.description&&data.author==file.author)
@@ -185,7 +185,7 @@
 			rmFile(index,id)
 			{
 				var _this = this;
-				var route = this.route+'/vindicator/rmFile';
+				var route = this.route+'/rmFile';
 				var data = {id:id};
 
 				$.ajax(
@@ -201,7 +201,7 @@
 			addfile()
 			{
 				var _this = this;
-				var route = this.route+'/vindicator/addFile';
+				var route = this.route+'/addFile';
 				var data = new FormData();
 				if(!this.addFile.file)
 				{

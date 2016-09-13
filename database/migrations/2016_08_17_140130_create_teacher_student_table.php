@@ -19,8 +19,8 @@ class CreateTeacherStudentTable extends Migration
             $table->integer('teacher_id');
             $table->integer('student_id');
             
+            $table->boolean('finish')->default(false);
         });
-
     }
 
     /**

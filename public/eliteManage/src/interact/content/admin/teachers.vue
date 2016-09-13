@@ -35,7 +35,7 @@
 
 	<div class="ui modal" v-el:info>
 		<div class="header">导师信息</div>
-		<div class="content">
+		<div class="content" style="padding:21px 21px 0;">
 			<div class="ui horizontal list">
 				<div class="item">
 					<i class="sort numeric ascending circular icon"></i>
@@ -58,19 +58,56 @@
 					<div class="content"><span v-text="teachers[index].laboratory"></span></div>
 				</div>
 			</div>
-			<template v-for="student in students">
+		</div>
+		
+		<h2 class="ui header">
+			<div class="content">学员进度</div>
+			<div @click="toggle($els.progress)" class="ui button right floated">展开/收起</div>
+		</h2>
+		<div class="content" v-el:progress>
+			<!-- 这里是正在进行的学员 -->
+			<template v-for="stu in students.progress">
 				<h3 class="ui header">
 					<i class="student icon"></i>
-					<div class="content" v-text="student.name">Uptime Guarantee </div>
+					<div class="content" v-text="stu.id+'-'+stu.name"></div>
 				</h3>
 				<table class="ui orange selectable celled table">
 					<thead>
 						<tr> <th>日期</th> <th>导师</th> <th>导师内容</th> <th>导师时间</th> <th>学员任务</th> <th>完成度</th> </tr>
 					</thead>
 					<tbody>
-						<tr v-for="task in student.tasks">
+						<tr v-for="task in stu.tasks">
 							<td v-text="task.up_time"></td>
-							<td v-text="task.teacher==teachers[index].name?'当前导师':task.teacher"></td>
+							<td v-text="task.teacher_id==teachers[index].id?'当前导师':'其他导师'"></td>
+							<td v-text="task.discribe"></td>
+							<td v-text="task.work_time*0.5+' h'"></td>
+							<td v-text="task.mission"></td>
+							<td v-text="task.progress?'完成':'未完成'"></td>
+						</tr>
+					</tbody>
+				</table>
+			</template>
+		</div>
+		
+		<h2 class="ui header">
+			<div class="content">结项学员</div>
+			<div @click="toggle($els.finish)" class="ui button right floated">展开/收起</div>
+		</h2>
+		<div class="content" v-el:finish>
+			<!-- 这里是已经结项的的学员 -->
+			<template v-for="stu in students.finish">
+				<h3 class="ui header">
+					<i class="student icon"></i>
+					<div class="content" v-text="stu.id+'-'+stu.name"></div>
+				</h3>
+				<table class="ui orange selectable celled table">
+					<thead>
+						<tr> <th>日期</th> <th>导师</th> <th>导师内容</th> <th>导师时间</th> <th>学员任务</th> <th>完成度</th> </tr>
+					</thead>
+					<tbody>
+						<tr v-for="task in stu.tasks">
+							<td v-text="task.up_time"></td>
+							<td v-text="task.teacher_id==teachers[index].id?'当前导师':'其他导师'"></td>
 							<td v-text="task.discribe"></td>
 							<td v-text="task.work_time*0.5+' h'"></td>
 							<td v-text="task.mission"></td>
@@ -81,7 +118,7 @@
 			</template>
 		</div>
 		<div class="actions">
-			<div class="ui cancel button">取消</div>
+			<div class="ui cancel button"> OK </div>
 		</div>
 	</div>
 </div>
@@ -95,7 +132,11 @@
 			filter: { keyword:'', field:'name'},
 			teachers: [{name:'',id:'',email:'',school:'',laboratory:''}],
 			index:0,
-			students: [{name:'',tasks: [{dicribe:'',mission:'',progress:'',work_time:'',up_time:''}]}]
+			students: 
+			{
+				progress:[{id:'',name:'',tasks: [{dicribe:'',mission:'',progress:'',work_time:'',up_time:'',teacher_id:''}]}],
+				finish:[{id:'',name:'',tasks: [{dicribe:'',mission:'',progress:'',work_time:'',up_time:'',teacher_id:''}]}],
+			},
 		}},
 		vuex:
 		{
@@ -117,18 +158,13 @@
 			getTeacherInfo(id)
 			{
 				var _this = this;
-				var route = this.route+'/admin/teacherInfo';
+				var route = this.route+'/teacherInfo';
 				var data = {id:id};
 				$.ajax(
 				{
-					type:'GET',
-					url:route,
-					data:data,
+					type:'GET', url:route, data:data,
 					success:(data)=>{ 
 						_this.students = data;
-						// data = JSON.stringify(data);
-						// data = JSON.parse(data);
-						// console.dir(data); 
 					},
 					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }
 				});
@@ -141,16 +177,16 @@
 
 				var str = ""+teacher[filter.field]
 				return str.match(filter.keyword);
-			}
+			},
+			toggle(el){ $(el).slideToggle(); },
 		},
 		ready()
 		{
 			var _this = this;
-			var route = this.route+'/admin/teacherlist';
+			var route = this.route+'/teacherlist';
 			$.ajax(
 			{
-				type:'GET',
-				url:route,
+				type:'GET', url:route,
 				success:(data)=>{_this.teachers = data;},
 				error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }
 			});

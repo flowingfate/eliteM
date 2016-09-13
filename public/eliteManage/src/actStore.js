@@ -7,7 +7,7 @@ const state =
 {
 	role : globalLoginInfo.role,      //全局判断登录身份：student teacher admin,
 	myId : globalLoginInfo.id,
-	route: globalLoginInfo.route,
+	route: globalLoginInfo.route+'/'+globalLoginInfo.role,
 	message:
 	{
 		type:'ok',      // ok err
@@ -17,18 +17,6 @@ const state =
 
 const mutations = 
 {
-	setRole(state,newVal)
-	{
-		state.role = newVal;
-	},
-	setMyId(state,newVal)
-	{
-		state.myId = newVal;
-	},
-	setRoute(state,newVal)
-	{
-		state.route = newVal;
-	},
 	newMessage({message},mess)
 	{
 		message.type = mess.type+"?"+Math.random();

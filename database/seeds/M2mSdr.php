@@ -12,9 +12,9 @@ class M2mSdr extends Seeder
      */
     public function run()
     {
-        for($i=1;$i<=18;$i++)
+        for($i=1;$i<=36;$i++)
         {
-            M2m::create(['teacher_id'=>rand(1,12),'student_id'=>rand(1,36)]);
+            M2m::create(['teacher_id'=>rand(1,12),'student_id'=>rand(1,36),'finish'=>rand(0,1)]);
         }
     }
 }

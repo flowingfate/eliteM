@@ -14,7 +14,7 @@
 Route::group(['middleware' => ['web','cors']], function () 
 {
 	Route::get('/',function(){return view('test');});
-	Route::get('test','TestCtl@delTry');
+	Route::get('test','TestCtl@index');
 
 	Route::any('login/{role}','LoginCtl@index');
 	Route::get('quit/{role}','LoginCtl@quit');
@@ -26,20 +26,21 @@ Route::group(['middleware' => ['web','cors']], function ()
 		// 管理员相关路由
 		Route::group(['prefix'=>'admin'],function()
 		{
-			Route::get('progress', 'StudentCtl@progress');
-			Route::get('finished', 'StudentCtl@finished');
+			Route::get('progress', 'AdminCtl@progress');
+			Route::get('finished', 'AdminCtl@finished');
+			Route::get('setFinish', 'AdminCtl@setFinish');
+
 			Route::any('studentInfo','StudentCtl@studentInfo');
 			Route::any('setTeacher','StudentCtl@setTeacher');
 
 			Route::get('teacherlist', 'TeacherCtl@teacherlist');
 			Route::any('teacherInfo','TeacherCtl@teacherInfo');
 
+			Route::get('users', 'AdminCtl@users');
 			Route::any('addUser','AdminCtl@addUser');
+			Route::any('modify','AdminCtl@modify');
 			Route::any('removeUser','AdminCtl@removeUser');
 			Route::any('resetPassword','AdminCtl@resetPassword');
-			Route::any('modifyCmt','AdminCtl@modifyCmt');
-
-			Route::get('users', 'AdminCtl@users');
 		});
 
 		// 导师相关路由
@@ -52,6 +53,7 @@ Route::group(['middleware' => ['web','cors']], function ()
 			Route::any('addTask','TaskCtl@add');
 			Route::any('removeTask','TaskCtl@remove');
 			Route::any('modifyTask','TaskCtl@modify');
+			Route::any('taskFinish','TaskCtl@finish');
 
 			Route::any('personalInfo','TeacherCtl@personalInfo');
 			Route::any('modifyPersonalInfo','TeacherCtl@modifyPersonalInfo');

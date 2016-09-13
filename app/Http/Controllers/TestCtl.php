@@ -16,7 +16,14 @@ class TestCtl extends Controller
 {
     public function index(Request $request)
     {
-    	return view('upload');
+    	$arr1 = [1,2,3,4,5,6,7];
+        $arr2 = [1,2,3,6];
+
+        $arr = array_diff($arr1, $arr2);
+
+        $tasks = Student::find(1)->tasks()->whereIn('teacher_id',$arr)->orderBy('student_id')->get()->toArray();
+
+        dd($tasks);
     }
     public function up(Request $request)
     {
@@ -47,17 +54,5 @@ class TestCtl extends Controller
     	// dd($data);
 
         return response()->json($data);
-    }
-
-    public function delTry()
-    {
-        // $sub2s = Subject1::find(5)->subject2s()->delete();
-        $this->say("asdkahfkaksdjfk");
-        dd($_GET);
-    }
-
-    private function say($str)
-    {
-        echo $str;
     }
 }
