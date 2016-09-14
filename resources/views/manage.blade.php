@@ -16,5 +16,5 @@
 
         $.ajaxSetup({headers:{'X-CSRF-TOKEN':"{{csrf_token()}}"}});
     </script>
-    <script src="{{asset('eliteManage/dist/app.js')}}"></script>
+    <script src="{{asset('eliteManage/dist/'.$role.'.js')}}"></script>
 @endsection

@@ -70,6 +70,10 @@ class StudentCtl extends Controller
     public function relatedInfo(Request $request)
     {
     	$id = $request->input('id');
+
+        /*---学员只能获取自己相关的信息---*/
+        if($id!=session('user')['id']) return response('无权限访问');
+
     	$student = Student::find($id);
 
     	$teachers = $student->teachers->toArray();
@@ -94,6 +98,10 @@ class StudentCtl extends Controller
     public function personalInfo(Request $request)
     {
         $id = $request->input('id');
+
+        /*---学员只能获取自己相关的信息---*/
+        if($id!=session('user')['id']) return response('无权限访问');
+
         $student = Student::select(['name','username','direction','school','email','qq','phone','wechat'])->where('id',$id)->first();
         return response()->json($student);
     }
@@ -101,6 +109,10 @@ class StudentCtl extends Controller
     public function modifyPersonalInfo(Request $request)
     {
         $id = $request->input('id');
+
+        /*---学员只能修改自己相关的信息---*/
+        if($id!=session('user')['id']) return response('无权限访问');
+        
         $inputs = $request->except(['id']);
 
         $student = Student::find($id);
@@ -113,6 +125,10 @@ class StudentCtl extends Controller
     public function modifyPassword(Request $request)
     {
         $id = $request->input('id');
+
+        /*---学员只能修改自己的密码---*/
+        if($id!=session('user')['id']) return response('无权限访问');
+        
         $originPass = $request->input('originPass');
         $newPass = $request->input('newPass');
 

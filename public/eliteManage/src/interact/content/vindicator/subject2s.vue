@@ -92,7 +92,7 @@
 
 				$.ajax(
 				{
-					type:'POST', url:route, data:data,
+					type:'GET', url:route, data:data,
 					success:(data)=>{
 						// 返回一个新对象，添加到学科列表数组中
 						_this.$store.dispatch('newMessage',data.msg);
@@ -114,7 +114,7 @@
 
 				$.ajax(
 				{
-					type:'POST', url:route, data:data,
+					type:'GET', url:route, data:data,
 					success:(data)=>{
 						_this.$store.dispatch('newMessage',data);
 						_this.subjects.splice(index,1);

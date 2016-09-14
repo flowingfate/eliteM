@@ -231,7 +231,7 @@
 
 				$.ajax(
 				{
-					type:'POST', url:route, data:data,
+					type:'GET', url:route, data:data,
 					success:(msg)=>{
 						_this.$store.dispatch('newMessage',msg);
 						_this.classes.splice(index,1);

@@ -13,8 +13,8 @@
 
 Route::group(['middleware' => ['web','cors']], function () 
 {
-	Route::get('/',function(){return view('test');});
-	Route::get('test','TestCtl@index');
+	// Route::get('/',function(){return view('test');});
+	// Route::get('test','TestCtl@index');
 
 	Route::any('login/{role}','LoginCtl@index');
 	Route::get('quit/{role}','LoginCtl@quit');
@@ -30,17 +30,17 @@ Route::group(['middleware' => ['web','cors']], function ()
 			Route::get('finished', 'AdminCtl@finished');
 			Route::get('setFinish', 'AdminCtl@setFinish');
 
-			Route::any('studentInfo','StudentCtl@studentInfo');
-			Route::any('setTeacher','StudentCtl@setTeacher');
+			Route::get('studentInfo','StudentCtl@studentInfo');
+			Route::get('setTeacher','StudentCtl@setTeacher');
 
 			Route::get('teacherlist', 'TeacherCtl@teacherlist');
-			Route::any('teacherInfo','TeacherCtl@teacherInfo');
+			Route::get('teacherInfo','TeacherCtl@teacherInfo');
 
 			Route::get('users', 'AdminCtl@users');
-			Route::any('addUser','AdminCtl@addUser');
-			Route::any('modify','AdminCtl@modify');
-			Route::any('removeUser','AdminCtl@removeUser');
-			Route::any('resetPassword','AdminCtl@resetPassword');
+			Route::get('addUser','AdminCtl@addUser');
+			Route::get('modify','AdminCtl@modify');
+			Route::get('removeUser','AdminCtl@removeUser');
+			Route::get('resetPassword','AdminCtl@resetPassword');
 		});
 
 		// 导师相关路由
@@ -48,54 +48,56 @@ Route::group(['middleware' => ['web','cors']], function ()
 		{
 			Route::get('relatedStudents', 'TeacherCtl@relatedStudents');
 
-			Route::any('studentInfo','StudentCtl@studentInfo');
+        	// 稍有安全隐患===>导师访问非自己的学生===>低发情况
+			Route::get('studentInfo','StudentCtl@studentInfo');
 
-			Route::any('addTask','TaskCtl@add');
-			Route::any('removeTask','TaskCtl@remove');
-			Route::any('modifyTask','TaskCtl@modify');
-			Route::any('taskFinish','TaskCtl@finish');
+			// 对任务的操作都有隐患===>老师之间互相访问操作===>低发情况
+			Route::get('addTask','TaskCtl@add');
+			Route::get('removeTask','TaskCtl@remove');
+			Route::get('modifyTask','TaskCtl@modify');
+			Route::get('taskFinish','TaskCtl@finish');
 
-			Route::any('personalInfo','TeacherCtl@personalInfo');
-			Route::any('modifyPersonalInfo','TeacherCtl@modifyPersonalInfo');
-			Route::any('modifyPassword','TeacherCtl@modifyPassword');
+			Route::get('personalInfo','TeacherCtl@personalInfo');
+			Route::get('modifyPersonalInfo','TeacherCtl@modifyPersonalInfo');
+			Route::get('modifyPassword','TeacherCtl@modifyPassword');
 		});
 
 
 		// 学员相关路由
 		Route::group(['prefix'=>'student'],function()
 		{
-			Route::any('relatedInfo','StudentCtl@relatedInfo');
+			Route::get('relatedInfo','StudentCtl@relatedInfo');
 			
-			Route::any('personalInfo','StudentCtl@personalInfo');
-			Route::any('modifyPersonalInfo','StudentCtl@modifyPersonalInfo');
-			Route::any('modifyPassword','StudentCtl@modifyPassword');
+			Route::get('personalInfo','StudentCtl@personalInfo');
+			Route::get('modifyPersonalInfo','StudentCtl@modifyPersonalInfo');
+			Route::get('modifyPassword','StudentCtl@modifyPassword');
 
-			Route::any('subject1s', 'SubjectCtl@subject1s');
-			Route::any('subject2', 'SubjectCtl@subject2');
-			Route::any('getfile/{id}', 'LibfileCtl@download');
+			Route::get('subject1s', 'SubjectCtl@subject1s');
+			Route::get('subject2', 'SubjectCtl@subject2');
+			Route::get('getfile/{id}', 'LibfileCtl@download');
 		});
 
 		// 运营维护相关路由
 		Route::group(['prefix'=>'vindicator'],function()
 		{
-			Route::any('subject1s', 'SubjectCtl@subject1s');
-			Route::any('subject2', 'SubjectCtl@subject2');
+			Route::get('subject1s', 'SubjectCtl@subject1s');
+			Route::get('subject2', 'SubjectCtl@subject2');
 
-			Route::any('addSub1', 'SubjectCtl@addSub1');
-			Route::any('chSub1', 'SubjectCtl@chSub1');
-			Route::any('rmSub1', 'SubjectCtl@rmSub1');
+			Route::get('addSub1', 'SubjectCtl@addSub1');
+			Route::get('chSub1', 'SubjectCtl@chSub1');
+			Route::get('rmSub1', 'SubjectCtl@rmSub1');
 
-			Route::any('addSub2', 'SubjectCtl@addSub2');
-			Route::any('rmSub2', 'SubjectCtl@rmSub2');
+			Route::get('addSub2', 'SubjectCtl@addSub2');
+			Route::get('rmSub2', 'SubjectCtl@rmSub2');
 			Route::any('chSub2', 'SubjectCtl@chSub2');
 
 			Route::any('addFile', 'LibfileCtl@addFile');
-			Route::any('chFile', 'LibfileCtl@chFile');
-			Route::any('rmFile', 'LibfileCtl@rmFile');
+			Route::get('chFile', 'LibfileCtl@chFile');
+			Route::get('rmFile', 'LibfileCtl@rmFile');
 
 			Route::any('addClass', 'LibclassCtl@addClass');
 			Route::any('chClass', 'LibclassCtl@chClass');
-			Route::any('rmClass', 'LibclassCtl@rmClass');
+			Route::get('rmClass', 'LibclassCtl@rmClass');
 		});
 	});
 });
@@ -110,6 +112,3 @@ Route::group(['middleware' => ['web','cors']], function ()
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-    //
-});
