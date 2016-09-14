@@ -12,62 +12,29 @@ use App\Models\Teacher;
 
 class StudentCtl extends Controller
 {
-    // 获取正在学习中的学员的信息
-    public function progress(Request $request)
-    {
-    	$students = Student::select(['id','name','school','direction'])->where('isfinish','0')->get();
-
-        $result = [];
-
-        foreach ($students as $student) 
-        {
-            $arr = [
-                'id'=>$student->id,
-                'name'=>$student->name,
-                'school'=>$student->school,
-                'teachers'=>$student->teachers()->select(['name'])->get()->toArray(),
-                'direction'=>$student->direction,
-            ];
-            array_push($result, $arr);
-        }
-        // dd($result);
-
-        return response()->json($result);
-    }
-
-    // 获取已经结项的学员的信息
-    public function finished()
-    {
-    	$students = Student::select(['id','name','school','direction'])->where('isfinish','1')->get();
-
-        $result = [];
-
-        foreach ($students as $student) 
-        {
-            $arr = [
-                'id'=>$student->id,
-                'name'=>$student->name,
-                'school'=>$student->school,
-                'teachers'=>$student->teachers()->select(['name'])->get()->toArray(),
-                'direction'=>$student->direction,
-            ];
-            array_push($result, $arr);
-        }
-        // dd($result);
-
-        return response()->json($result);
-    }
-
     // 给学员指定导师
     public function setTeacher(Request $request)
     {
+        // 添加导师无条件允许
+        // 删除导师只能是没有发布过任务的老师
+        // 按理说应当在后端做检查，但是放在前端更利于减小负担
+        // 如果非要删除的话，那也应该删除导师布置过的任务
         $studentId = $request->input('studentId');
-        $teacherIds = $request->input('teacherIds');
-
         $student = Student::find($studentId);
-        
-        $student->teachers()->attach($teacherIds);
 
+        $inputIds = $request->input('teacherIds');
+        $nowIds = [];
+        foreach ($student->teachers as $T) array_push($nowIds,$T->id);
+
+        $add = array_diff($inputIds, $nowIds);
+        $del = array_diff($nowIds, $inputIds);
+        
+        if(count($add)>0) $student->teachers()->attach($add);
+        if(count($del)>0)
+        {
+            $student->teachers()->detach($del);
+            $student->tasks()->whereIn('teacher_id',$del)->delete();
+        }
         
         return response()->json(['type'=>'ok','content'=>'设置导师成功']);
     }
@@ -84,6 +51,7 @@ class StudentCtl extends Controller
         foreach ($tasks as $task) 
         {
             $arr = [
+                'id'=>$task->id,
                 'discribe'=>$task->discribe,
                 'mission'=>$task->mission,
                 'progress'=>$task->progress,
@@ -103,20 +71,19 @@ class StudentCtl extends Controller
     {
     	$id = $request->input('id');
     	$student = Student::find($id);
+
     	$teachers = $student->teachers->toArray();
     	$nowtasks = [];
-        foreach ($student->tasks()->where('progress',0)->orderBy('updated_at', 'desc')->get() as $task) 
-        {
-            $arr = $task->toArray();
-            $arr['teacher'] = $task->teacher->name;
-            array_push($nowtasks, $arr);
-        }
         $histasks = [];
-        foreach ($student->tasks()->where('progress',1)->orderBy('updated_at', 'desc')->get() as $task) 
+
+        foreach ($student->tasks()->orderBy('id', 'desc')->get() as $task) 
         {
             $arr = $task->toArray();
             $arr['teacher'] = $task->teacher->name;
-            array_push($histasks, $arr);
+            $arr['teacherId'] = $task->teacher->id;
+
+            if($arr['progress']==0) array_push($nowtasks, $arr);
+            if($arr['progress']==1) array_push($histasks, $arr);
         }
 
     	$data = ['teachers'=>$teachers, 'nowtasks'=>$nowtasks, 'histasks'=>$histasks ];
@@ -127,22 +94,17 @@ class StudentCtl extends Controller
     public function personalInfo(Request $request)
     {
         $id = $request->input('id');
-        $student = Student::select(['username','direction','school'])->where('id',$id)->first();
+        $student = Student::select(['name','username','direction','school','email','qq','phone','wechat'])->where('id',$id)->first();
         return response()->json($student);
     }
 
     public function modifyPersonalInfo(Request $request)
     {
         $id = $request->input('id');
-        $username = $request->input('username');
-        $direction = $request->input('direction');
-        $school = $request->input('school');
+        $inputs = $request->except(['id']);
 
         $student = Student::find($id);
-        if($student->username!=$username) $student->username=$username;
-        if($student->direction!=$direction) $student->direction=$direction;
-        if($student->school!=$school) $student->school=$school;
-
+        foreach ($inputs as $k => $val) { $student[$k] = $val; }
         $student->save();
         
         return response()->json(['type'=>'ok','content'=>'信息修改成功']);

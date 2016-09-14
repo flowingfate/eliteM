@@ -16,7 +16,7 @@
 		<h1 class="ui top attached header">
 			<div class="ui right floated animated orange fade button" 
 				tabindex="0"
-				@click="actionModal">
+				@click="$broadcast('add')">
 				<div class="visible content">添加</div>
 				<div class="hidden content">&nbsp;&nbsp;&nbsp;<i class="icon add user"></i></div>
 			</div>
@@ -53,47 +53,70 @@
 					</div>
 				</div>
 			</div>
-
-					
 		</div>
+
 		<div class="ui segment attached">
-			<table class="ui orange selectable celled table">
-				<thead>
-					<tr> 
-						<th class="center aligned">姓名</th> 
-						<th class="center aligned">用户名</th> 
-						<th class="center aligned" colspan="2">备注</th> 
-						<th class="center aligned">重置密码</th> 
-						<th class="center aligned">删除</th> 
-					</tr>
+			<table v-show="role=='teacher'" class="ui orange selectable celled table">
+				<thead class="center aligned">
+					<tr> <th>ID</th> <th>姓名</th> <th>学校</th> <th>实验室</th> <th>备注</th> <th>email</th> <th>QQ</th> <th>编辑</th> <th>删除</th> </tr>
 				</thead>
 				<tbody @mouseleave="users.rowIndex=-1">
-					<tr v-for="user in users[role]" 
+					<tr v-for="user in users.teacher" 
 						v-show="match(user)"
+						class="center aligned"
 						@mouseenter="users.rowIndex=$index">
-						<td class="center aligned" v-text="user.name"></td>
-						<td class="center aligned" v-text="user.username"></td>
+						<td v-text="user.id"></td>
+						<td v-text="user.name"></td>
+						<td v-text="user.school"></td>
+						<td v-text="user.laboratory"></td>
+						<td v-text="user.comment"></td>
+						<td v-text="user.email"></td>
+						<td v-text="user.qq"></td>
+						
 						<td>
-							<div class="ui icon input" style="width:100%;">
-								<input type="text" v-model="user.comment" placeholder="修改备注" />
+							<button class="ui icon basic circular button" 
+								:class="{orange:users.rowIndex==$index}"
+								@click="toEdit(user)" >
 								<i class="edit icon"></i>
-							</div>
-						</td>
-						<td class="center aligned">
-							<button class="ui icon basic circular button" 
-								:class="{orange:users.rowIndex==$index}"
-								@click="modifyCmt(user.id,$index)" >
-								<i class="checkmark icon"></i>
 							</button>
 						</td>
-						<td class="center aligned">
+						<td>
 							<button class="ui icon basic circular button" 
 								:class="{orange:users.rowIndex==$index}"
-								@click="resetPassword(user.id)" >
-								<i class="undo icon"></i>
+								@click="removeUser(user.id,$index)" >
+								<i class="remove user icon"></i>
 							</button>
 						</td>
-						<td class="center aligned">
+					</tr>
+				</tbody>
+			</table>
+			<table v-show="role=='student'" class="ui orange selectable celled table">
+				<thead class="center aligned">
+					<tr> <th>ID</th> <th>姓名</th> <th>学校</th> <th>方向</th> <th>备注</th> <th>email</th> <th>QQ</th> <th>电话</th> <th>微信</th> <th>编辑</th> <th>删除</th> </tr>
+				</thead>
+				<tbody @mouseleave="users.rowIndex=-1">
+					<tr v-for="user in users.student" 
+						v-show="match(user)"
+						class="center aligned"
+						@mouseenter="users.rowIndex=$index">
+						<td v-text="user.id"></td>
+						<td v-text="user.name"></td>
+						<td v-text="user.school"></td>
+						<td v-text="user.direction"></td>
+						<td v-text="user.comment"></td>
+						<td v-text="user.email"></td>
+						<td v-text="user.qq"></td>
+						<td v-text="user.phone"></td>
+						<td v-text="user.wechat"></td>
+						
+						<td>
+							<button class="ui icon basic circular button" 
+								:class="{orange:users.rowIndex==$index}"
+								@click="toEdit(user)" >
+								<i class="edit icon"></i>
+							</button>
+						</td>
+						<td>
 							<button class="ui icon basic circular button" 
 								:class="{orange:users.rowIndex==$index}"
 								@click="removeUser(user.id,$index)" >
@@ -106,36 +129,8 @@
 		</div>
 	</div>
 
-	<div class="ui small modal" v-el:adduser>
-		<div class="header">添加用户</div>
-		<div class="content">
-			<div class="ui form">
-				<div class="inline field">
-					<div class="ui radio checkbox">
-						<input type="radio" v-model="role" value="teacher" tabindex="0" class="hidden">
-						<label>导师</label>
-					</div>
-					<div class="ui radio checkbox">
-						<input type="radio" v-model="role" value="student" tabindex="0" class="hidden">
-						<label>学员</label>
-					</div>
-				</div>
-				<div class="field">
-					<input type="text" v-model="addInput.name" placeholder="姓名">
-				</div>
-				<div class="field">
-					<input type="text" v-model="addInput.username" placeholder="用户名">
-				</div>
-				<div class="field">
-					<textarea v-model="addInput.comment" placeholder="备注" rows="2"></textarea>
-				</div>
-			</div>
-		</div>
-		<div class="actions">
-			<div class="ui cancel button">取消</div>
-			<div class="ui approve button" @click="addUser">确认</div>
-		</div>
-	</div>
+	<add-user></add-user>
+	<edit-user :user="nowEdit" :role="role"></edit-user>
 </div>
 </template>
 
@@ -145,105 +140,40 @@
 		data() {return {
 
 			role:'teacher',
-			options:{name:'姓名',username:'用户名',comment:'评论',id:'编号'},
+			options:{name:'姓名',school:'学校',id:'编号'},
 			filter: { keyword:'', field:'name'},
-			addInput:{name:'',username:'',comment:''},
 			users:
 			{
 				rowIndex:-1,
-				teacher: [{name:'',username:'',comment:'',id:'',originCmt:''}],
-				student: [{name:'',username:'',comment:'',id:'',originCmt:''}]
-			}
+				teacher: [{id:'',name:'',username:'',school:'',laboratory:'',comment:'',email:'',qq:''}],
+				student: [{id:'',name:'',username:'',school:'',direction:'',comment:'',email:'',qq:'',phone:'',wechat:''}]
+			},
+			nowEdit:{},
 		}},
-		vuex:
+		vuex: {getters: {route: ({route})=>{return route;},}},
+		components:
 		{
-			getters: {route: ({route})=>{return route;},}
+			addUser: require('./manage/add.vue'),
+			editUser:require('./manage/edit.vue'),
 		},
 		methods:
 		{
-			actionModal() { $(this.$els.adduser).modal('show'); },
-			addUser()
-			{
-				var data = 
-				{
-					name : this.addInput.name,
-					username : this.addInput.username,
-					comment : this.addInput.comment,
-					role : this.role
-				};
-				var _this = this;
-				var route = this.route+'/admin/addUser';
-
-				$.ajax(
-				{
-					type:'GET',
-					url:route,
-					data:data,
-					success:(data)=>{ 
-						_this.$store.dispatch('newMessage',data);
-						// 需要刷新页面获取新信息
-					},
-					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }
-				});
-			},
+			// 需要注意的是，删除用户可能也意味着清楚与之相关联的数据
+			// 某些用户应当设置不允许删除
 			removeUser(id,index)
 			{
 				var _this = this;
-				var route = this.route+'/admin/removeUser';
+				var route = this.route+'/removeUser';
 
 				$.ajax(
 				{
-					type:'GET',
-					url:route,
+					type:'GET', url:route,
 					data:{id:id,role:_this.role},
 					success:(data)=>{ 
-						_this.$store.dispatch('newMessage',data);
-						_this.users[_this.role].splice(index,1);
+						_this.$store.dispatch('newMessage',data.msg);
+						if(data.flag) _this.users[_this.role].splice(index,1);
 					},
 					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }
-				});
-			},
-			resetPassword(id)
-			{
-				var _this = this;
-				var route = this.route+'/admin/resetPassword';
-
-				$.ajax(
-				{
-					type:'GET',
-					url:route,
-					data:{id:id,role:_this.role},
-					success:(data)=>{ 
-						_this.$store.dispatch('newMessage',data);
-					},
-					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }
-				});
-			},
-			modifyCmt(id,index)
-			{
-				var user = this.users[this.role][index];
-				if(user.originCmt==user.comment)
-				{
-					this.$store.dispatch('newMessage',{type:'err',content:'您好，您并没有做任何修改！'});
-					return;
-				}
-
-				var route = this.route+'/admin/modifyCmt';
-				var _this = this;
-
-				$.ajax(
-				{
-					type:'GET',
-					url:route,
-					data:{id:id,role:_this.role,content:user.comment},
-					success:(data)=>{ 
-						_this.$store.dispatch('newMessage',data);
-						user.originCmt = user.comment;
-					},
-					error:()=>{ 
-						_this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'});
-						user.comment = user.originCmt;
-					}
 				});
 			},
 			match(user)
@@ -254,25 +184,30 @@
 
 				var str = ""+user[filter.field]
 				return str.match(filter.keyword);
+			},
+			toEdit(user)
+			{
+				this.nowEdit = user;
+				this.$broadcast('edit');
+			},
+			loadData()
+			{
+				var _this = this;
+				var route = this.route+'/users';
+				$.ajax(
+				{
+					type:'GET', url:route,
+					success:(data)=>{
+						_this.users.teacher = data.teachers;
+						_this.users.student = data.students;
+					},
+					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }
+				});
 			}
 		},
 		ready()
 		{
-			var _this = this;
-			var route = this.route+'/admin/users';
-			$.ajax(
-			{
-				type:'GET',
-				url:route,
-				success:(data)=>{
-					_this.users.teacher = data.teachers;
-					_this.users.teacher.forEach((user)=>{user.originCmt = user.comment;});
-					_this.users.student = data.students;
-					_this.users.student.forEach((user)=>{user.originCmt = user.comment;});
-				},
-				error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }
-			});
-
+			this.loadData();
 			$('.ui.radio.checkbox').checkbox();
 			$('select.dropdown').dropdown();
 		}

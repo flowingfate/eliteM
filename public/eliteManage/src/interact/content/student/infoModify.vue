@@ -16,69 +16,110 @@
 <template>
 <div class="v-infoModify">
 	<div class="panel">
-		<div class="left">
-			<h3 class="ui header attached top" style="text-align:center;">修改密码</h3>
-			<div class="ui segment attached">
-				<div class="ui form" style="height:140px;">
-					<div class="field">
-						<input type="password" v-model="passInput.origin" placeholder="原密码" />
-					</div>
-					<div class="field">
-						<input type="password" v-model="passInput.new" placeholder="新密码" />
-					</div>					
-					<div class="field">
-						<input type="password" v-model="passInput.again" placeholder="重复密码" />
-					</div>
-				</div>
-			</div>
-			<div class="ui segment attached bottom">
-				<div class="ui two buttons">
-					<button class="ui button" @click="clearPassword">清空</button>
-					<div class="or"></div>
-					<button class="ui orange button" @click="modifyPassword">确认修改</button>
-				</div>
-			</div>
-		</div>
-		<div class="right">
-			<h3 class="ui header attached top" style="text-align:center;">修改信息</h3>
-			<div class="ui segment attached">
-				<div class="ui form" style="height:140px;">
-					<div class="two fields">
+		<div class="ui padded grid">
+
+			<div class="five wide stretched column">
+				<h3 class="ui header attached top" style="text-align:center;">修改密码</h3>
+				<div class="ui segment attached">
+					<div class="ui form">
 						<div class="field">
-							<div class="ui labeled input">
-								<div class="ui basic label">用户名</div>
-								<input type="text" v-model="infoInput.username" placeholder="your username">
-							</div>
+							<label>输入原密码</label>
+							<input type="password" v-model="passInput.origin" placeholder="原密码" />
 						</div>
 						<div class="field">
-							<div class="ui labeled input">
-								<div class="ui basic label">方&nbsp;&nbsp;&nbsp;向</div>
-								<input type="text" v-model="infoInput.direction" placeholder="your email">
-							</div>
-						</div>
-					</div>
-					<div class="two fields">
+							<label>输入新密码</label>
+							<input type="password" v-model="passInput.new" placeholder="新密码" />
+						</div>					
 						<div class="field">
-							<div class="ui labeled input">
-								<div class="ui basic label">学&nbsp;&nbsp;&nbsp;校</div>
-								<input type="text" v-model="infoInput.school" placeholder="your school">
-							</div>
-						</div>
-					</div>	
-					<div class="two fields">		
-						<div class="field disabled">
-							<div class="ui transparent input">
-								<input type="text" placeholder="直接在输入框中修改即可">
-							</div>
+							<label>再次输入新密码</label>
+							<input type="password" v-model="passInput.again" placeholder="重复密码" />
 						</div>
 					</div>
 				</div>
+				<div class="ui segment attached bottom">
+					<div class="ui two buttons">
+						<button class="ui button" @click="clearPassword">清空</button>
+						<div class="or"></div>
+						<button class="ui orange button" @click="modifyPassword">确认修改</button>
+					</div>
+				</div>
 			</div>
-			<div class="ui segment attached bottom">
-				<div class="ui two buttons">
-					<button class="ui button" @click="resetPersonalInfo">复原</button>
-					<div class="or"></div>
-					<button class="ui orange button" @click="modifyPersonalInfo">确认修改</button>
+
+			<div class="eleven wide stretched column">
+				<h3 class="ui header attached top" style="text-align:center;">修改信息</h3>
+				<div class="ui segment attached">
+					<div class="ui form">
+						<div class="two fields">
+							<div class="field">
+								<div class="ui labeled input">
+									<div class="ui basic label">姓&nbsp;&nbsp;&nbsp;名</div>
+									<input type="text" v-model="infoInput.name" placeholder="your name">
+								</div>
+							</div>
+							<div class="field">
+								<div class="ui labeled input">
+									<div class="ui basic label">用户名</div>
+									<input type="text" v-model="infoInput.username" placeholder="your username">
+								</div>
+							</div>
+						</div>
+						<div class="two fields">
+							<!-- <div class="field">
+								<div class="ui labeled input">
+									<div class="ui basic label">方&nbsp;&nbsp;&nbsp;向</div>
+									<input type="text" v-model="infoInput.direction" placeholder="your laboratory">
+								</div>
+							</div> -->
+							<div class="field">
+								<div class="ui labeled input">
+									<div class="ui basic label">学&nbsp;&nbsp;&nbsp;校</div>
+									<input type="text" v-model="infoInput.school" placeholder="your school">
+								</div>
+							</div>
+						</div>
+						<div class="two fields">
+							<div class="field">
+								<div class="ui labeled input">
+									<div class="ui basic label">邮&nbsp;&nbsp;&nbsp;箱</div>
+									<input type="text" v-model="infoInput.email" placeholder="your email">
+								</div>
+							</div>
+							<div class="field">
+								<div class="ui labeled input">
+									<div class="ui basic label">&nbsp;&nbsp;QQ&nbsp;&nbsp;</div>
+									<input type="text" v-model="infoInput.qq" placeholder="your qq">
+								</div>
+							</div>
+						</div>
+						<div class="two fields">
+							<div class="field">
+								<div class="ui labeled input">
+									<div class="ui basic label">手&nbsp;&nbsp;&nbsp;机</div>
+									<input type="text" v-model="infoInput.phone" placeholder="your email">
+								</div>
+							</div>
+							<div class="field">
+								<div class="ui labeled input">
+									<div class="ui basic label">微&nbsp;&nbsp;&nbsp;信</div>
+									<input type="text" v-model="infoInput.wechat" placeholder="your qq">
+								</div>
+							</div>
+						</div>
+						<div class="two fields">		
+							<div class="field disabled">
+								<div class="ui transparent input">
+									<input type="text" placeholder="直接在输入框中修改即可">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="ui segment attached bottom">
+					<div class="ui two buttons">
+						<button class="ui button" @click="resetPersonalInfo">复原</button>
+						<div class="or"></div>
+						<button class="ui orange button" @click="modifyPersonalInfo">确认修改</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -91,8 +132,8 @@
 	{
 		data() {return {
 			passInput: { origin:'', new:'', again:'' },
-			infoInput: { username:'',direction:'', school:''},
-			infoOrigin: { username:'',direction:'', school:''}
+			infoInput: { name:'',username:'',direction:'', school:'',email:'',qq:'',phone:'',wechat:'' },
+			infoOrigin: { name:'',username:'',direction:'', school:'',email:'',qq:'',phone:'',wechat:''}
 		}},
 		vuex:
 		{
@@ -107,36 +148,33 @@
 			clearPassword() { this.passInput = { origin:'', new:'', again:'' }; },
 			modifyPassword()
 			{
-				if(this.passInput.origin=='')
+				var p = this.passInput;
+				var flag = (p.origin!='')&&(p.new!='')&&(p.again!='');
+
+				if(!flag)
 				{
-					this.$store.dispatch('newMessage',{type:'err',content:'原密码不能为空'});
+					this.$store.dispatch('newMessage',{type:'err',content:'表单都不能为空'});
 					return;
 				}
-				if(this.passInput.new=='')
+
+				if(p.origin==p.new)
 				{
-					this.$store.dispatch('newMessage',{type:'err',content:'新密码不能为空'});
+					this.$store.dispatch('newMessage',{type:'err',content:'新密码应与原密码不能相同'});
 					return;
 				}
-				if(this.passInput.origin==this.passInput.new)
-				{
-					this.$store.dispatch('newMessage',{type:'err',content:'新密码应与原密码不同'});
-					return;
-				}
-				if(this.passInput.new!=this.passInput.again)
+				if(p.new!=p.again)
 				{
 					this.$store.dispatch('newMessage',{type:'err',content:'两次新密码输入必须相同'});
 					return;
 				}
 
 				var _this = this;
-				var route = this.route+'/student/modifyPassword';
-				var data = {id:this.myId,originPass:this.passInput.origin,newPass:this.passInput.new};
+				var route = this.route+'/modifyPassword';
+				var data = {id:this.myId,originPass:p.origin,newPass:p.new};
 
 				$.ajax(
 				{
-					type:'GET',
-					url:route,
-					data:data,
+					type:'GET', url:route, data:data,
 					success:(data)=>{
 						_this.$store.dispatch('newMessage',data);
 						_this.passInput = { origin:'', new:'', again:'' };
@@ -146,37 +184,39 @@
 			},
 			resetPersonalInfo() 
 			{
-				Object.keys(this.infoInput).forEach((val)=>{
-					this.infoInput[val] = this.infoOrigin[val];
+				Object.keys(this.infoInput).forEach((k)=>{
+					this.infoInput[k] = this.infoOrigin[k];
 				});
 			},
 			modifyPersonalInfo()
 			{
-				var flag = false;
-				Object.keys(this.infoInput).forEach((val)=>{
-					if(this.infoInput[val] != this.infoOrigin[val]) flag=true;
-				});
+				var o = this.infoOrigin;
+				var i = this.infoInput;
+
+				var flag = (i.name!='')&&(i.username!='')&&(i.school!='');
 				if(!flag)
+				{
+					this.$store.dispatch('newMessage',{type:'err',content:'姓名、用户名、学校 都不能为空'});
+					return;
+				}
+
+				var obj = {};
+				Object.keys(i).forEach( (k)=>{if(i[k]!=o[k]) obj[k]=i[k];} );
+				if(Object.keys(obj).length==0)
 				{
 					this.$store.dispatch('newMessage',{type:'err',content:'您好，您并没有做任何修改！'});
 					return;
 				}
 
 				var _this = this;
-				var route = this.route+'/student/modifyPersonalInfo';
-				var data = {id:this.myId};
-				Object.assign(data,this.infoInput);
-
+				var route = this.route+'/modifyPersonalInfo';
+				var data = Object.assign(obj,{id:this.myId});
 				$.ajax(
 				{
-					type:'GET',
-					url:route,
-					data:data,
+					type:'GET', url:route, data:data,
 					success:(data)=>{
 						_this.$store.dispatch('newMessage',data);
-						Object.keys(_this.infoInput).forEach((val)=>{
-							_this.infoOrigin[val] = _this.infoInput[val];
-						});
+						Object.keys(obj).forEach((k)=>{o[k] = obj[k]; });
 					},
 					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }
 				});
@@ -185,13 +225,11 @@
 		ready()
 		{
 			var _this = this;
-			var route = this.route+'/student/personalInfo';
+			var route = this.route+'/personalInfo';
 			var data = {id:this.myId};
 			$.ajax(
 			{
-				type:'GET',
-				url:route,
-				data:data,
+				type:'GET', url:route, data:data,
 				success:(data)=>{ 
 					Object.keys(data).forEach((val)=>{
 						_this.infoInput[val] = _this.infoOrigin[val] = data[val];

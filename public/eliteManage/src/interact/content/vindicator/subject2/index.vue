@@ -40,7 +40,7 @@
 			{
 				if( this.id == -1 ) return false;
 				var _this = this;
-				var route = this.route+'/vindicator/subject2';
+				var route = this.route+'/subject2';
 				$.ajax(
 				{
 					type:'GET', url:route, data:{ id:this.id },

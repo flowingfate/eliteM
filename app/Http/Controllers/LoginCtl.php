@@ -67,7 +67,7 @@ class LoginCtl extends Controller
         // 如果用户名存在，则进行密码的验证
 		if($inputs['password']==$user->password)
 		{
-			session(['user'=>$role,'captcha'=>null]);
+			session(['user.role'=>$role,'user.id'=>$user->id,'captcha'=>null]);
 
 			return redirect('manage/'.$role.'/'.$user->id);
 		}

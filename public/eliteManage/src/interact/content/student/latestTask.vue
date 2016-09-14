@@ -18,20 +18,27 @@
 			<template v-for="teacher in teachers">
 				<div class="ui horizontal list" style="display:block;">
 					<div class="item">
+						<div class="content"><h4>导师信息：</h4></div>
+					</div>
+					<div class="item">
 						<i class="user circular icon"></i>
-						<div class="content"><span v-text="'导师：'+teacher.name"></span></div>
+						<div class="content"><span v-text="teacher.name"></span></div>
 					</div>
 					<div class="item">
 						<i class="university circular icon"></i>
-						<div class="content"><span v-text="'学校：'+teacher.school"></span></div>
+						<div class="content"><span v-text="teacher.school"></span></div>
 					</div>
 					<div class="item">
 						<i class="lab circular icon"></i>
-						<div class="content"><span v-text="'实验室：'+teacher.laboratory"></span></div>
+						<div class="content"><span v-text="teacher.laboratory"></span></div>
 					</div>
 					<div class="item">
 						<i class="mail circular icon"></i>
-						<div class="content"><span v-text="'邮箱：'+teacher.email"></span></div>
+						<div class="content"><span v-text="teacher.email"></span></div>
+					</div>
+					<div class="item">
+						<i class="qq circular icon"></i>
+						<div class="content"><span v-text="teacher.qq"></span></div>
 					</div>
 				</div>
 			</template>
@@ -40,7 +47,7 @@
 	<div class="panel">
 		<h2 class="ui header attached top">最新任务 </h2>
 		<div class="ui segment attached">
-			<table class="ui orange selectable celled table">
+			<table class="ui orange center aligned selectable celled table">
 				<thead>
 					<tr> <th>日期</th> <th>导师</th> <th>任务内容</th> <th>完成度</th> </tr>
 				</thead>
@@ -56,7 +63,7 @@
 		</div>
 		<h2 class="ui header attached">历史任务 </h2>
 		<div class="ui segment attached">
-			<table class="ui orange selectable celled table">
+			<table class="ui orange center aligned selectable celled table">
 				<thead>
 					<tr> <th>日期</th> <th>导师</th> <th>任务内容</th> <th>完成度</th> </tr>
 				</thead>
@@ -70,7 +77,6 @@
 				</tbody>
 			</table>
 		</div>
-		<!-- <div class="ui segment attached"> </div> -->
 	</div>
 </div>
 </template>
@@ -99,13 +105,11 @@
 		ready()
 		{
 			var _this = this;
-			var route = this.route+'/student/relatedInfo';
+			var route = this.route+'/relatedInfo';
 			var data = {id:this.myId};
 			$.ajax(
 			{
-				type:'GET',
-				url:route,
-				data:data,
+				type:'GET', url:route, data:data,
 				success:(data)=>{
 					_this.teachers = data.teachers;
 					_this.nowtasks = data.nowtasks;

@@ -21,13 +21,27 @@ class TaskCtl extends Controller
             'work_time' => $request->input('work_time'),
             'student_id' => $request->input('student_id'),
             'teacher_id'=> $request->input('teacher_id'),
-            'up_time'=>date('Y-m-d H:i:s'),
+            'up_time'=>date('Y-m-d'),
             'progress'=>0
         ];
 
-        Task::create($arr);
+        $T = Task::create($arr);
 
-        return response()->json(['type'=>'ok','content'=>'添加任务成功！']);
+        $task = [
+            'id'=>$T->id,
+            'discribe'=>$T->discribe,
+            'mission'=>$T->mission,
+            'progress'=>$T->progress,
+            'work_time'=>$T->work_time,
+            'teacher'=>$T->teacher->name,
+            'teacherId'=>$T->teacher_id,
+            'up_time'=>$T->up_time
+        ];
+
+        return response()->json([
+            'msg'=>['type'=>'ok','content'=>'添加任务成功！'],
+            'task'=>$task
+        ]);
     }
 
     // 删除任务
@@ -40,19 +54,27 @@ class TaskCtl extends Controller
         return response()->json(['type'=>'ok','content'=>'删除任务成功！']);
     }
 
+    // 切换任务的状态：完成--未完成
+    public function finish(Request $request)
+    {
+        // 任务ID
+        $id = $request->input('id');
+        $task = Task::find($id);
+        $task->progress = 1-$task->progress;
+        $task->save();
+
+        return response()->json(['type'=>'ok','content'=>'设置成功']);
+    }
+
     // 修改任务
     public function modify(Request $request)
     {
     	// 任务ID
     	$id = $request->input('id');
-        $discribe = $request->input('discribe');
-        $mission = $request->input('mission');
-        $work_time = $request->input('work_time');
-
     	$task = Task::find($id);
-        $task->discribe = $discribe;
-        $task->mission = $mission;
-        $task->work_time = $work_time;
+        $inputs = $request->except(['id']);
+
+        foreach ($inputs as $k => $val) { $task[$k] = $val; }
         $task->save();
 
         return response()->json(['type'=>'ok','content'=>'修改任务成功！']);

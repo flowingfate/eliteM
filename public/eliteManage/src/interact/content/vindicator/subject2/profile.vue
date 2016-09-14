@@ -124,7 +124,7 @@
 			chInfo()
 			{
 				var _this = this;
-				var route = this.route+'/vindicator/chSub2';
+				var route = this.route+'/chSub2';
 				var data = new FormData(); data.append('id',this.editInfo.id);
 
 				var flag = true;

@@ -3,22 +3,14 @@
 
 .v-studentProgress
 {
-	.mycard
+	.checker
 	{
-		padding:1px; background-color:white;
-		>span{ display:block; margin:20px auto; text-align:center;}
-		span.id
-		{ 
-			height:50px; width:50px; border:1px solid #E4E4E4;border-radius:50px; line-height:50px;
-			color:#FE7E1B; font-size:18px;
-		}
-		span.name{ font-size:18px; color:black; }
-		span.teacher { color:#868686;font-size:14px; }
-		&.noTeacher
-		{
-			span.id{ color:#E4E4E4; }
-			span.teacher{ width:80%; border:1px solid #E4E4E4; padding:5px; border-radius:20px; }
-		}
+		position:fixed; z-index:100; $W:40px; $H:40px;
+		width:$W; height:$H; top:50%; margin-top:-$H/2; right:0; line-height:$H;
+		border-radius:$H 0 0 $H; border:1px solid #ffdac2; border-right:none;
+		background-color:#F5F5F5; box-shadow:0 0 5px rgba(0,0,0,0.1);
+		text-align:center; transition:0.3s ease-in-out; white-space:nowrap;
+		&:hover{ width:100px; box-shadow:0 0 50px rgba(0,0,0,0.3); border-color:red; }
 	}
 }
 
@@ -28,190 +20,69 @@
 	
 	<filter-box :filter="filter" role="student"></filter-box>
 	
+	<div class="checker">
+		<div class="ui transparent input" style="margin-left:15px;">
+			<input type="text" v-model="check">
+		</div>
+	</div>
+
 	<div class="ui six cards">
-		<a class="card" :class="{orange:student.teachers.length!=0,grey:student.teachers.length==0}" 
-			v-for="student in students" 
-			v-show="match(student)"
-			@click="actionModal(student.teachers,student.id,$index)">
-			<div class="image" style="overflow:hidden;">
-				<div class="mycard" :class="{noTeacher:student.teachers.length==0}">
-					<span class="id" v-text="student.id"></span>
-					<span class="name" v-text="student.name"></span>
-					<span class="teacher" v-text="student.teachers.length!=0?teachersToStr(student.teachers):'未指派导师'">
-					</span>
+		<div class="ui card" :class="{orange:stu.numThr!=0,grey:stu.numThr==0}"
+			v-for="stu in students"
+			v-show="match(stu)">
+		    <div class="content" style="text-align:center;">
+		    	<i class="right floated disabled user icon"></i>
+		        <div class="header" style="margin-top:10px;">
+					<span v-text="stu.id"></span>. <span v-text="stu.name"></span>
+		        </div>
+				<div class="meta"> <div class="ui divider"></div> </div>
+				<div class="description">
+					<div class="ui two column padded grid">
+						<div class="column" style="padding:5px;" v-for="t in stu.teachers"> 
+							<div class="ui fluid label" :class="{basic:t.time==-1,red:t.time>=check,yellow:t.time==0}" v-text="t.name"></div>
+						</div>
+					</div>
 				</div>
-			</div>
-		</a>
-	</div>
-	<div class="ui modal" v-el:info>
-		<div class="header">学员信息</div>
-		<div class="content">
-			<div class="ui horizontal list">
-				<div class="item">
-					<i class="sort numeric ascending circular icon"></i>
-					<div class="content"><span v-text="students[index].id"></span></div>
-				</div>
-				<div class="item">
-					<i class="user circular icon"></i>
-					<div class="content"><span v-text="students[index].name"></span></div>
-				</div>
-				<div class="item">
-					<i class="university circular icon"></i>
-					<div class="content"><span v-text="students[index].school"></span></div>
-				</div>
-				<div class="item">
-					<i class="idea circular icon"></i>
-					<div class="content"><span v-text="students[index].direction"></span></div>
-				</div>
-				<div class="item">
-					<i class="doctor circular icon"></i>
-					<div class="content"><span v-text="teachersToStr(students[index].teachers)"></span></div>
-				</div>
-			</div>
-			<table class="ui orange selectable celled table">
-				<thead>
-					<tr> <th>日期</th> <th>导师</th> <th>导师内容</th> <th>导师时间</th> <th>学员任务</th> <th>完成度</th> </tr>
-				</thead>
-				<tbody>
-					<tr v-for="task in tasks">
-						<td v-text="task.up_time"></td>
-						<td v-text="task.teacher"></td>
-						<td v-text="task.discribe"></td>
-						<td v-text="task.work_time*0.5+' h'"></td>
-						<td v-text="task.mission"></td>
-						<td v-text="task.progress?'完成':'未完成'"></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="actions">
-			<div class="ui cancel button">OK</div>
+		    </div>
+		    <div class="extra content">
+		        <div v-if="stu.numThr" class="ui basic orange circular fluid button" @click="showModal($index,'showInfo')">查看详情</div>
+		        <div v-else class="ui basic circular fluid button" @click="showModal($index,'showSet')">指派导师</div>
+		    </div>
 		</div>
 	</div>
-	<div class="ui modal" v-el:set>
-		<div class="header">指派导师</div>
-		<div class="content">
-			<div class="ui horizontal list">
-				<div class="item">
-					<i class="sort numeric ascending circular icon"></i>
-					<div class="content"><span v-text="students[index].id"></span></div>
-				</div>
-				<div class="item">
-					<i class="user circular icon"></i>
-					<div class="content"><span v-text="students[index].name"></span></div>
-				</div>
-				<div class="item">
-					<i class="university circular icon"></i>
-					<div class="content"><span v-text="students[index].school"></span></div>
-				</div>
-				<div class="item">
-					<i class="idea circular icon"></i>
-					<div class="content"><span v-text="students[index].direction"></span></div>
-				</div>
-				<div class="item">
-					<i class="doctor circular icon"></i>
-					<div class="content"><span v-text="students[index].teacher"></span></div>
-				</div>
-			</div>
-			<table class="ui orange selectable celled table">
-				<thead>
-					<tr> <th>姓名</th> <th>学校</th> <th>实验室</th> <th>邮箱</th> <th>指派</th> </tr>
-				</thead>
-				<tbody>
-					<tr v-for="teacher in teachers">
-						<td v-text="teacher.name"></td>
-						<td v-text="teacher.school"></td>
-						<td v-text="teacher.laboratory"></td>
-						<td v-text="teacher.email"></td>
-						<td>
-							<div class="ui slider checkbox">
-								<input type="checkbox" :value="teacher.id" v-model="teacherIds">
-								<label>选择导师</label>
-							</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="actions">
-			<div class="ui cancel button" @click="teacherIds=[]">取消</div>
-			<div class="ui approve button" @click="setTeacher(students[index].id,teacherIds)">确认</div>
-		</div>
-	</div>
+	<info :student="students[index]"></info>
+	<set :student="students[index]"></set>
 </div>
 </template>
 
 <script>
-
+	/**
+	 * 目前全都采用全局数据重新拉去的策略
+	 * 按理说应该针对单个学员的数据进行局部更新
+	 * 但是由于牵涉到是否全部结项的判断，逻辑比较复杂，需求延后作为3.0版本优化
+	 */
 	module.exports =
 	{
 		data() {return {
 
+			check:15,
 			filter: { keyword:'', field:'name'},
-			students: [{name:'',school:'',direction:'',teachers:[],id:''}],
+			students: [{id:'',name:'',school:'',direction:'',numThr:'',teachers:[{id:'',name:'',time:''}]}],
 			index:0,
-			tasks: [{dicribe:'',mission:'',progress:'',work_time:'',teacher:'',up_time:''}],
-			teachers: [{name:'',email:'',school:'',laboratory:'',id:''}],
-			teacherIds:[]
 		}},
-		vuex:
-		{
-			getters: {route: ({route})=>{return route;}, }
-		},
-		components:
-		{
-			filterBox:require('../filter.vue'),
+		vuex: { getters: { route: ({route})=>{return route;}, } },
+		components: 
+		{ 
+			filterBox:require('../filter.vue'), 
+			info:require('./progress/info.vue'),
+			set:require('./progress/setTeacher.vue'),
 		},
 		methods:
 		{
-			teachersToStr(teachers) {return teachers.map((teacher)=>{return teacher.name}).join("、"); },
-			actionModal(teachers,id,index)
+			showModal(index,event)
 			{
-				var _this = this
 				this.index = index;
-				if(teachers.length==0) setTimeout(()=>{$(_this.$els.set).modal('show');},100);
-				else 
-				{
-					this.getStudentInfo(id);
-					setTimeout(()=>{$(_this.$els.info).modal('show');},100);
-				}
-			},
-			setTeacher(studentId,teacherIds)
-			{
-				var data = {studentId:studentId,teacherIds:teacherIds};
-				var _this = this;
-				var route = this.route+'/admin/setTeacher';
-
-				$.ajax(
-				{
-					type:'GET',
-					url:route,
-					data:data,
-					success:(data)=>{ 
-						_this.$store.dispatch('newMessage',data);
-						_this.teacherIds = [];
-						setTimeout(()=>{window.location.reload();},2000);
-					},
-					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'});}
-				});
-			},
-			getStudentInfo(id)
-			{
-				var _this = this;
-				var route = this.route+'/admin/studentInfo';
-				var data = {id:id};
-				$.ajax(
-				{
-					type:'GET',
-					url:route,
-					data:data,
-					success:(data)=>{ 
-						_this.tasks = data;
-						// var d = JSON.stringify(data);
-						// console.dir(JSON.parse(d));
-					},
-					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }
-				});
+				this.$broadcast(event);
 			},
 			match(student)
 			{
@@ -231,28 +102,23 @@
 
 				var str = ""+student[filter.field];
 				return str.match(filter.keyword);
+			},
+			loadData()
+			{
+				console.log("haha");
+				var _this = this;
+				var route = this.route+'/progress';
+				$.ajax(
+				{
+					type:'GET', url:route,
+					success:(data)=>{_this.students = data;},
+					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }
+				});
 			}
 		},
 		ready()
 		{
-			var _this = this;
-			var route = this.route+'/admin/progress';
-			$.ajax(
-			{
-				type:'GET',
-				url:route,
-				success:(data)=>{_this.students = data;},
-				error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }
-			});
-
-			$.ajax(
-			{
-				type:'GET',
-				url:_this.route+'/admin/teacherlist',
-				success:(data)=>{_this.teachers = data;},
-				error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'});}
-			});
-
+			this.loadData();
 			$('.ui.checkbox').checkbox();
 		}
 	}

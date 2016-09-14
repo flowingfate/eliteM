@@ -127,7 +127,7 @@
 			addSub1()
 			{
 				var _this = this;
-				var route = this.route+'/vindicator/addSub1';
+				var route = this.route+'/addSub1';
 				var data = this.addSubject1;
 
 				$.ajax(
@@ -146,7 +146,7 @@
 			{
 				var _this = this;
 				var origin = this.subject1s[this.index];
-				var route = this.route+'/vindicator/chSub1';
+				var route = this.route+'/chSub1';
 				var data = this.editSubject1;
 				if(origin.number==data.number&&origin.title==data.title)
 				{
@@ -172,7 +172,7 @@
 				if(!flag) return false;
 
 				var _this = this;
-				var route = this.route+'/vindicator/rmSub1';
+				var route = this.route+'/rmSub1';
 				var data = {id:this.subject1s[this.index].id};
 
 				$.ajax(
@@ -189,7 +189,7 @@
 			loadData()
 			{
 				var _this = this;
-				var route = this.route+'/vindicator/subject1s';
+				var route = this.route+'/subject1s';
 				$.ajax(
 				{
 					type:'GET', url:route,

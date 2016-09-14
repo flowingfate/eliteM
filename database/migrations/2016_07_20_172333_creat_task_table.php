@@ -18,9 +18,10 @@ class CreatTaskTable extends Migration
             $table->string('teacher_id');
             $table->string('discribe')->default('未指定!');
             $table->string('mission')->default('未指定!');
-            $table->boolean('progress')->default(false);
             $table->string('up_time')->nullable();
             $table->integer('work_time')->default(0);   // 以半小时为单位
+
+            $table->boolean('progress')->default(false);
             
             $table->timestamps();
         });

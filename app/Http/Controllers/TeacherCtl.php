@@ -27,29 +27,20 @@ class TeacherCtl extends Controller
         $id = $request->input('id');
 
         $teacher = Teacher::find($id);
-        $students = [];
+        $students = ['progress'=>[],'finish'=>[]];
+        $val = [0=>'progress',1=>'finish'];
 
         foreach ($teacher->students as $student) 
         {
-            $tasks = [];
-            foreach ($student->tasks as $task) 
-            {
-                $arr = [
-                    'discribe'=>$task->discribe,
-                    'mission'=>$task->mission,
-                    'progress'=>$task->progress,
-                    'work_time'=>$task->work_time,
-                    'teacher'=>$task->teacher->name,
-                    'up_time'=>$task->up_time
-                ];
-                array_push($tasks, $arr);
-            }
-
+            $tasks = $student->tasks()->select(['discribe','mission','progress','work_time','teacher_id','up_time'])->get()->toArray();
         	$one = [
+                'id'=>$student->id,
         		'name'=>$student->name,
         		'tasks'=>$tasks
         	];
-        	array_push($students, $one);
+            $state = $student->pivot->finish;
+
+        	array_push($students[$val[$state]], $one);
         }
 
         $data = $students;
@@ -61,40 +52,38 @@ class TeacherCtl extends Controller
     public function relatedStudents(Request $request)
     {
     	$id = $request->input('id');
-    	$isfinish = $request->input('isfinish');
+    	$finish = $request->input('finish');
     	$teacher = Teacher::find($id);
-    	$students = $teacher->students()->where('isfinish',$isfinish)->get()->toArray();
+    	$students = [];
+
+        foreach ($teacher->students as $s) 
+        {
+            if($s->pivot->finish==$finish) array_push($students,$s->toArray());
+        }
 
         // 注意处理查询结果为空的情况
         $data = [
             'teacher'=>$teacher->toArray(),
             'students'=>$students
         ];
-        // dd($students);
+        // dd($data);
         return response()->json($data);
     }
 
     public function personalInfo(Request $request)
     {
         $id = $request->input('id');
-        $teacher = Teacher::select(['username','laboratory','school','email'])->where('id',$id)->first();
+        $teacher = Teacher::select(['name','username','laboratory','school','qq','email'])->where('id',$id)->first();
         return response()->json($teacher->toArray());
     }
 
     public function modifyPersonalInfo(Request $request)
     {
         $id = $request->input('id');
-        $username = $request->input('username');
-        $laboratory = $request->input('laboratory');
-        $school = $request->input('school');
-        $email = $request->input('email');
+        $inputs = $request->except(['id']);
 
         $teacher = Teacher::find($id);
-        if($teacher->username!=$username) $teacher->username=$username;
-        if($teacher->laboratory!=$laboratory) $teacher->laboratory=$laboratory;
-        if($teacher->school!=$school) $teacher->school=$school;
-        if($teacher->email!=$email) $teacher->email=$email;
-
+        foreach ($inputs as $k => $val) { $teacher[$k] = $val; }
         $teacher->save();
         
         return response()->json(['type'=>'ok','content'=>'信息修改成功']);

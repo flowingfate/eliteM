@@ -19,8 +19,10 @@ class CreatTeacherTable extends Migration
             $table->string('name')->nullable();
             $table->string('school')->nullable();
             $table->string('laboratory')->nullable();
-            $table->string('email')->nullable()->unique();
             $table->string('comment')->nullable();
+
+            $table->string('email')->nullable()->unique();
+            $table->string('qq')->nullable()->unique();
             
             $table->timestamps();
         });
