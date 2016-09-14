@@ -20,16 +20,15 @@ class Login
          * 否则不同身份之间登录之后可以互相访问了
          */
         $user = session('user');
-        
         if(!$user)
         {
             // 理论上应该跳转到登录页面，但是如果是异步请求就不行
             return response('未登陆');
         }
 
-        $role = $user['role'];
+        $ROLE = $user['role'];
         $arr = explode('/',$request->path());
-        if(!in_array($role,$arr)) return response('无权限访问');
+        if(!in_array($ROLE,$arr)) return response('无权限访问');
 
         return $next($request);
     }

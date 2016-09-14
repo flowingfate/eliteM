@@ -132,7 +132,7 @@
 
 				$.ajax(
 				{
-					type:'POST', url:route, data:data,
+					type:'GET', url:route, data:data,
 					success:(data)=>{
 						// 添加一级学科比较特殊，所以重新load数据比较好
 						_this.$store.dispatch('newMessage',data);

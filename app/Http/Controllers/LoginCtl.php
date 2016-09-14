@@ -89,7 +89,12 @@ class LoginCtl extends Controller
     public function manage($role,$id)
     {
         // 限制$role只能是某几种类型
-        if(!in_array($role,['admin','vindicator','teacher','student'])) return "您输入的地址有误";
+        if(!in_array($role,['admin','vindicator','teacher','student'])) return response("您输入的地址有误");
+
+        $user = session('user');
+        $ID = $user['id'];
+
+        if($id!=$ID) return response('无权限访问');
 
         return view('manage',['role'=>$role,'id'=>$id]);
     }

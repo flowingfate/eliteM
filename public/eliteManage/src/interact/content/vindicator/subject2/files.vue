@@ -173,7 +173,7 @@
 
 				$.ajax(
 				{
-					type:'POST', url:route, data:data,
+					type:'GET', url:route, data:data,
 					success:(msg)=>{
 						_this.$store.dispatch('newMessage',msg);
 						file.description=data.description;  file.author=data.author;
@@ -190,7 +190,7 @@
 
 				$.ajax(
 				{
-					type:'POST', url:route, data:data,
+					type:'GET', url:route, data:data,
 					success:(msg)=>{
 						_this.$store.dispatch('newMessage',msg);
 						_this.files.splice(index,1);
