@@ -11,10 +11,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(AdminSdr::class);
-        $this->call(TeacherSdr::class);
-        $this->call(StudentSdr::class);
-        $this->call(M2mSdr::class);
+        // $this->call(AdminSdr::class);
+        // $this->call(TeacherSdr::class);
+        // $this->call(StudentSdr::class);
+        // $this->call(M2mSdr::class);
         $this->call(TaskSdr::class);
         // $this->call(Subject1Sdr::class);
         // $this->call(Subject2Sdr::class);

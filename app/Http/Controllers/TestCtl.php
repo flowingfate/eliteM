@@ -16,14 +16,7 @@ class TestCtl extends Controller
 {
     public function index(Request $request)
     {
-    	$arr1 = [1,2,3,4,5,6,7];
-        $arr2 = [1,2,3,6];
-
-        $arr = array_diff($arr1, $arr2);
-
-        $tasks = Student::find(1)->tasks()->whereIn('teacher_id',$arr)->orderBy('student_id')->get()->toArray();
-
-        dd($tasks);
+    	// here for test
     }
     public function up(Request $request)
     {
