@@ -13,7 +13,7 @@ class TaskSdr extends Seeder
      */
     public function run()
     {
-        $arr = ['2016-09-01','2016-09-02','2016-09-03','2016-09-04','2016-09-05','2016-09-06','2016-09-07'];
+        $date = ['2016-09-01','2016-09-02','2016-09-03','2016-09-04','2016-09-05','2016-09-06','2016-09-07'];
         for($i=1;$i<=108;$i++)
         {
             $m2m = M2m::find(rand(1,36));
@@ -23,7 +23,7 @@ class TaskSdr extends Seeder
                 'student_id'=>$m2m->student_id,
                 'discribe'=>'指导学生完成学习任务',
                 'mission'=>'读论文+做作品',
-                'up_time'=>$arr[rand(0,6)],
+                'up_time'=>$date[rand(0,6)],
                 'work_time'=>rand(1,10),
                 'progress'=>rand(0,1)
             ];
