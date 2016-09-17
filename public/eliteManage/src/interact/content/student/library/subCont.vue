@@ -113,6 +113,7 @@
 						_this.info = data.info;
 						_this.files = data.files;
 						_this.classes = data.classes;
+						console.dir(data.classes);
 					},
 					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }
 				});
