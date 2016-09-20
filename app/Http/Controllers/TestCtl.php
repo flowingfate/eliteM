@@ -12,11 +12,31 @@ use App\Models\Teacher;
 use App\Models\M2m;
 use App\Models\Subject1;
 
+use Validator;
+
 class TestCtl extends Controller
 {
     public function index(Request $request)
     {
-    	// here for test
+        $arr = ['username'=>'admin','role'=>'jshd','name'=>'sdkfajh'];
+
+        $rules = [
+            'username'=>'required|unique:admin',
+        ];
+
+        $msg = [
+            'username.unique'=>'该用户名已经存在，不能再使用',
+        ];
+
+        $validator = Validator::make($arr,$rules,$msg);
+        $errs = $validator->errors();
+
+        // 可以用 $errs->has('字段')来验证是否存在某类错误
+        // dd($errs->has('username'));
+
+        dd($errs->all());
+
+    	// dd('My name is Jason Shang');
     }
     public function up(Request $request)
     {

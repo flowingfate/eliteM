@@ -96,6 +96,7 @@
 					success:(data)=>{
 						// 返回一个新对象，添加到学科列表数组中
 						_this.$store.dispatch('newMessage',data.msg);
+						if(data.msg.type=='err') return;
 						_this.addSubject2 = {number:'',title:''};
 						_this.subjects.push(data.subject);
 					},

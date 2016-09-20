@@ -32,7 +32,7 @@
 				infoModify:'修改信息',
 				library:'访问智库'
 			},
-			nowMenu:'library'
+			nowMenu:'latestTask'
 		}},
 		vuex:
 		{

@@ -64,15 +64,15 @@
 			<div class="ui horizontal list">
                 <div class="item">
                     <i class="file circular icon"></i>
-                    <div class="content"><span v-text="files[editIndex].origin_name"></span></div>
+                    <div class="content"><span v-text="files[editIndex]?files[editIndex].origin_name:''"></span></div>
                 </div>
                 <div class="item">
                     <i class="clone circular icon"></i>
-                    <div class="content"><span v-text="files[editIndex].type"></span></div>
+                    <div class="content"><span v-text="files[editIndex]?files[editIndex].type:''"></span></div>
                 </div>
                 <div class="item">
                     <i class="expand circular icon"></i>
-                    <div class="content"><span v-text="files[editIndex].size|filesize"></span></div>
+                    <div class="content"><span v-text="files[editIndex]?files[editIndex].size:0|filesize"></span></div>
                 </div>
             </div>
             <div class="ui divider" style="margin:6px 0 10px;"></div>

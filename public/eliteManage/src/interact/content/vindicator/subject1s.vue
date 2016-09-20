@@ -136,6 +136,7 @@
 					success:(data)=>{
 						// 添加一级学科比较特殊，所以重新load数据比较好
 						_this.$store.dispatch('newMessage',data);
+						if(data.type=='err') return;
 						_this.addSubject1 = {number:'',title:''};
 						setTimeout(()=>{_this.loadData();},2000);
 					},
@@ -144,23 +145,28 @@
 			},
 			chSub1()
 			{
-				var _this = this;
-				var origin = this.subject1s[this.index];
-				var route = this.route+'/chSub1';
-				var data = this.editSubject1;
-				if(origin.number==data.number&&origin.title==data.title)
+				var o = this.subject1s[this.index];
+				var e = this.editSubject1;
+
+				var obj = {};
+				Object.keys(e).forEach( (k)=>{if(e[k]!=o[k]) obj[k]=e[k];} );
+				if(Object.keys(obj).length==0)
 				{
-					this.$store.dispatch('newMessage',{type:'err',content:'抱歉，并没有做任何修改！！'});
-					return false;
+					this.$store.dispatch('newMessage',{type:'err',content:'您好，您并没有做任何修改！'});
+					return;
 				}
 
+				var _this = this;
+				var route = this.route+'/chSub1';
+				var data = Object.assign(obj,{id:e.id});
 				$.ajax(
 				{
 					type:'GET', url:route, data:data,
 					success:(data)=>{
 						_this.$store.dispatch('newMessage',data);
-						origin.number = _this.editSubject1.number;
-						origin.title = _this.editSubject1.title;
+						if(data.type=='err') return;
+						o.number = _this.editSubject1.number;
+						o.title = _this.editSubject1.title;
 					},
 					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }
 				});

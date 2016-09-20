@@ -1,5 +1,5 @@
 <div class="head">
-	<div class="logo"><img src="{{asset('img/logo.png')}}" /></div>
+	<div class="logo"><img src="{{asset('img/logoSetup.png')}}" /></div>
 	<div class="topinfo">
 		@if(session('user'))
 			<div class="helloUser">

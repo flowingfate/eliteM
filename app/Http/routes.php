@@ -15,6 +15,7 @@ Route::group(['middleware' => ['web','cors']], function ()
 {
 	// Route::get('/',function(){return view('test');});
 	// Route::get('test','TestCtl@index');
+	Route::get('test','TestCtl@index');
 
 	Route::any('login/{role}','LoginCtl@index');
 	Route::get('quit/{role}','LoginCtl@quit');
@@ -36,7 +37,7 @@ Route::group(['middleware' => ['web','cors']], function ()
 			Route::get('teacherlist', 'TeacherCtl@teacherlist');
 			Route::get('teacherInfo','TeacherCtl@teacherInfo');
 
-			Route::get('users', 'AdminCtl@users');
+			Route::get('users','AdminCtl@users');
 			Route::get('addUser','AdminCtl@addUser');
 			Route::get('modify','AdminCtl@modify');
 			Route::get('removeUser','AdminCtl@removeUser');
@@ -46,7 +47,7 @@ Route::group(['middleware' => ['web','cors']], function ()
 		// 导师相关路由
 		Route::group(['prefix'=>'teacher'],function()
 		{
-			Route::get('relatedStudents', 'TeacherCtl@relatedStudents');
+			Route::get('relatedStudents', 'TeacherCtl@relatedStudents')->middleware(["check:id,无权访问"]);
 
         	// 稍有安全隐患===>导师访问非自己的学生===>低发情况
 			Route::get('studentInfo','StudentCtl@studentInfo');
@@ -57,20 +58,19 @@ Route::group(['middleware' => ['web','cors']], function ()
 			Route::get('modifyTask','TaskCtl@modify');
 			Route::get('taskFinish','TaskCtl@finish');
 
-			Route::get('personalInfo','TeacherCtl@personalInfo');
-			Route::get('modifyPersonalInfo','TeacherCtl@modifyPersonalInfo');
-			Route::get('modifyPassword','TeacherCtl@modifyPassword');
+			Route::get('personalInfo','TeacherCtl@personalInfo')->middleware(["check:id,无权访问"]);
+			Route::get('modifyPersonalInfo','TeacherCtl@modifyPersonalInfo')->middleware(["check:id,无权访问"]);
+			Route::get('modifyPassword','TeacherCtl@modifyPassword')->middleware(["check:id,无权访问"]);
 		});
 
 
 		// 学员相关路由
 		Route::group(['prefix'=>'student'],function()
 		{
-			Route::get('relatedInfo','StudentCtl@relatedInfo');
-			
-			Route::get('personalInfo','StudentCtl@personalInfo');
-			Route::get('modifyPersonalInfo','StudentCtl@modifyPersonalInfo');
-			Route::get('modifyPassword','StudentCtl@modifyPassword');
+			Route::get('relatedInfo','StudentCtl@relatedInfo')->middleware(["check:id,无权访问"]);
+			Route::get('personalInfo','StudentCtl@personalInfo')->middleware(["check:id,无权访问"]);
+			Route::get('modifyPersonalInfo','StudentCtl@modifyPersonalInfo')->middleware(["check:id,无权访问"]);
+			Route::get('modifyPassword','StudentCtl@modifyPassword')->middleware(["check:id,无权访问"]);
 
 			Route::get('subject1s', 'SubjectCtl@subject1s');
 			Route::get('subject2', 'SubjectCtl@subject2');

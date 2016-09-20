@@ -24,7 +24,7 @@
 		            <div class="description"> <p v-text="info.profile"></p> </div>
 		            <div class="extra">
 		            	<template v-if="info.keywords">
-			            	<div class="ui label" v-for="word in (info.keywords.split('+'))">
+			            	<div class="ui label" v-for="word in kws">
 			            		<i class="tag orange icon"></i><span v-text="word"></span>
 			            	</div>
 		            	</template>
@@ -105,6 +105,7 @@
 
 			fileType:"image/png,image/jpeg",
 			isEditOpen:false,
+			kws:[],
 			img:{name:'',type:'',size:'',url:'',file:''},
 			editInfo:{ id:'',number:'',title:'',img_url:'',keywords:'',profile:''},
 		}},
@@ -117,7 +118,8 @@
 				this.editInfo = Object.assign({},this.info);
 				this.img = {name:'',type:'',size:'',url:'',file:''};
 				this.$els.form.reset();
-			}
+			},
+			'info.keywords':function(val){ this.kws = val.split('+'); }
 		},
 		methods:
 		{
@@ -150,8 +152,8 @@
 					cache:false, processData:false, contentType:false,
 					success:(data)=> {
 						// 如果成功了，最好是返回一个新的info去替代原来父组件的info
-						console.dir(JSON.parse(JSON.stringify(data)));
 						_this.$store.dispatch('newMessage',data.msg);
+						if(data.msg.type=='err') return;
 						_this.$parent.info = data.info;  //改变了info之后会自动触发更新，所以不必手动清空
 					},
 					error:()=>{_this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'});}

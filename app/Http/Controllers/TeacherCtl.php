@@ -10,6 +10,8 @@ use App\Models\Student;
 use App\Models\Task;
 use App\Models\Teacher;
 
+use Validator;
+
 class TeacherCtl extends Controller
 {
 
@@ -52,10 +54,6 @@ class TeacherCtl extends Controller
     public function relatedStudents(Request $request)
     {
     	$id = $request->input('id');
-
-        /*---导师只能获取自己的学员信息---*/
-        if($id!=session('user')['id']) return response('无权限访问');
-
     	$finish = $request->input('finish');
     	$teacher = Teacher::find($id);
     	$students = [];
@@ -78,9 +76,6 @@ class TeacherCtl extends Controller
     {
         $id = $request->input('id');
 
-        /*---导师只能获取自己的个人信息---*/
-        if($id!=session('user')['id']) return response('无权限访问');
-
         $teacher = Teacher::select(['name','username','laboratory','school','qq','email'])->where('id',$id)->first();
         return response()->json($teacher->toArray());
     }
@@ -88,11 +83,23 @@ class TeacherCtl extends Controller
     public function modifyPersonalInfo(Request $request)
     {
         $id = $request->input('id');
-
-        /*---导师只能修改自己的个人信息---*/
-        if($id!=session('user')['id']) return response('无权限访问');
-
         $inputs = $request->except(['id']);
+        foreach ($inputs as $k=>$v) { if(empty($inputs[$k])) $inputs[$k]=NULL; }
+
+        $msg = [
+            'username.unique'=>'已经有人使用了这个用户名，请更换！！',
+            'email.unique'=>'已经有人使用了相同的邮箱，请更换！',
+            'email.email'=>'您填写的邮箱不合法，请重填！',
+            'qq.unique'=>'已经有人使用了相同的QQ，请更换！',
+        ];
+        $rules = [
+            'username'=>'unique:teacher',
+            'email'=>'email|unique:teacher',
+            'qq'=>'unique:teacher',
+        ];
+        $validator = Validator::make($inputs,$rules,$msg);
+        $errs = $validator->errors()->all();
+        if(count($errs)!=0) return response()->json(['type'=>'err','content'=>$errs[0]]);
 
         $teacher = Teacher::find($id);
         foreach ($inputs as $k => $val) { $teacher[$k] = $val; }
@@ -104,10 +111,6 @@ class TeacherCtl extends Controller
     public function modifyPassword(Request $request)
     {
         $id = $request->input('id');
-
-        /*---导师只能修改自己的个人密码---*/
-        if($id!=session('user')['id']) return response('无权限访问');
-
         $originPass = $request->input('originPass');
         $newPass = $request->input('newPass');
 

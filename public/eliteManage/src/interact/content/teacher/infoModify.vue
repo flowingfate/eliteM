@@ -198,6 +198,7 @@
 					type:'GET', url:route, data:data,
 					success:(data)=>{
 						_this.$store.dispatch('newMessage',data);
+						if(data.type=='err') return;
 						Object.keys(obj).forEach((k)=>{o[k] = obj[k]; });
 					},
 					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }

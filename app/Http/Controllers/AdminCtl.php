@@ -11,6 +11,8 @@ use App\Models\Task;
 use App\Models\Teacher;
 use App\Models\M2m;
 
+use Validator;
+
 class AdminCtl extends Controller
 {
     /**
@@ -114,16 +116,44 @@ class AdminCtl extends Controller
     {
         $role = $request->input('role');
         $arr = $request->except(['role']);
+        foreach ($arr as $k => $v) { if(empty($arr[$k])) $arr[$k]=NULL; }
 
-        // dd($arr);
+        $msg = [
+            'username.unique'=>'已经有人使用了这个用户名，请更换！！',
+            'email.unique'=>'已经有人使用了相同的邮箱，请更换！',
+            'email.email'=>'您填写的邮箱不合法，请重填！',
+            'qq.unique'=>'已经有人使用了相同的QQ，请更换！',
+            'wechat.unique'=>'已经有人使用了相同的微信，请更换！',
+            'phone.unique'=>'已经有人使用了相同的电话，请更换！'
+        ];
 
         if($role=="teacher")
         {
+            $rules = [
+                'username'=>'unique:teacher',
+                'email'=>'email|unique:teacher',
+                'qq'=>'unique:teacher',
+            ];
+            $validator = Validator::make($arr,$rules,$msg);
+            $errs = $validator->errors()->all();
+            if(count($errs)!=0) return response()->json(['type'=>'err','content'=>$errs[0]]);
+
             Teacher::create($arr);
             return response()->json(['type'=>'ok','content'=>'添加导师成功！']);
         }
         if($role=="student")
         {
+            $rules = [
+                'username'=>'unique:student',
+                'email'=>'email|unique:student',
+                'qq'=>'unique:student',
+                'wechat'=>'unique:student',
+                'phone'=>'unique:student',
+            ];
+            $validator = Validator::make($arr,$rules,$msg);
+            $errs = $validator->errors()->all();
+            if(count($errs)!=0) return response()->json(['type'=>'err','content'=>$errs[0]]);
+
             Student::create($arr);
             return response()->json(['type'=>'ok','content'=>'添加学员成功！']);
         }
@@ -219,9 +249,28 @@ class AdminCtl extends Controller
         $role = $request->input('role');
         $id = $request->input('id');
         $inputs = $request->except(['id','role']);
+        foreach ($inputs as $k=>$v) { if(empty($inputs[$k])) $inputs[$k]=NULL; }
+
+        $msg = [
+            'username.unique'=>'已经有人使用了这个用户名，请更换！！',
+            'email.unique'=>'已经有人使用了相同的邮箱，请更换！',
+            'email.email'=>'您填写的邮箱不合法，请重填！',
+            'qq.unique'=>'已经有人使用了相同的QQ，请更换！',
+            'wechat.unique'=>'已经有人使用了相同的微信，请更换！',
+            'phone.unique'=>'已经有人使用了相同的电话，请更换！'
+        ];
 
         if($role=="teacher")
         {
+            $rules = [
+                'username'=>'unique:teacher',
+                'email'=>'email|unique:teacher',
+                'qq'=>'unique:teacher',
+            ];
+            $validator = Validator::make($inputs,$rules,$msg);
+            $errs = $validator->errors()->all();
+            if(count($errs)!=0) return response()->json(['type'=>'err','content'=>$errs[0]]);
+
             $user = Teacher::find($id);
             foreach ($inputs as $k => $val) { $user[$k] = $val; }
             $user->save();
@@ -229,6 +278,17 @@ class AdminCtl extends Controller
         }
         if($role=="student")
         {
+            $rules = [
+                'username'=>'unique:student',
+                'email'=>'email|unique:student',
+                'qq'=>'unique:student',
+                'wechat'=>'unique:student',
+                'phone'=>'unique:student',
+            ];
+            $validator = Validator::make($inputs,$rules,$msg);
+            $errs = $validator->errors()->all();
+            if(count($errs)!=0) return response()->json(['type'=>'err','content'=>$errs[0]]);
+            
             $user = Student::find($id);
             foreach ($inputs as $k => $val) { $user[$k] = $val; }
             $user->save();

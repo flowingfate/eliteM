@@ -11,8 +11,8 @@ use App\Models\Libfile;
 use App\Models\Libclass;
 
 use DB;
-
 use Storage;
+use Validator;
 
 class SubjectCtl extends Controller
 {
@@ -40,6 +40,26 @@ class SubjectCtl extends Controller
     	return response()->json($data);
     }
 
+    /**----------------------------------------------
+     * 自定义私有方法用于检验学科标号和标题
+     *----------------------------------------------*/
+    private function subCheck($arr,$table,$required=true)
+    {
+        $str = $required?'required|unique:':'unique:';
+        $str .= $table;
+
+        $rules = [ 'number'=>$str, 'title'=>$str ];
+        $msg = [
+            'number.unique'=>'已经使用了这个编号，请更换！！',
+            'number.required'=>'编号不能为空',
+            'title.unique'=>'已经使用了相同的标题，请更换！',
+            'title.required'=>'标题不能为空',
+        ];
+
+        $validator = Validator::make($arr,$rules,$msg);
+        return $validator->errors()->all();
+    }
+
     // 添加一级学科
     public function addSub1(Request $request)
     {
@@ -47,8 +67,10 @@ class SubjectCtl extends Controller
             'number' => $request->input('number'),
             'title' => $request->input('title'),
         ];
-        Subject1::create($arr);
+        $errs = $this->subCheck($arr,'subject1');
+        if(count($errs)!=0) return response()->json(['type'=>'err','content'=>$errs[0]]);
 
+        Subject1::create($arr);
         return response()->json(['type'=>'ok','content'=>'添加一级学科成功！']);
     }
     // 修改一级学科
@@ -56,13 +78,15 @@ class SubjectCtl extends Controller
     {
         // 任务ID
         $id = $request->input('id');
-        $subject = Subject1::find($id);
+        $arr = $request->except(['id']);
+        $errs = $this->subCheck($arr,'subject1',false);
+        if(count($errs)!=0) return response()->json(['type'=>'err','content'=>$errs[0]]);
 
-        $subject->number = $request->input('number');
-        $subject->title = $request->input('title');
+        $subject = Subject1::find($id);
+        foreach ($arr as $k => $val) { $subject[$k] = $val; }
         $subject->save();
 
-        return response()->json(['type'=>'ok','content'=>'修一级学科务成功！']);
+        return response()->json(['type'=>'ok','content'=>'修一级学科成功！']);
     }
 
     /**
@@ -159,6 +183,9 @@ class SubjectCtl extends Controller
             'subject1_id' => $request->input('subject1_id'),
             'title' => $request->input('title'),
         ];
+        $errs = $this->subCheck($arr,'subject2');
+        if(count($errs)!=0) return response()->json(['msg'=>['type'=>'err','content'=>$errs[0]]]);
+
         $sub = Subject2::create($arr);
         $id = $sub->id;
 
@@ -216,9 +243,12 @@ class SubjectCtl extends Controller
     {
         // 任务ID
         $id = $request->input('id');
-        $sub2 = Subject2::find($id);
-
         $inputs = $request->except(['file','id']);
+
+        $errs = $this->subCheck($inputs,'subject2',false);
+        if(count($errs)!=0) return response()->json(['msg'=>['type'=>'err','content'=>$errs[0]]]);
+        
+        $sub2 = Subject2::find($id);
         foreach ($inputs as $key => $value) { $sub2[$key] = $value; }
 
         if ($request->hasFile('file')) 

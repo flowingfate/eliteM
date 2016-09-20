@@ -164,6 +164,7 @@
 					success:(data)=>{ 
 						_this.$store.dispatch('newMessage',data);
 						// 需要刷新页面获取新信息
+						if(data.type=='err') return;
 						_this.$parent.loadData();
 						_this.clearInput();
 					},

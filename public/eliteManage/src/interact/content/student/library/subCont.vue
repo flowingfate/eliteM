@@ -33,7 +33,7 @@
 			            </div>
 			            <div class="extra">
 							<template v-if="info.keywords">
-				            	<div class="ui label" v-for="word in (info.keywords.split('+'))">
+				            	<div class="ui label" v-for="word in kws">
 				            		<i class="tag orange icon"></i><span v-text="word"></span>
 				            	</div>
 			            	</template>
@@ -93,7 +93,7 @@
 		data() {return {
 
 			iconType:{ pdf:'pdf',ppt:'powerpoint',pptx:'powerpoint',doc:'word',docx:'word' },
-			info:{ id:'',number:'',title:'',img_url:'',keywords:'',profile:'' },
+			info:{ id:'',number:'',title:'',img_url:'',keywords:'',profile:'' }, kws:[],
 			files:[{id:'',url:'',origin_name:'',author:'',description:'',type:'',size:''}],
 			classes:[{id:'',title:'',url:'',time:'',img_url:''}]
 		}},
@@ -113,13 +113,16 @@
 						_this.info = data.info;
 						_this.files = data.files;
 						_this.classes = data.classes;
-						console.dir(data.classes);
 					},
 					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }
 				});
 			}
 		},
-		watch: { 'id':function(){ this.loadData(); }, },
+		watch: 
+		{ 
+			'id':function(){ this.loadData(); }, 
+			'info.keywords':function(val){ this.kws = val.split('+'); }
+		},
 		ready() { this.loadData(); }
 	}
 </script>

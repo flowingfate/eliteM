@@ -10,6 +10,8 @@ use App\Models\Student;
 use App\Models\Task;
 use App\Models\Teacher;
 
+use Validator;
+
 class StudentCtl extends Controller
 {
     // 给学员指定导师
@@ -70,10 +72,6 @@ class StudentCtl extends Controller
     public function relatedInfo(Request $request)
     {
     	$id = $request->input('id');
-
-        /*---学员只能获取自己相关的信息---*/
-        if($id!=session('user')['id']) return response('无权限访问');
-
     	$student = Student::find($id);
 
     	$teachers = $student->teachers->toArray();
@@ -99,9 +97,6 @@ class StudentCtl extends Controller
     {
         $id = $request->input('id');
 
-        /*---学员只能获取自己相关的信息---*/
-        if($id!=session('user')['id']) return response('无权限访问');
-
         $student = Student::select(['name','username','direction','school','email','qq','phone','wechat'])->where('id',$id)->first();
         return response()->json($student);
     }
@@ -109,11 +104,28 @@ class StudentCtl extends Controller
     public function modifyPersonalInfo(Request $request)
     {
         $id = $request->input('id');
-
-        /*---学员只能修改自己相关的信息---*/
-        if($id!=session('user')['id']) return response('无权限访问');
         
         $inputs = $request->except(['id']);
+        foreach ($inputs as $k=>$v) { if(empty($inputs[$k])) $inputs[$k]=NULL; }
+
+        $msg = [
+            'username.unique'=>'已经有人使用了这个用户名，请更换！！',
+            'email.unique'=>'已经有人使用了相同的邮箱，请更换！',
+            'email.email'=>'您填写的邮箱不合法，请重填！',
+            'qq.unique'=>'已经有人使用了相同的QQ，请更换！',
+            'wechat.unique'=>'已经有人使用了相同的微信，请更换！',
+            'phone.unique'=>'已经有人使用了相同的电话，请更换！'
+        ];
+        $rules = [
+            'username'=>'unique:student',
+            'email'=>'email|unique:student',
+            'qq'=>'unique:student',
+            'wechat'=>'unique:student',
+            'phone'=>'unique:student',
+        ];
+        $validator = Validator::make($inputs,$rules,$msg);
+        $errs = $validator->errors()->all();
+        if(count($errs)!=0) return response()->json(['type'=>'err','content'=>$errs[0]]);
 
         $student = Student::find($id);
         foreach ($inputs as $k => $val) { $student[$k] = $val; }
@@ -125,9 +137,6 @@ class StudentCtl extends Controller
     public function modifyPassword(Request $request)
     {
         $id = $request->input('id');
-
-        /*---学员只能修改自己的密码---*/
-        if($id!=session('user')['id']) return response('无权限访问');
         
         $originPass = $request->input('originPass');
         $newPass = $request->input('newPass');
