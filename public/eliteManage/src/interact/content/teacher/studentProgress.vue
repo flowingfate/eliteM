@@ -182,6 +182,7 @@
 					type:'GET', url:route, data:{id:id},
 					success:(data)=>{ 
 						_this.$store.dispatch('newMessage',data);
+						if(data.type=='err') return;
 						_this.tasks[index].progress = 1-progress;
 					},
 					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }
@@ -201,6 +202,11 @@
 				{
 					type:'GET', url:route, data:data,
 					success:(data)=>{ 
+						if(data.type=='err')
+						{
+							_this.$store.dispatch('newMessage',data);
+							return;
+						}
 						_this.students = data.students;
 						_this.teacher = data.teacher; 
 						_this.getStudentInfo(data['students'][_this.index].id,_this.index);

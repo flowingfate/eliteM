@@ -60,6 +60,8 @@ class TaskCtl extends Controller
         // 任务ID
         $id = $request->input('id');
         $task = Task::find($id);
+        if(!$task) return response()->json(['type'=>'err','content'=>'任务查找失败！']);
+
         $task->progress = 1-$task->progress;
         $task->save();
 
@@ -72,6 +74,8 @@ class TaskCtl extends Controller
     	// 任务ID
     	$id = $request->input('id');
     	$task = Task::find($id);
+        if(!$task) return response()->json(['type'=>'err','content'=>'没找到任务相关信息']);
+
         $inputs = $request->except(['id']);
 
         foreach ($inputs as $k => $val) { $task[$k] = $val; }

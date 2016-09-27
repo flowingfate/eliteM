@@ -94,10 +94,13 @@ class AdminCtl extends Controller
         $val = ['finish'=>1,'revert'=>0];
 
         $m2m = M2m::where('student_id',$s_id)->where('teacher_id',$t_id)->first();
-        $m2m->finish = $val[$flag];
-        $m2m->save();
-
-        return response()->json(['type'=>'ok','content'=>'结项设置成功！']);
+        if($m2m)
+        {
+            $m2m->finish = $val[$flag];
+            $m2m->save();
+            return response()->json(['type'=>'ok','content'=>'结项设置成功！']);
+        }
+        return response()->json(['type'=>'err','content'=>'结项设置失败！']);
     }
 
 	// 获取所有的用户，包括所有教师和学生
@@ -173,8 +176,8 @@ class AdminCtl extends Controller
         if($role=="teacher")
         {
             $t = Teacher::find($id);
-            $num = count($t->students->toArray());
-            if($num==0)
+
+            if($t&&(count($t->students->toArray())==0))
             {
                 $t->delete();
                 return response()->json([
@@ -193,8 +196,7 @@ class AdminCtl extends Controller
         if($role=="student")
         {
             $s = Student::find($id);
-            $num = count($s->teachers->toArray());
-            if($num==0)
+            if($s&&(count($s->teachers->toArray())==0))
             {
                 $s->delete();
                 return response()->json([
@@ -228,16 +230,22 @@ class AdminCtl extends Controller
         if($role=="teacher")
         {
             $user = Teacher::find($id);
-            $user->password = $pass;
-            $user->save();
-            return response()->json(['type'=>'ok','content'=>'重置导师密码成功！']);
+            if($user)
+            {
+                $user->password = $pass;
+                $user->save();
+                return response()->json(['type'=>'ok','content'=>'重置导师密码成功！']);
+            }
         }
         if($role=="student")
         {
             $user = Student::find($id);
-            $user->password = $pass;
-            $user->save();
-            return response()->json(['type'=>'ok','content'=>'重置学员密码成功！']);
+            if($user)
+            {
+                $user->password = $pass;
+                $user->save();
+                return response()->json(['type'=>'ok','content'=>'重置学员密码成功！']);
+            }
         }
 
         return response()->json(['type'=>'err','content'=>'重置密码失败！']);

@@ -94,6 +94,7 @@
 					type:'GET', url:route, data:data,
 					success:(data)=>{ 
 						_this.$store.dispatch('newMessage',data);
+						if(data.type=='err') return;
 						setTimeout(()=>{_this.$parent.loadData();},2000);
 					},
 					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'});}

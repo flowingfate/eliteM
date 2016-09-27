@@ -164,6 +164,11 @@
 				{
 					type:'GET', url:route, data:data,
 					success:(data)=>{ 
+						if(data.type=='err')
+						{
+							_this.$store.dispatch('newMessage',data);
+							return;
+						}
 						_this.students = data;
 					},
 					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }

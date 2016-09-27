@@ -106,7 +106,7 @@ class SubjectCtl extends Controller
         // 任务ID
         $id = $request->input('id');
         $sub1 = Subject1::find($id);
-
+        if(!$sub1) return response()->json(['type'=>'err','content'=>'删除失败']);
         /**
          * 需要注意的是，删除一级学科需要连带清除所有下属内容
          * 包括所有二级学科
@@ -160,9 +160,11 @@ class SubjectCtl extends Controller
     {
         $id = $request->input('id');
         $sub2 = Subject2::select(['id','number','title','img_url','keywords','profile'])->find($id); 
+
+        if(!$sub2) return response()->json(['info'=>[], 'files'=>[], 'classes'=>[]]);
+
         $files = $sub2->libfiles()->select(['id','origin_name','author','description','type','size'])->get()->toArray();
         $classes = $sub2->libclasses()->select(['id','title','url','time','img_url'])->get()->toArray();
-
         $data = [
 
             'info'=>$sub2->toArray(),
@@ -203,7 +205,7 @@ class SubjectCtl extends Controller
         // 任务ID
         $id = $request->input('id');
         $sub2 = Subject2::find($id);
-
+        if(!$sub2) return response()->json(['type'=>'err','content'=>'删除失败']);
         /**
          * 需要注意的是，删除二级学科需要连带清除所有下属内容
          * 包括所有的下属的文件和课程

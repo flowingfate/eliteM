@@ -47,6 +47,7 @@ class LibclassCtl extends Controller
         // 任务ID
         $id = $request->input('id');
         $class = Libclass::find($id);
+        if(!$class) return response()->json(['type'=>'err','content'=>'未找到该课程']);
 
         $name = $class->saved_name;
         if($name&&Storage::disk('upload')->has('classImg/'.$name))
@@ -63,6 +64,7 @@ class LibclassCtl extends Controller
     	// ID
         $id = $request->input('id');
         $class = Libclass::find($id);
+        if(!$class) return response()->json(['type'=>'err','content'=>'未找到该课程']);
 
         $inputs = $request->except(['img','id']);
         foreach ($inputs as $key => $value) { $class[$key] = $value; }

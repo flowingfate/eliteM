@@ -118,6 +118,7 @@
 					type:'GET', url:route, data:data,
 					success:(data)=>{
 						_this.$store.dispatch('newMessage',data);
+						if(data.type=='err') return;
 						_this.subjects.splice(index,1);
 					},
 					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }

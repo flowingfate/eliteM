@@ -176,6 +176,7 @@
 					type:'GET', url:route, data:data,
 					success:(msg)=>{
 						_this.$store.dispatch('newMessage',msg);
+						if(msg.type=='err') return;
 						file.description=data.description;  file.author=data.author;
 						$(_this.$els.list).slideDown(); $(_this.$els.edit).slideUp();
 					},
@@ -193,6 +194,7 @@
 					type:'GET', url:route, data:data,
 					success:(msg)=>{
 						_this.$store.dispatch('newMessage',msg);
+						if(msg.type=='err') return;
 						_this.files.splice(index,1);
 					},
 					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }

@@ -14,6 +14,18 @@ use App\Models\Teacher;
 
 class LoginCtl extends Controller
 {
+    public function domain(Request $request)
+    {
+        $site = explode('//',url('/'))[1];
+        $domain = explode('.',$site)[0];
+        
+        if($domain=='g') return redirect('login/admin');
+        if($domain=='t') return redirect('login/teacher');
+        if($domain=='y') return redirect('login/vindicator');
+
+        return redirect('login/student');
+    }
+
     public function index(Request $request,$role)
     {
         // 限制$role只能是某几种类型

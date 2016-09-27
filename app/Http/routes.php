@@ -15,7 +15,8 @@ Route::group(['middleware' => ['web','cors']], function ()
 {
 	// Route::get('/',function(){return view('test');});
 	// Route::get('test','TestCtl@index');
-	Route::get('test','TestCtl@index');
+
+	Route::get('/','LoginCtl@domain');
 
 	Route::any('login/{role}','LoginCtl@index');
 	Route::get('quit/{role}','LoginCtl@quit');

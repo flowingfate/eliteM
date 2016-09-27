@@ -23,6 +23,7 @@ class StudentCtl extends Controller
         // 如果非要删除的话，那也应该删除导师布置过的任务
         $studentId = $request->input('studentId');
         $student = Student::find($studentId);
+        if(!$student) return response()->json(['type'=>'err','content'=>'没有找到该学员的信息']);
 
         $inputIds = $request->input('teacherIds');
         $nowIds = [];
@@ -73,6 +74,7 @@ class StudentCtl extends Controller
     {
     	$id = $request->input('id');
     	$student = Student::find($id);
+        if(!$student) return response()->json(['type'=>'err','content'=>'没有找到该学员的信息']);
 
     	$teachers = $student->teachers->toArray();
     	$nowtasks = [];
@@ -98,6 +100,7 @@ class StudentCtl extends Controller
         $id = $request->input('id');
 
         $student = Student::select(['name','username','direction','school','email','qq','phone','wechat'])->where('id',$id)->first();
+        if(!$student) return response()->json(['type'=>'err','content'=>'没有找到该学员的信息']);
         return response()->json($student);
     }
 
@@ -142,6 +145,7 @@ class StudentCtl extends Controller
         $newPass = $request->input('newPass');
 
         $student = Student::find($id);
+        if(!$student) return response()->json(['type'=>'err','content'=>'没有找到该学员的信息']);
         if($student->password!=$originPass)
         {
             return response()->json(['type'=>'err','content'=>'原密码输入不正确！']);

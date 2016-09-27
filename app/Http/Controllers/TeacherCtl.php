@@ -29,6 +29,8 @@ class TeacherCtl extends Controller
         $id = $request->input('id');
 
         $teacher = Teacher::find($id);
+        if(!$teacher) return response()->json(['type'=>'err','content'=>'没有找到该导师的信息']);
+
         $students = ['progress'=>[],'finish'=>[]];
         $val = [0=>'progress',1=>'finish'];
 
@@ -56,6 +58,8 @@ class TeacherCtl extends Controller
     	$id = $request->input('id');
     	$finish = $request->input('finish');
     	$teacher = Teacher::find($id);
+        if(!$teacher) return response()->json(['type'=>'err','content'=>'没有找到该导师的信息']);
+
     	$students = [];
 
         foreach ($teacher->students as $s) 
@@ -77,6 +81,8 @@ class TeacherCtl extends Controller
         $id = $request->input('id');
 
         $teacher = Teacher::select(['name','username','laboratory','school','qq','email'])->where('id',$id)->first();
+        if(!$teacher) return response()->json(['type'=>'err','content'=>'没有找到该导师的信息']);
+
         return response()->json($teacher->toArray());
     }
 
@@ -115,6 +121,8 @@ class TeacherCtl extends Controller
         $newPass = $request->input('newPass');
 
         $teacher = Teacher::find($id);
+        if(!$teacher) return response()->json(['type'=>'err','content'=>'没有找到该导师的信息']);
+        
         if($teacher->password!=$originPass)
         {
             return response()->json(['type'=>'err','content'=>'原密码输入不正确！']);

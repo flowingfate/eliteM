@@ -186,6 +186,7 @@
 					type:'GET', url:route, data:data,
 					success:(data)=>{
 						_this.$store.dispatch('newMessage',data);
+						if(data.type=='err') return;
 						_this.subject1s.splice(_this.index,1);
 						_this.switchEdit(_this.index!=0?_this.index-1:_this.index);
 					},

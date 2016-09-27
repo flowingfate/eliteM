@@ -53,6 +53,7 @@ class LibfileCtl extends Controller
     {
         $id = $request->input('id');
         $file = Libfile::find($id);
+        if(!$file) return response()->json(['type'=>'err','content'=>'未找到文件']);
 
         $file->author = $request->input('author');
         $file->description = $request->input('description');
@@ -66,6 +67,7 @@ class LibfileCtl extends Controller
         // 任务ID
         $id = $request->input('id');
         $file = Libfile::find($id);
+        if(!$file) return response()->json(['type'=>'err','content'=>'未找到文件']);
 
         $name = $file->saved_name;
         if($name&&Storage::disk('upload')->has('files/'.$name))

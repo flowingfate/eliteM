@@ -216,6 +216,7 @@
 					success:(data)=> {
 						// 如果成功了，最好是返回一个新的class去替代原来的class
 						_this.$store.dispatch('newMessage',data.msg);
+						if(data.msg.type=='err') return;
 						_this.classes.$set(_this.editIndex,data.item);
 						_this.$els.editform.reset();
 						Object.keys(_this.editImg).forEach((k)=>{_this.editImg[k]="";});
@@ -234,6 +235,7 @@
 					type:'GET', url:route, data:data,
 					success:(msg)=>{
 						_this.$store.dispatch('newMessage',msg);
+						if(msg.type=='err') return;
 						_this.classes.splice(index,1);
 					},
 					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }

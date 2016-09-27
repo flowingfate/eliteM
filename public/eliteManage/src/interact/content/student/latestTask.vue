@@ -111,6 +111,11 @@
 			{
 				type:'GET', url:route, data:data,
 				success:(data)=>{
+					if(data.type=='err')
+					{
+						_this.$store.dispatch('newMessage',data);
+						return;
+					}
 					_this.teachers = data.teachers;
 					_this.nowtasks = data.nowtasks;
 					_this.histasks = data.histasks;

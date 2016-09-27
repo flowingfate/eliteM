@@ -232,6 +232,11 @@
 			{
 				type:'GET', url:route, data:data,
 				success:(data)=>{ 
+					if(data.type=='err')
+					{
+						_this.$store.dispatch('newMessage',data);
+						return;
+					}
 					Object.keys(data).forEach((val)=>{
 						_this.infoInput[val] = _this.infoOrigin[val] = data[val];
 					});
