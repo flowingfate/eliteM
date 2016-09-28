@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(TeacherSdr::class);
         // $this->call(StudentSdr::class);
         // $this->call(M2mSdr::class);
-        $this->call(TaskSdr::class);
+        // $this->call(TaskSdr::class);
         // $this->call(Subject1Sdr::class);
         // $this->call(Subject2Sdr::class);
         // $this->call(LibfileSdr::class);

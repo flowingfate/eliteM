@@ -55,7 +55,7 @@
 				</div>
 				<div class="fields">
 					<div class="field sixteen wide">
-						<input type="text" name="password" placeholder="密码" value="{{old('password')}}">
+						<input type="password" name="password" placeholder="密码" value="{{old('password')}}">
 					</div>
 				</div>
 
