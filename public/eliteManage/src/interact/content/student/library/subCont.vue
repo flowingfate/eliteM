@@ -33,7 +33,7 @@
 			            </div>
 			            <div class="extra">
 							<template v-if="info.keywords">
-				            	<div class="ui label" v-for="word in kws">
+				            	<div class="ui label" track-by="$index" v-for="word in kws">
 				            		<i class="tag orange icon"></i><span v-text="word"></span>
 				            	</div>
 			            	</template>

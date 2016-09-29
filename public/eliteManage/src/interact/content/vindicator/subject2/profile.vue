@@ -24,7 +24,7 @@
 		            <div class="description"> <p v-text="info.profile"></p> </div>
 		            <div class="extra">
 		            	<template v-if="info.keywords">
-			            	<div class="ui label" v-for="word in kws">
+			            	<div class="ui label" track-by="$index" v-for="word in kws">
 			            		<i class="tag orange icon"></i><span v-text="word"></span>
 			            	</div>
 		            	</template>
@@ -119,7 +119,7 @@
 				this.img = {name:'',type:'',size:'',url:'',file:''};
 				this.$els.form.reset();
 			},
-			'info.keywords':function(val){ this.kws = val.split('+'); }
+			'info.keywords':function(val) {this.kws = val.split('+'); }
 		},
 		methods:
 		{
