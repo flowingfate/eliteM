@@ -119,7 +119,7 @@
 				this.img = {name:'',type:'',size:'',url:'',file:''};
 				this.$els.form.reset();
 			},
-			'info.keywords':function(val) {this.kws = val.split('+'); }
+			'info.keywords':function(val) { if(val===null) val=''; this.kws=val.split('+'); }
 		},
 		methods:
 		{

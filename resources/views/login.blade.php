@@ -16,6 +16,11 @@
 	text-align: center;
 	position: absolute; width: 100%; left:0; top:-100px;
 }
+.photo i.icon
+{
+	display: inline-block; padding:.5em 0!important;
+	text-align: center;font-size:96px;margin:0;
+}
 .captcha img { display: inline-block; line-height: 42px;width: 100%; border-radius: 2px; margin-top:1px; }
 
 </style>
@@ -42,8 +47,9 @@
 
 	<div class="loginBox" style="padding-top:1px;">
 		<div class="photo">
-			<i class="circular massive inverted grey user icon"
-				style="font-size:96px; padding:32px;margin:0;"></i>
+			<i class="circular massive inverted grey <?php
+				$icons = ['admin'=>'settings','teacher'=>'doctor','student'=>'student','vindicator'=>'spy'];
+				echo $icons[$role]; ?> icon"></i>
 		</div>
 		<div style="padding:16px 16px 40px; margin-top:90px;">
 			<form class="ui form attached fluid" action="{{url('login/'.$role)}}" method="post">
@@ -74,8 +80,8 @@
 					<div class="visible content">登录账户</div>
 					<div class="hidden content">
 						<?php
-							$arr = ['admin'=>'管理员','teacher'=>'导师','student'=>'学员','vindicator'=>'运营维护者'];
-							echo $arr[$role];
+							$btn = ['admin'=>'管理员','teacher'=>'导师','student'=>'学员','vindicator'=>'运营维护者'];
+							echo $btn[$role];
 						?>
 					</div>
 				</button>
