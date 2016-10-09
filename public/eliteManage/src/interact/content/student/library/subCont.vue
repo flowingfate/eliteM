@@ -29,7 +29,7 @@
 			            <div class="header" v-text="info.title"></div>
 			            <div class="meta"><div class="ui divider" style="margin:7px 0;"></div></div>
 			            <div class="description">
-			                <p v-text="info.profile"></p>
+			                <p><pre v-text="info.profile"></pre></p>
 			            </div>
 			            <div class="extra">
 							<template v-if="info.keywords">
