@@ -18,11 +18,7 @@ class TestCtl extends Controller
 {
     public function index(Request $request)
     {
-        $user = Admin::destroy(5);
-
-        dd($user);
-
-    	// dd('My name is Jason Shang');
+        dd(isTest());
     }
     public function up(Request $request)
     {

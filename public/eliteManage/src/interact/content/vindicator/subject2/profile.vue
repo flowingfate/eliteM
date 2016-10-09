@@ -21,7 +21,7 @@
 		        <div class="content">
 		            <div class="header" v-text="info.title"></div>
 		            <div class="meta"><div class="ui divider" style="margin:7px 0;"></div></div>
-		            <div class="description"> <p v-text="info.profile?info.profile.replace(/\n/g,'<br/>').replace(/ /g,'&nbsp;'):''"></p> </div>
+		            <div class="description"> <p v-html="filtStr(info.profile)"></p> </div>
 		            <div class="extra">
 		            	<template v-if="info.keywords">
 			            	<div class="ui label" track-by="$index" v-for="word in kws">
@@ -123,6 +123,7 @@
 		},
 		methods:
 		{
+			filtStr(str) { return str?str.replace(/\n/g,'<br/>').replace(/ /g,'&nbsp;'):''; },
 			chInfo()
 			{
 				var _this = this;
