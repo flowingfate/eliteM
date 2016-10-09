@@ -58,7 +58,7 @@
 		<div class="ui segment attached">
 			<table v-show="role=='teacher'" class="ui orange selectable celled table">
 				<thead class="center aligned">
-					<tr> <th>ID</th> <th>姓名</th> <th>学校</th> <th>实验室</th> <th>备注</th> <th>email</th> <th>QQ</th> <th>编辑</th> <th>删除</th> </tr>
+					<tr> <th>ID</th> <th>姓名</th> <th>学校</th> <th>实验室</th> <th width="180">备注</th> <th>email</th> <th>QQ</th> <th>编辑</th> <th>删除</th> </tr>
 				</thead>
 				<tbody @mouseleave="users.rowIndex=-1">
 					<tr v-for="user in users.teacher" 
@@ -92,7 +92,7 @@
 			</table>
 			<table v-show="role=='student'" class="ui orange selectable celled table">
 				<thead class="center aligned">
-					<tr> <th>ID</th> <th>姓名</th> <th>学校</th> <th>方向</th> <th>备注</th> <th>email</th> <th>QQ</th> <th>电话</th> <th>微信</th> <th>编辑</th> <th>删除</th> </tr>
+					<tr> <th>ID</th> <th>姓名</th> <th>学校</th> <th>方向</th> <th width="150">备注</th> <th>email</th> <th>QQ</th> <th>电话</th> <th>微信</th> <th>编辑</th> <th>删除</th> </tr>
 				</thead>
 				<tbody @mouseleave="users.rowIndex=-1">
 					<tr v-for="user in users.student" 
@@ -162,6 +162,10 @@
 			// 某些用户应当设置不允许删除
 			removeUser(id,index)
 			{
+				// 删除需要给提示，同意才能继续
+				var flag = confirm("是否确认删除 ？");
+				if(!flag) return false;
+				
 				var _this = this;
 				var route = this.route+'/removeUser';
 

@@ -185,6 +185,10 @@
 			},
 			rmFile(index,id)
 			{
+				// 删除需要给提示，同意才能继续
+				var flag = confirm("是否确认删除 ？");
+				if(!flag) return false;
+
 				var _this = this;
 				var route = this.route+'/rmFile';
 				var data = {id:id};

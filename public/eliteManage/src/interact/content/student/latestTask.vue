@@ -49,13 +49,18 @@
 		<div class="ui segment attached">
 			<table class="ui orange center aligned selectable celled table">
 				<thead>
-					<tr> <th>日期</th> <th>导师</th> <th>任务内容</th> <th>完成度</th> </tr>
+					<tr> 
+						<th width="140">日期</th> 
+						<th width="120">导师</th> 
+						<th>任务内容</th> 
+						<th width="120">完成度</th> 
+					</tr>
 				</thead>
 				<tbody>
 					<tr v-for="task in nowtasks">
 						<td v-text="task.up_time"></td>
 						<td v-text="task.teacher"></td>
-						<td v-text="task.mission"></td>
+						<td class="left aligned" v-text="task.mission"></td>
 						<td v-text="task.progress?'完成':'未完成'"></td>
 					</tr>
 				</tbody>
@@ -65,13 +70,18 @@
 		<div class="ui segment attached">
 			<table class="ui orange center aligned selectable celled table">
 				<thead>
-					<tr> <th>日期</th> <th>导师</th> <th>任务内容</th> <th>完成度</th> </tr>
+					<tr> 
+						<th width="140">日期</th> 
+						<th width="120">导师</th> 
+						<th>任务内容</th> 
+						<th width="120">完成度</th> 
+					</tr>
 				</thead>
 				<tbody>
 					<tr v-for="task in histasks">
 						<td v-text="task.up_time"></td>
 						<td v-text="task.teacher"></td>
-						<td v-text="task.mission"></td>
+						<td class="left aligned" v-text="task.mission"></td>
 						<td v-text="task.progress?'完成':'未完成'"></td>
 					</tr>
 				</tbody>

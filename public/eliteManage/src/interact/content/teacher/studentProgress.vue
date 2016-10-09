@@ -68,12 +68,21 @@
 			</div>
 		</div>
 		<div class="ui segment attached">
+
 			<table class="ui orange center aligned selectable celled table">
 				<thead>
 					<tr> 
-						<th>日期</th> <th>导师</th> <th>导师任务</th> <th>导师时间</th> <th>学员任务</th> 
-						<th>完成度</th> <th>完成/撤销</th> <th>编辑</th> <th>删除</th>
+						<th width="110">日期</th> 
+						<th width="80">导师</th> 
+						<th>导师任务</th> 
+						<th width="80">导师时间</th> 
+						<th>学员任务</th> 
+						<th width="80">完成度</th> 
+						<th width="90">完成/撤销</th> 
+						<th width="60">编辑</th> 
+						<th width="60">删除</th>
 					</tr>
+					
 				</thead>
 				<tbody @mouseleave="hoverTaskIndex=-1">
 					<tr v-for="t in tasks" @mouseenter="hoverTaskIndex=$index">
@@ -105,6 +114,11 @@
 							</button>
 						</td>
 					</tr>
+					<tr v-if="students[index].comment">
+						<td colspan="9" class="left aligned">
+							<span class="ui tag large label" v-text="'备注：'+students[index].comment"></span>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 		</div>
@@ -121,7 +135,7 @@
 		data() {return {
 			teacher:{name:''},  //包括其他一堆信息
 			
-			students:[{name:'',school:'',direction:'',id:''}],   //包括其他一堆信息
+			students:[{name:'',school:'',direction:'',id:'',comment:''}],   //包括其他一堆信息
 			tasks:[{id:'',discribe:'',mission:'',progress:'',work_time:'',teacher:'',teacherId:'',up_time:''}],
 			
 			hoverTaskIndex:-1,
@@ -158,6 +172,10 @@
 			},
 			removeTask(id,index)
 			{
+				// 删除需要给提示，同意才能继续
+				var flag = confirm("是否确认删除 ？");
+				if(!flag) return false;
+				
 				var _this = this;
 				var route = this.route+'/removeTask';
 

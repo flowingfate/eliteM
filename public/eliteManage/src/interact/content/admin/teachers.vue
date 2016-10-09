@@ -73,7 +73,14 @@
 				</h3>
 				<table class="ui orange selectable celled table">
 					<thead>
-						<tr> <th>日期</th> <th>导师</th> <th>导师内容</th> <th>导师时间</th> <th>学员任务</th> <th>完成度</th> </tr>
+						<tr> 
+							<th width="110">日期</th> 
+							<th width="80">导师</th> 
+							<th>导师内容</th> 
+							<th width="80">导师时间</th> 
+							<th>学员任务</th> 
+							<th width="80">完成度</th> 
+						</tr>
 					</thead>
 					<tbody>
 						<tr v-for="task in stu.tasks">
@@ -102,7 +109,14 @@
 				</h3>
 				<table class="ui orange selectable celled table">
 					<thead>
-						<tr> <th>日期</th> <th>导师</th> <th>导师内容</th> <th>导师时间</th> <th>学员任务</th> <th>完成度</th> </tr>
+						<tr> 
+							<th width="110">日期</th> 
+							<th width="80">导师</th> 
+							<th>导师内容</th> 
+							<th width="80">导师时间</th> 
+							<th>学员任务</th> 
+							<th width="80">完成度</th> 
+						</tr>
 					</thead>
 					<tbody>
 						<tr v-for="task in stu.tasks">

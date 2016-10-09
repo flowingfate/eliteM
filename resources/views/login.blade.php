@@ -23,6 +23,14 @@
 }
 .captcha img { display: inline-block; line-height: 42px;width: 100%; border-radius: 2px; margin-top:1px; }
 
+@if($role=='teacher'||$role=='student')
+body 
+{
+	background-image:url("{{asset('img/'.$role.'.png')}}");
+	background-size: cover; background-position: center; background-repeat: none;
+}
+@endif
+
 </style>
 @endsection
 
