@@ -121,7 +121,7 @@
 		watch: 
 		{ 
 			'id':function(){ this.loadData(); }, 
-			'info.keywords':function(val){ this.kws = val.split('+'); }
+			'info.keywords':function(val){  this.kws = val===null?[]:val.split('+');  }
 		},
 		ready() { this.loadData(); }
 	}

@@ -64,7 +64,8 @@
 	{
 		data() {return {
 			filter:{keyword:'',field:'title'},
-			addSubject2:{number:'',title:''}
+			addSubject2:{number:'',title:''},
+			index:-1,
 		}},
 		props: 
 		{ 
@@ -124,11 +125,9 @@
 					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }
 				});
 			},
-			toEdit(index,id) { this.$dispatch('detail',id); }
+			toEdit(index,id) { this.$dispatch('detail',id); this.index=index;}
 		},
-		ready()
-		{
-			$('.ui.dropdown').dropdown();
-		}
+		events: { 'profileEdit':function(data){ this.subjects.$set(this.index,data); }, },
+		ready() { $('.ui.dropdown').dropdown(); }
 	}
 </script>

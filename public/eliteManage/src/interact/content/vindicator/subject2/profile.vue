@@ -119,7 +119,7 @@
 				this.img = {name:'',type:'',size:'',url:'',file:''};
 				this.$els.form.reset();
 			},
-			'info.keywords':function(val) { if(val===null) val=''; this.kws=val.split('+'); }
+			'info.keywords':function(val) { this.kws = val===null?[]:val.split('+'); }
 		},
 		methods:
 		{
@@ -155,6 +155,7 @@
 						_this.$store.dispatch('newMessage',data.msg);
 						if(data.msg.type=='err') return;
 						_this.$parent.info = data.info;  //改变了info之后会自动触发更新，所以不必手动清空
+						_this.$dispatch('profile',data.info);
 					},
 					error:()=>{_this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'});}
 				}); return false;

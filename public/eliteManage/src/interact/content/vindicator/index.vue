@@ -26,7 +26,7 @@
 </div>
 <div class="v-library">
 	<subject1s @detail="toDetail" v-show="!showCont" transition="subjects"></subject1s>
-	<sub-cont @list="toList" :id="contId" v-show="showCont" transition="subCont"></sub-cont>
+	<sub-cont @list="toList" @profile="chProfile" :id="contId" v-show="showCont" transition="subCont"></sub-cont>
 </div>
 </template>
 
@@ -46,7 +46,8 @@
 		methods:
 		{
 			toDetail(id){ this.showCont = true; this.contId = parseInt(id); },
-			toList(){ this.showCont = false; }
+			toList(){ this.showCont = false; },
+			chProfile(data) { this.$broadcast('profileEdit',data); }
 		},
 		ready() { }
 	}
