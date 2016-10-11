@@ -25,7 +25,7 @@ class StudentCtl extends Controller
         $student = Student::find($studentId);
         if(!$student) return response()->json(['type'=>'err','content'=>'没有找到该学员的信息']);
 
-        $inputIds = $request->input('teacherIds');
+        $inputIds = $request->input('teacherIds',[]);
         $nowIds = [];
         foreach ($student->teachers as $T) array_push($nowIds,$T->id);
 

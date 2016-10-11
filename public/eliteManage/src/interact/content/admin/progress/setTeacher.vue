@@ -86,6 +86,7 @@
 				// 添加导师无条件允许
 				// 删除导师只能是没有发布过任务的老师
 				var data = {studentId:this.student.id,teacherIds:teacherIds};
+				console.dir(data);
 				var _this = this;
 				var route = this.route+'/setTeacher';
 
@@ -97,7 +98,7 @@
 						if(data.type=='err') return;
 						setTimeout(()=>{_this.$parent.loadData();},2000);
 					},
-					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'});}
+					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }
 				});
 			},
 		},

@@ -58,7 +58,17 @@
 		<div class="ui segment attached">
 			<table v-show="role=='teacher'" class="ui orange selectable celled table">
 				<thead class="center aligned">
-					<tr> <th>ID</th> <th>姓名</th> <th>学校</th> <th>实验室</th> <th width="180">备注</th> <th>email</th> <th>QQ</th> <th>编辑</th> <th>删除</th> </tr>
+					<tr> 
+						<th width="40">ID</th> 
+						<th width="80">姓名</th> 
+						<th>学校</th> 
+						<th>实验室</th> 
+						<th>备注</th> 
+						<th width="100">email</th> 
+						<th width="100">QQ</th> 
+						<th width="70">编辑</th> 
+						<th width="70">删除</th> 
+					</tr>
 				</thead>
 				<tbody @mouseleave="users.rowIndex=-1">
 					<tr v-for="user in users.teacher" 
@@ -92,7 +102,19 @@
 			</table>
 			<table v-show="role=='student'" class="ui orange selectable celled table">
 				<thead class="center aligned">
-					<tr> <th>ID</th> <th>姓名</th> <th>学校</th> <th>方向</th> <th width="150">备注</th> <th>email</th> <th>QQ</th> <th>电话</th> <th>微信</th> <th>编辑</th> <th>删除</th> </tr>
+					<tr> 
+						<th width="40">ID</th> 
+						<th width="80">姓名</th> 
+						<th>学校</th> 
+						<th>方向</th> 
+						<th>备注</th> 
+						<th width="100">email</th> 
+						<th width="100">QQ</th> 
+						<th width="100">电话</th> 
+						<th width="100">微信</th> 
+						<th width="70">编辑</th> 
+						<th width="70">删除</th> 
+					</tr>
 				</thead>
 				<tbody @mouseleave="users.rowIndex=-1">
 					<tr v-for="user in users.student" 

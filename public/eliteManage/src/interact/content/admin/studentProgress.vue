@@ -105,7 +105,6 @@
 			},
 			loadData()
 			{
-				console.log("haha");
 				var _this = this;
 				var route = this.route+'/progress';
 				$.ajax(
