@@ -35,6 +35,6 @@ module.exports =
         contentBase: 'dist',
         inline: true,
         host: process.env.IP || '0.0.0.0',
-        port: process.env.PORT || 8000
+        port: process.env.PORT || 8080
     }
 }

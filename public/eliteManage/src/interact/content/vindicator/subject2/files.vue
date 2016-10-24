@@ -98,7 +98,7 @@
 		<div class="ui cards">
 		    <div class="card" v-for="file in files">
 		        <div class="content">
-		            <i class="right floated file outline big orange icon" :class="iconType[file.type]"></i>
+		            <i class="right floated file outline big orange icon" :class="iconType[file.type]||'text'"></i>
 		            <div class="header" v-text="file.origin_name"></div>
 		            <div class="meta">
 		            	<span v-text="file.author"></span>&nbsp;&nbsp;
@@ -126,7 +126,7 @@
 			progress:0,
 
 			iconType:{ pdf:'pdf',ppt:'powerpoint',pptx:'powerpoint',doc:'word',docx:'word' },
-			fileType:"application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation",
+			fileType:"application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,.caj",
 			
 			addFile:{name:'',type:'',size:'',file:'',author:'',description:''},
 			editFile:{id:'',author:'',description:''},
@@ -255,13 +255,13 @@
 					"application/msword":"Word文件",
 					"application/vnd.openxmlformats-officedocument.wordprocessingml.document":"Word文件",
 					"application/vnd.ms-powerpoint":"PowerPoint文件",
-					"application/vnd.openxmlformats-officedocument.presentationml.presentation":"PowerPoint文件"
+					"application/vnd.openxmlformats-officedocument.presentationml.presentation":"PowerPoint文件",
 				};
 				if(file)
 				{
 					_this.addFile.file = file;
 					_this.addFile.name = file.name;
-					_this.addFile.type = type[file.type];
+					_this.addFile.type = type[file.type]||'CAJ文件';
 					_this.addFile.size = file.size;
 				}
 			},
@@ -273,6 +273,6 @@
 				f.name = f.type = f.size = f.file = "";
 			}
 		},
-		ready() { $('.ui.progress').progress(); }
+		ready() { $('.ui.progress').progress();}
 	}
 </script>

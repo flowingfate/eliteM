@@ -61,7 +61,7 @@
 			</div>
 		</div>
 		<div v-show="role=='student'" class="ui form">
-			<h3 class="ui dividing header">请填学员师信息</h3>
+			<h3 class="ui dividing header">请填学员信息</h3>
 			<div class="two fields">
 				<div class="field">
 					<label>姓名</label>

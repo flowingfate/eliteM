@@ -16,5 +16,11 @@
 
         $.ajaxSetup({headers:{'X-CSRF-TOKEN':"{{csrf_token()}}"}});
     </script>
-    <script src="{{asset('eliteManage/dist/'.$role.'.js')}}"></script>
+
+    @if(isTest())
+        <script src="http://localhost:8080/app.js"></script>
+    @else
+        <script src="{{asset('eliteManage/dist/'.$role.'.js')}}"></script>
+    @endif
+    
 @endsection

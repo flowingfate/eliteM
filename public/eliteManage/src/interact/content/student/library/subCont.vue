@@ -48,7 +48,7 @@
 			<div class="ui cards">
 			    <div class="card" v-for="file in files">
 			        <div class="content">
-			            <i class="right floated file outline big orange icon" :class="iconType[file.type]"></i>
+			            <i class="right floated file outline big orange icon" :class="iconType[file.type]||'text'"></i>
 			            <div class="header" v-text="file.origin_name"></div>
 			            <div class="meta">
 			            	<span v-text="file.author"></span>&nbsp;&nbsp;

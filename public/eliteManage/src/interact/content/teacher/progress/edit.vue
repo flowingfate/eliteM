@@ -64,8 +64,11 @@
 				var _this = this;
 				var edit = this.edit;
 				var task = this.task;
+
+				edit.discribe = edit.discribe||'无';
+				edit.mission = edit.mission||'无';
+
 				var flag = (edit.discribe!='')&&(edit.mission!='')&&(edit.work_time!='');
-				
 				if(!flag)
 				{
 					this.$store.dispatch('newMessage',{type:'err',content:'表单内容都不能为空！'});

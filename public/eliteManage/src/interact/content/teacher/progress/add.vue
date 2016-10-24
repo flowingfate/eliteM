@@ -65,13 +65,20 @@
 			{
 				var _this = this;
 				var task = this.task;
-				var flag = (task.discribe!='')&&(task.mission!='')&&(task.work_time!='');
+
+				task.discribe = task.discribe||'无';
+				task.mission = task.mission||'无';
+
+				/**
+				 * 检查表单是否为空
+				 * 
+				 var flag = (task.discribe!='')&&(task.mission!='')&&(task.work_time!='');
 
 				if(!flag)
 				{
 					this.$store.dispatch('newMessage',{type:'err',content:'表单内容都不能为空！'});
 					return;
-				}
+				}*/
 
 				var data = Object.assign(this.task,{teacher_id:this.myId,student_id:this.stuId});
 				
