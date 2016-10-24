@@ -29,7 +29,7 @@
                             <form v-el:form enctype="multipart/form-data"><label class="ui right labeled button">
 								<div class="ui icon button">&nbsp;<i class="file icon"></i>&nbsp;&nbsp;</div>
 								<span class="ui basic left pointing label">点击此按钮选择要上传的文件</span>
-								<input v-el:inputfile style="display:none" type="file" :accept="fileType" @change="getFile($event.currentTarget)">
+								<input v-el:inputfile style="display:none" type="file" @change="getFile($event.currentTarget)">
 							</label></form>
                         </div>
                         <div v-show="addFile.name" class="item">
@@ -126,7 +126,7 @@
 			progress:0,
 
 			iconType:{ pdf:'pdf',ppt:'powerpoint',pptx:'powerpoint',doc:'word',docx:'word' },
-			fileType:"application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,.caj",
+			// fileType:"application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,.caj",
 			
 			addFile:{name:'',type:'',size:'',file:'',author:'',description:''},
 			editFile:{id:'',author:'',description:''},
