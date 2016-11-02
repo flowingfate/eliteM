@@ -54,7 +54,6 @@
 				</div>
 			</div>
 		</div>
-
 		<div class="ui segment attached">
 			<table v-show="role=='teacher'" class="ui orange selectable celled table">
 				<thead class="center aligned">
@@ -63,6 +62,7 @@
 						<th width="80">姓名</th> 
 						<th>学校</th> 
 						<th>实验室</th> 
+						<th width="60">评分</th>
 						<th>备注</th> 
 						<th width="100">email</th> 
 						<th width="100">QQ</th> 
@@ -79,6 +79,7 @@
 						<td v-text="user.name"></td>
 						<td v-text="user.school"></td>
 						<td v-text="user.laboratory"></td>
+						<td v-text="user.stars"></td>
 						<td v-text="user.comment"></td>
 						<td v-text="user.email"></td>
 						<td v-text="user.qq"></td>
@@ -167,7 +168,7 @@
 			users:
 			{
 				rowIndex:-1,
-				teacher: [{id:'',name:'',username:'',school:'',laboratory:'',comment:'',email:'',qq:''}],
+				teacher: [{id:'',name:'',username:'',school:'',laboratory:'',stars:1,comment:'',email:'',qq:''}],
 				student: [{id:'',name:'',username:'',school:'',direction:'',comment:'',email:'',qq:'',phone:'',wechat:''}]
 			},
 			nowEdit:{},

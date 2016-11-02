@@ -12,6 +12,12 @@
 <template>
 <div class="v-studentFinished">
 	<div class="panel">
+		<div class="ui segment">
+			<span>我的教学评分：</span>
+			<div class="ui rating" data-max-rating="5"></div>
+		</div>
+	</div>
+	<div class="panel">
 		<div class="ui header attached top">
 			<div class="ui large buttons basic">
 				<div class="ui button animated basic fade" tabindex="0" 
@@ -131,6 +137,8 @@
 					success:(data)=>{ 
 						_this.students = data.students;
 						_this.teacher = data.teacher; 
+						$('.ui.rating').rating('disable');
+						$('.ui.rating').rating('set rating',data.teacher.stars);
 						_this.getStudentInfo(_this.students[_this.index].id,_this.index);
 					},
 					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }

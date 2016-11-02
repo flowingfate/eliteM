@@ -15,33 +15,23 @@
 <div class="v-latestTask">
 	<div class="panel">
 		<div class="ui segment">
-			<template v-for="teacher in teachers">
-				<div class="ui horizontal list" style="display:block;">
-					<div class="item">
-						<div class="content"><h4>导师信息：</h4></div>
-					</div>
-					<div class="item">
-						<i class="user circular icon"></i>
-						<div class="content"><span v-text="teacher.name"></span></div>
-					</div>
-					<div class="item">
-						<i class="university circular icon"></i>
-						<div class="content"><span v-text="teacher.school"></span></div>
-					</div>
-					<div class="item">
-						<i class="lab circular icon"></i>
-						<div class="content"><span v-text="teacher.laboratory"></span></div>
-					</div>
-					<div class="item">
-						<i class="mail circular icon"></i>
-						<div class="content"><span v-text="teacher.email"></span></div>
-					</div>
-					<div class="item">
-						<i class="qq circular icon"></i>
-						<div class="content"><span v-text="teacher.qq"></span></div>
-					</div>
-				</div>
-			</template>
+			<table class="ui selectable basic table">
+				<tbody>
+					<tr  v-for="teacher in teachers">
+						<td width="100">导师信息：</td>
+						<td width="100"><i class="user icon"></i><span v-text="teacher.name"></span></td>
+						<td><i class="university icon"></i><span v-text="teacher.school"></span></td>
+						<td><i class="lab icon"></i><span v-text="teacher.laboratory"></span></td>
+						<td><i class="mail icon"></i><span v-text="teacher.email"></span></td>
+						<td><i class="qq icon"></i><span v-text="teacher.qq"></span></td>
+						<td width="110">
+							<i class="star icon"
+							:class="{olive:teacher.stars==2,green:teacher.stars==3,teal:teacher.stars>=4}"></i>
+							<span>评分：</span><span v-text="teacher.stars"></span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 	<div class="panel">

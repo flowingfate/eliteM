@@ -12,6 +12,12 @@
 <template>
 <div class="v-studentProgress">
 	<div class="panel">
+		<div class="ui segment">
+			<span>我的教学评分：</span>
+			<div class="ui rating" data-max-rating="5"></div>
+		</div>
+	</div>
+	<div class="panel">
 		<div class="ui header attached top">
 			<div class="ui large buttons basic">
 				<div class="ui button animated basic fade" tabindex="0" 
@@ -63,7 +69,7 @@
 			<div class="ui right floated animated orange fade button" 
 				tabindex="0"
 				@click="$broadcast('add')">
-				<div class="visible content">添加</div>
+				<div class="visible content">添加任务</div>
 				<div class="hidden content">&nbsp;<i class="icon add circle"></i></div>
 			</div>
 		</div>
@@ -226,13 +232,15 @@
 							return;
 						}
 						_this.students = data.students;
-						_this.teacher = data.teacher; 
+						_this.teacher = data.teacher;
+						$('.ui.rating').rating('disable');
+						$('.ui.rating').rating('set rating',data.teacher.stars);
 						_this.getStudentInfo(data['students'][_this.index].id,_this.index);
 					},
 					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }
 				});
 			}
 		},
-		ready() { this.loadData(); }
+		ready() { this.loadData();}
 	}
 </script>

@@ -30,6 +30,11 @@
 				<span class="id" v-text="teacher.id"></span>
 				<span class="name" v-text="teacher.name"></span>
 			</div></div>
+			<div class="extra content">
+				<i class="star icon" 
+    			:class="{olive:teacher.stars==2,green:teacher.stars==3,teal:teacher.stars>=4}"></i> 
+    			<span>教学评分：</span><span v-text="teacher.stars"></span> 
+			</div>
 		</a>
 	</div>
 
@@ -144,7 +149,7 @@
 		data() {return {
 
 			filter: { keyword:'', field:'name'},
-			teachers: [{name:'',id:'',email:'',school:'',laboratory:''}],
+			teachers: [{name:'',id:'',email:'',school:'',laboratory:'',stars:1}],
 			index:0,
 			students: 
 			{

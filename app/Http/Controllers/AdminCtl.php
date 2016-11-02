@@ -106,7 +106,7 @@ class AdminCtl extends Controller
 	// 获取所有的用户，包括所有教师和学生
     public function users()
     {
-        $teachers = Teacher::select(['id','username','name','school','laboratory','comment','email','qq'])->get()->toArray();
+        $teachers = Teacher::select(['id','username','name','school','laboratory','stars','comment','email','qq'])->get()->toArray();
         $students = Student::select(['id','username','name','school','direction','comment','email','qq','phone','wechat'])->get()->toArray();
 
         $data = ['teachers'=>$teachers,'students'=>$students];

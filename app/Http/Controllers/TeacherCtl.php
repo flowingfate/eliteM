@@ -18,7 +18,7 @@ class TeacherCtl extends Controller
     // 获取导师列表
     public function teacherlist()
     {
-        $result = Teacher::select(['id','name','email','school','laboratory'])->get()->toArray();
+        $result = Teacher::select(['id','name','email','school','laboratory','stars'])->get()->toArray();
 
         return response()->json($result);
     }

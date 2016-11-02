@@ -44,6 +44,7 @@
 				</div>
 			</div>
 		</div>
+
 		<div v-show="role=='student'" class="ui form">
 			<div class="two fields">
 				<div class="field">
@@ -91,6 +92,12 @@
 			</div>
 		</div>
 	</div>
+	<template v-if="role=='teacher'">
+		<div class="ui divider" style="margin:0;"></div>
+		<div class="content">
+			<span>设置评分：</span><div @click='getStars' class="ui rating" :data-rating="teacher.stars" data-max-rating="5"></div>
+		</div>
+	</template>
 	<div class="actions">
 		<div class="ui cancel button">取消</div>
 		<div class="ui button" @click="resetPassword(user.id,role)">重置密码</div>
@@ -105,7 +112,7 @@
 	{
 		data() {return {
 
-			teacher:{id:'',name:'',username:'',school:'',laboratory:'',comment:'',email:'',qq:''},
+			teacher:{id:'',name:'',username:'',school:'',laboratory:'',stars:1,comment:'',email:'',qq:''},
 			student:{id:'',name:'',username:'',school:'',direction:'',comment:'',email:'',qq:'',phone:'',wechat:''}
 		}},
 		vuex: {getters: {route: ({route})=>{return route;},}},
@@ -119,10 +126,17 @@
 			'user':function()
 			{
 				this[this.role] = Object.assign({},this.user);
+				if(this.role=='teacher') $('.ui.rating').rating('set rating',this.teacher.stars);
 			}
 		},
 		methods:
 		{
+			getStars(ev)
+			{
+				var target = ev.target;
+				var num = $(target).index()+1;
+				this.teacher.stars = num;
+			},
 			resetPassword(id,role)
 			{
 				var _this = this;
@@ -193,8 +207,6 @@
 				setTimeout(()=>{$(_this.$els.edit).modal('show');},100);
 			},
 		},
-		ready()
-		{
-		}
+		ready() { }
 	}
 </script>
