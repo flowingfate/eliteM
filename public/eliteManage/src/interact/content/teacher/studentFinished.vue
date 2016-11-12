@@ -13,8 +13,8 @@
 <div class="v-studentFinished">
 	<div class="panel">
 		<div class="ui segment">
-			<span>我的教学评分：</span>
-			<div class="ui rating" data-max-rating="5"></div>
+			<span>我的星级：</span>
+			<div v-el:stars class="ui star rating"></div>
 		</div>
 	</div>
 	<div class="panel">
@@ -137,8 +137,8 @@
 					success:(data)=>{ 
 						_this.students = data.students;
 						_this.teacher = data.teacher; 
+						$(_this.$els.stars).rating({initialRating:data.teacher.stars, maxRating:5});
 						$('.ui.rating').rating('disable');
-						$('.ui.rating').rating('set rating',data.teacher.stars);
 						_this.getStudentInfo(_this.students[_this.index].id,_this.index);
 					},
 					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }

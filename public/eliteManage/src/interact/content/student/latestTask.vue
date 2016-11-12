@@ -24,10 +24,10 @@
 						<td><i class="lab icon"></i><span v-text="teacher.laboratory"></span></td>
 						<td><i class="mail icon"></i><span v-text="teacher.email"></span></td>
 						<td><i class="qq icon"></i><span v-text="teacher.qq"></span></td>
-						<td width="110">
+						<td width="130">
 							<i class="star icon"
 							:class="{olive:teacher.stars==2,green:teacher.stars==3,teal:teacher.stars>=4}"></i>
-							<span>评分：</span><span v-text="teacher.stars"></span>
+							<span>导师星级：</span><span v-text="teacher.stars"></span>
 						</td>
 					</tr>
 				</tbody>

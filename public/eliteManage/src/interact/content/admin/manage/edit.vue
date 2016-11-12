@@ -95,7 +95,7 @@
 	<template v-if="role=='teacher'">
 		<div class="ui divider" style="margin:0;"></div>
 		<div class="content">
-			<span>设置评分：</span><div @click='getStars' class="ui rating" :data-rating="teacher.stars" data-max-rating="5"></div>
+			<span>设置星级：</span><div @click='getStars' class="ui star rating" :data-rating="teacher.stars" data-max-rating="5"></div>
 		</div>
 	</template>
 	<div class="actions">

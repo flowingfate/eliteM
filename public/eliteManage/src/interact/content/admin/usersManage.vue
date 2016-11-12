@@ -62,7 +62,7 @@
 						<th width="80">姓名</th> 
 						<th>学校</th> 
 						<th>实验室</th> 
-						<th width="60">评分</th>
+						<th width="60">星级</th>
 						<th>备注</th> 
 						<th width="100">email</th> 
 						<th width="100">QQ</th> 
