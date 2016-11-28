@@ -22,6 +22,13 @@
 	text-align: center;font-size:96px;margin:0;
 }
 .captcha img { display: inline-block; line-height: 42px;width: 100%; border-radius: 2px; margin-top:1px; }
+.footer
+{
+	position:absolute; bottom:0; left:0; width:100%; height:60px; line-height:60px;
+	text-align:center; color:white; background-color:#222e4c; font-size:14px; font-weight:lighter;
+	position:fixed;
+	
+}
 
 @if($role=='teacher'||$role=='student')
 body 
@@ -98,3 +105,8 @@ body
 	</div>
 @endsection
 
+@section('footer')
+	<div class="footer">
+		Copyright © 2016 北京菁英天下国际教育咨询有限公司 版权所有 京ICP备15000012号 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 技术支持：北京赛亚数据科技有限公司
+	</div>
+@endsection

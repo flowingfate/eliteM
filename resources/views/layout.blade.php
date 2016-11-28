@@ -19,5 +19,7 @@
 	<div class="contenBox">
 		@yield('content')
 	</div>
+
+	@yield('footer')
 </body>
 </html>
