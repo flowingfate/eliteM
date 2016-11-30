@@ -50,6 +50,10 @@
 				</div>
 			</div>
 		</div>
+		<div class="ui segment" v-if="student.comment">
+			<a class="ui orange tag label">备注</a>
+			<span v-text="student.comment"></span>
+		</div>
 		<table class="ui orange selectable celled table">
 			<thead>
 				<tr> 
@@ -90,7 +94,7 @@
 		vuex: { getters: { route: ({route})=>{return route;}, } },
 		props:
 		{
-			student:{type:Object,default:()=>{return {id:-1,name:'',school:'',direction:'',phone:'',numThr:'',teachers:[{id:'',name:''}]}; }},
+			student:{type:Object,default:()=>{return {id:-1,name:'',school:'',direction:'',phone:'',comment:'',numThr:'',teachers:[{id:'',name:''}]}; }},
 		},
 		methods:
 		{

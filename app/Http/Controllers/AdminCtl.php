@@ -21,7 +21,7 @@ class AdminCtl extends Controller
      */
     public function progress(Request $request)
     {
-        $students = Student::select(['id','name','school','direction','phone'])->get();
+        $students = Student::select(['id','name','school','direction','phone','comment'])->get();
 
         $result = [];
         foreach ($students as $student) 
@@ -58,7 +58,7 @@ class AdminCtl extends Controller
     }
     public function finished(Request $request)
     {
-        $students = Student::select(['id','name','school','direction','phone'])->get();
+        $students = Student::select(['id','name','school','direction','phone','comment'])->get();
 
         $result = [];
         foreach ($students as $student) 

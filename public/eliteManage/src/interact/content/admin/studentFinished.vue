@@ -50,7 +50,7 @@
 		data() {return {
 
 			filter: { keyword:'', field:'name'},
-			students: [{id:'',name:'',school:'',direction:'',phone:'',teachers:[]}],
+			students: [{id:'',name:'',school:'',direction:'',phone:'',comment:'',teachers:[]}],
 			index:0,
 		}},
 		vuex: { getters:{ route:({route})=>{return route;}, } },

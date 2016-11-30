@@ -67,7 +67,7 @@
 
 			check:15,
 			filter: { keyword:'', field:'name'},
-			students: [{id:'',name:'',school:'',direction:'',phone:'',numThr:'',teachers:[{id:'',name:'',time:''}]}],
+			students: [{id:'',name:'',school:'',direction:'',phone:'',comment:'',numThr:'',teachers:[{id:'',name:'',time:''}]}],
 			index:0,
 		}},
 		vuex: { getters: { route: ({route})=>{return route;}, } },
