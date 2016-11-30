@@ -37,6 +37,10 @@
 				<i class="idea circular icon"></i>
 				<div class="content"><span v-text="student.direction"></span></div>
 			</div>
+			<div class="item">
+				<i class="call circular icon"></i>
+				<div class="content"><span v-text="student.phone"></span></div>
+			</div>
 			<div class="item" v-for="t in student.teachers">
 				<div class="ui basic label" :class="{orange:t.time!=-1}">
 					<i class="doctor circular icon"></i><span v-text="t.name"></span>
@@ -87,7 +91,7 @@
 		vuex: { getters: { route: ({route})=>{return route;}, } },
 		props:
 		{
-			student:{type:Object,default:()=>{return {id:-1,name:'',school:'',direction:'',numThr:'',teachers:[{id:'',name:'',time:''}]}; }},
+			student:{type:Object,default:()=>{return {id:-1,name:'',school:'',direction:'',phone:'',numThr:'',teachers:[{id:'',name:'',time:''}]}; }},
 		},
 		methods:
 		{
