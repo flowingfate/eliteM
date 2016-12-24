@@ -19,13 +19,17 @@
 	</div>
 	<div class="panel">
 		<div class="ui header attached top">
-			<div class="ui large buttons basic">
-				<div class="ui button animated basic fade" tabindex="0" 
-					v-for="student in students"
-					:class="{orange:index==$index}"
-					@click="getStudentInfo(student.id,$index)" >
-					<div class="visible content"><i class="student icon"></i><span v-text="student.name"></span></div>
-					<div class="hidden content">查看信息</div>
+			<div class="ui celled horizontal list">
+				<div class="item" style="border:none; padding:0.4em 0.2em;" 
+					v-for="student in students">
+					<div class="ui button animated basic fade" tabindex="0" 
+						:class="{orange:index==$index}"
+						@click="getStudentInfo(student.id,$index)" >
+						<div class="visible content">
+							<i class="student icon"></i><span v-text="student.name"></span>
+						</div>
+						<div class="hidden content">查看信息</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -99,7 +103,10 @@
 	{
 		data() {return {
 			teacher:{name:''},  //包括其他一堆信息
-			students: [{name:'',school:'',direction:'',id:''}],  //包括其他一堆信息
+			students: 
+			[
+				{name:'张小蛋',school:'',direction:'',id:''},
+			],
 			tasks: [{dicribe:'',mission:'',progress:'',work_time:'',teacher:'',up_time:''}],
 			index:0  // 判断当前操作对象是谁
 		}},
