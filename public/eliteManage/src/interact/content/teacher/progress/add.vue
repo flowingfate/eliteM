@@ -28,6 +28,16 @@
 					</div>
 				</div>
 			</div>
+			<br/>
+			<div class="field">
+				<label>Deadline</label>
+				<div class="ui divider"></div>
+				<div class="ui action right labeled input">
+					<div class="ui basic label">选择日期</div>
+					<input v-el:picker type="text" v-model="task.deadline" />
+					<button class="ui right labeled icon button"  @click="clearDate"><i class="remove icon"></i>清除</button>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="actions">
@@ -40,11 +50,16 @@
 </template>
 
 <script>	
+
+	const Flatpickr = require("flatpickr");
+	const Chinese = require("flatpickr/dist/l10n/zh.js").zh;
+
 	module.exports =
 	{
 		data() {return {
 
-			task:{discribe:'',mission:'',work_time:1},
+			task:{discribe:'',mission:'',work_time:1,deadline:''},
+			picker:null,
 		}},
 		vuex:
 		{
@@ -61,6 +76,7 @@
 			{
 				Object.keys(this.task).forEach((k)=>{this.task[k]='';});
 			},
+			clearDate() { this.task.deadline = '无'; },
 			addTask()
 			{
 				var _this = this;
@@ -100,6 +116,7 @@
 			'add':function()
 			{
 				var _this = this;
+				this.picker.setDate(new Date().fp_incr(7));
 				setTimeout(()=>{$(_this.$els.add).modal('show');},100);
 			},
 		},
@@ -107,6 +124,14 @@
 		{ 
 			$('select.dropdown').dropdown(); 
 			$('.ui.radio.checkbox').checkbox();
+
+			this.picker = new Flatpickr(this.$els.picker,{
+				locale: Chinese,
+				allowInput: true,
+				minDate: new Date(),
+				maxDate: new Date().fp_incr(14),
+				appendTo: $('.pickContain').get(0),
+			});
 		}
 	}
 </script>

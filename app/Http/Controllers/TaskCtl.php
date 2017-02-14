@@ -21,8 +21,8 @@ class TaskCtl extends Controller
             'work_time' => $request->input('work_time'),
             'student_id' => $request->input('student_id'),
             'teacher_id'=> $request->input('teacher_id'),
+            'deadline'=>$request->input('deadline'),
             'up_time'=>date('Y-m-d'),
-            'progress'=>0
         ];
 
         $T = Task::create($arr);
@@ -31,11 +31,11 @@ class TaskCtl extends Controller
             'id'=>$T->id,
             'discribe'=>$T->discribe,
             'mission'=>$T->mission,
-            'progress'=>$T->progress,
             'work_time'=>$T->work_time,
             'teacher'=>$T->teacher->name,
             'teacherId'=>$T->teacher_id,
-            'up_time'=>$T->up_time
+            'up_time'=>$T->up_time,
+            'deadline'=>$T->deadline,
         ];
 
         return response()->json([
@@ -52,20 +52,6 @@ class TaskCtl extends Controller
         Task::destroy($id);
 
         return response()->json(['type'=>'ok','content'=>'删除任务成功！']);
-    }
-
-    // 切换任务的状态：完成--未完成
-    public function finish(Request $request)
-    {
-        // 任务ID
-        $id = $request->input('id');
-        $task = Task::find($id);
-        if(!$task) return response()->json(['type'=>'err','content'=>'任务查找失败！']);
-
-        $task->progress = 1-$task->progress;
-        $task->save();
-
-        return response()->json(['type'=>'ok','content'=>'设置成功']);
     }
 
     // 修改任务

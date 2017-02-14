@@ -39,7 +39,10 @@
 				<div class="description">
 					<div class="ui two column padded grid">
 						<div class="column" style="padding:5px;" v-for="t in stu.teachers"> 
-							<div class="ui fluid label" :class="{basic:t.time==-1,red:t.time>=check,yellow:t.time==0}" v-text="t.name"></div>
+							<div class="ui fluid label" 
+								:class="{ black:t.time==-1, red:t.time>=check, green:t.time==0 }"
+								:data-tooltip="tips(t.time)"
+								v-text="t.name"></div>
 						</div>
 					</div>
 				</div>
@@ -79,6 +82,13 @@
 		},
 		methods:
 		{
+			tips(time)
+			{ 
+				if(time==-1) return "已结项";
+				if(time==0) return "新加导师，还未发布过任务";
+				if(time>=this.check) return "已超过"+this.check+"天未联系学生";
+				return "正常任务中";
+			},
 			showModal(index,event)
 			{
 				this.index = index;

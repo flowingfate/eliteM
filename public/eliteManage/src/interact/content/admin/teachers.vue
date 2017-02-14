@@ -84,7 +84,7 @@
 							<th>导师内容</th> 
 							<th width="80">导师时间</th> 
 							<th>学员任务</th> 
-							<th width="80">完成度</th> 
+							<th width="110">deadline</th> 
 						</tr>
 					</thead>
 					<tbody>
@@ -94,7 +94,7 @@
 							<td v-text="task.discribe"></td>
 							<td v-text="task.work_time*0.5+' h'"></td>
 							<td v-text="task.mission"></td>
-							<td v-text="task.progress?'完成':'未完成'"></td>
+							<td v-text="task.deadline"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -120,7 +120,7 @@
 							<th>导师内容</th> 
 							<th width="80">导师时间</th> 
 							<th>学员任务</th> 
-							<th width="80">完成度</th> 
+							<th width="110">deadline</th>  
 						</tr>
 					</thead>
 					<tbody>
@@ -130,7 +130,7 @@
 							<td v-text="task.discribe"></td>
 							<td v-text="task.work_time*0.5+' h'"></td>
 							<td v-text="task.mission"></td>
-							<td v-text="task.progress?'完成':'未完成'"></td>
+							<td v-text="task.deadline"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -153,8 +153,8 @@
 			index:0,
 			students: 
 			{
-				progress:[{id:'',name:'',tasks: [{dicribe:'',mission:'',progress:'',work_time:'',up_time:'',teacher_id:''}]}],
-				finish:[{id:'',name:'',tasks: [{dicribe:'',mission:'',progress:'',work_time:'',up_time:'',teacher_id:''}]}],
+				progress:[{id:'',name:'',tasks: [{dicribe:'',mission:'',work_time:'',up_time:'',teacher_id:''}]}],
+				finish:[{id:'',name:'',tasks: [{dicribe:'',mission:'',work_time:'',up_time:'',teacher_id:''}]}],
 			},
 		}},
 		vuex:

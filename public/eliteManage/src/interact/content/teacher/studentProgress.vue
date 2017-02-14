@@ -22,13 +22,19 @@
 			<div class="ui celled horizontal list">
 				<div class="item" style="border:none; padding:0.4em 0.2em;" 
 					v-for="student in students">
-					<div class="ui button animated basic fade" tabindex="0" 
-						:class="{orange:index==$index}"
-						@click="getStudentInfo(student.id,$index)" >
-						<div class="visible content">
-							<i class="student icon"></i><span v-text="student.name"></span>
+					<div class="ui labeled button" tabindex="0" :data-tooltip="'上次联系学生在 '+student.time+' 天前'">
+						<div class="ui button"
+							@click="getStudentInfo(student.id,$index)"
+							:class="{basic:index!=$index,orange:index==$index}">
+							<i class="student icon"></i>
+							<span v-text="student.name"></span>
 						</div>
-						<div class="hidden content">查看信息</div>
+						<a class="ui basic left pointing label"
+							:class="{
+									green:student.time<7,
+									yellow:student.time>=7&&student.time<15,
+									red:student.time>=15
+							}">{{student.time}}</a>
 					</div>
 				</div>
 			</div>
@@ -75,8 +81,27 @@
 				<div class="hidden content">&nbsp;<i class="icon add circle"></i></div>
 			</div>
 		</div>
+		<!-- <div class="ui segment attached">
+			<table class="ui olive center aligned selectable celled table">
+				<thead>
+					<tr> 
+						<th width="120">备注来源</th> 
+						<th>备注内容</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>管理员</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>教师</td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+		</div> -->
 		<div class="ui segment attached">
-
 			<table class="ui orange center aligned selectable celled table">
 				<thead>
 					<tr> 
@@ -85,12 +110,10 @@
 						<th>导师任务</th> 
 						<th width="80">导师时间</th> 
 						<th>学员任务</th> 
-						<th width="80">完成度</th> 
-						<th width="90">完成/撤销</th> 
+						<th width="110">deadline</th>
 						<th width="60">编辑</th> 
 						<th width="60">删除</th>
 					</tr>
-					
 				</thead>
 				<tbody @mouseleave="hoverTaskIndex=-1">
 					<tr v-for="t in tasks" @mouseenter="hoverTaskIndex=$index">
@@ -99,14 +122,7 @@
 						<td v-text="t.discribe"></td>
 						<td v-text="t.work_time*0.5+' h'"></td>
 						<td v-text="t.mission"></td>
-						<td v-text="t.progress?'完成':'未完成'"></td>
-						<td>
-							<button class="ui icon basic circular button" 
-								:class="{orange:hoverTaskIndex==$index&&t.teacherId==myId,disabled:t.teacherId!=myId}"
-								@click="taskFinish(t.id,$index)" >
-								<i class="icon" :class="{checkmark:!t.progress,undo:t.progress}"></i>
-							</button>
-						</td>
+						<td v-text="t.deadline"></td>
 						<td>
 							<button class="ui icon basic circular button" 
 								:class="{orange:hoverTaskIndex==$index&&t.teacherId==myId,disabled:t.teacherId!=myId}"
@@ -137,14 +153,14 @@
 </div>
 </template>
 
-<script>	
+<script>
 	module.exports =
 	{
 		data() {return {
 			teacher:{name:''},  //包括其他一堆信息
 			
-			students: [{name:'张小三',school:'',direction:'',id:'',comment:''},],   //包括其他一堆信息
-			tasks:[{id:'',discribe:'',mission:'',progress:'',work_time:'',teacher:'',teacherId:'',up_time:''}],
+			students: [{name:'张小三',school:'',direction:'',id:'',comment:'',time:-1},],   //包括其他一堆信息
+			tasks:[{id:'',discribe:'',mission:'',work_time:'',teacher:'',teacherId:'',up_time:'',deadline:''}],
 			hoverTaskIndex:-1,
 			editTask:{},
 			index:0,  // 判断当前操作对象是谁
@@ -192,23 +208,6 @@
 					success:(data)=>{ 
 						_this.$store.dispatch('newMessage',data);
 						_this.tasks.splice(index,1);
-					},
-					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }
-				});
-			},
-			taskFinish(id,index)
-			{
-				var _this = this;
-				var progress = this.tasks[index].progress;
-				var route = this.route+'/taskFinish';
-
-				$.ajax(
-				{
-					type:'GET', url:route, data:{id:id},
-					success:(data)=>{ 
-						_this.$store.dispatch('newMessage',data);
-						if(data.type=='err') return;
-						_this.tasks[index].progress = 1-progress;
 					},
 					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }
 				});

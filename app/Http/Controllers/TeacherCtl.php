@@ -36,7 +36,7 @@ class TeacherCtl extends Controller
 
         foreach ($teacher->students as $student) 
         {
-            $tasks = $student->tasks()->select(['discribe','mission','progress','work_time','teacher_id','up_time'])->get()->toArray();
+            $tasks = $student->tasks()->select(['discribe','mission','work_time','teacher_id','up_time','deadline'])->get()->toArray();
         	$one = [
                 'id'=>$student->id,
         		'name'=>$student->name,
@@ -61,10 +61,26 @@ class TeacherCtl extends Controller
         if(!$teacher) return response()->json(['type'=>'err','content'=>'没有找到该导师的信息']);
 
     	$students = [];
-
+        $arrTemp = [];
         foreach ($teacher->students as $s) 
         {
-            if($s->pivot->finish==$finish) array_push($students,$s->toArray());
+            if($s->pivot->finish==$finish)
+            {
+                $arrTemp = $s->toArray();
+
+                // 获取导师联系时间间隔
+                if($finish==0)
+                {
+                    $task = $teacher->tasks()->select(['up_time'])->where('student_id',$s->id)->orderBy('id','desc')->first();
+                    
+                    // 有任务，记录时间
+                    if($task) $arrTemp['time'] = round((time()-strtotime($task->up_time))/60/60/24);
+                    // 无任务，或者刚布置完任务，标记为0
+                    else $arrTemp['time'] = 0;
+                }
+
+                array_push($students,$arrTemp);
+            }
         }
 
         // 注意处理查询结果为空的情况

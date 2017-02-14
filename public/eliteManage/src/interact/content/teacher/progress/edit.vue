@@ -14,6 +14,7 @@
 				<div class="field">
 					<textarea type="text" v-model="edit.mission" placeholder="任务内容" rows="2"></textarea>
 				</div>
+				<br/>
 				<div class="field">
 					<label>工作时长</label>
 					<div class="ui divider"></div>
@@ -24,6 +25,16 @@
 							<label v-text="(n+1)*0.5+' 小时'"></label>
 						</div>
 						</div>
+					</div>
+				</div>
+				<br/>
+				<div class="field">
+					<label>Deadline</label>
+					<div class="ui divider"></div>
+					<div class="ui action right labeled input">
+						<div class="ui basic label">选择日期</div>
+						<input v-el:picker type="text" v-model="edit.deadline" />
+						<button class="ui right labeled icon button"  @click="clearDate"><i class="remove icon"></i>清除</button>
 					</div>
 				</div>
 			</div>
@@ -38,11 +49,16 @@
 </template>
 
 <script>	
+
+	const Flatpickr = require("flatpickr");
+	const Chinese = require("flatpickr/dist/l10n/zh.js").zh;
+	
 	module.exports =
 	{
 		data() {return {
 
-			edit:{discribe:'',mission:'',work_time:'',id:''},
+			edit:{discribe:'',mission:'',work_time:'',id:'',deadline:''},
+			picker:null,
 		}},
 		props:{task:{type:Object,default:()=>{return {};}} },
 		vuex:
@@ -55,7 +71,7 @@
 		},
 		watch:
 		{
-			'task':function() { this.edit = Object.assign({},this.task); }
+			'task': function() { this.edit = Object.assign({},this.task); },
 		},
 		methods:
 		{
@@ -67,6 +83,7 @@
 
 				edit.discribe = edit.discribe||'无';
 				edit.mission = edit.mission||'无';
+				edit.deadline = edit.deadline||'无';
 
 				var flag = (edit.discribe!='')&&(edit.mission!='')&&(edit.work_time!='');
 				if(!flag)
@@ -97,15 +114,28 @@
 					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }
 				});
 			},
+			clearDate() { this.edit.deadline = '无'; }
 		},
 		events:
 		{
 			'edit':function()
 			{
 				var _this = this;
+				var D = this.edit.deadline;
+				if(D&&(D!='无')) this.picker.setDate(D);
 				setTimeout(()=>{$(_this.$els.edit).modal('show');},100);
 			},
 		},
-		ready() { $('select.dropdown').dropdown(); }
+		ready() 
+		{ 
+			$('select.dropdown').dropdown();
+			this.picker = new Flatpickr(this.$els.picker,{
+				locale: Chinese,
+				allowInput: true,
+				minDate: new Date(),
+				maxDate: new Date().fp_incr(14),
+				appendTo: $('.pickContain').get(0),
+			});
+		}
 	}
 </script>

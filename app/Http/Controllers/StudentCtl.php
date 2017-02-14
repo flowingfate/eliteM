@@ -57,11 +57,11 @@ class StudentCtl extends Controller
                 'id'=>$task->id,
                 'discribe'=>$task->discribe,
                 'mission'=>$task->mission,
-                'progress'=>$task->progress,
                 'work_time'=>$task->work_time,
                 'teacher'=>$task->teacher->name,
                 'teacherId'=>$task->teacher_id,
-                'up_time'=>$task->up_time
+                'up_time'=>$task->up_time,
+                'deadline'=>$task->deadline,
             ];
             array_push($result, $arr);
         }
@@ -77,6 +77,7 @@ class StudentCtl extends Controller
         if(!$student) return response()->json(['type'=>'err','content'=>'没有找到该学员的信息']);
 
     	$teachers = $student->teachers->toArray();
+        $tasks = [];
     	$nowtasks = [];
         $histasks = [];
 
@@ -86,11 +87,12 @@ class StudentCtl extends Controller
             $arr['teacher'] = $task->teacher->name;
             $arr['teacherId'] = $task->teacher->id;
 
-            if($arr['progress']==0) array_push($nowtasks, $arr);
-            if($arr['progress']==1) array_push($histasks, $arr);
+            // if($arr['progress']==0) array_push($nowtasks, $arr);
+            // if($arr['progress']==1) array_push($histasks, $arr);
+            array_push($tasks, $arr);
         }
 
-    	$data = ['teachers'=>$teachers, 'nowtasks'=>$nowtasks, 'histasks'=>$histasks ];
+    	$data = ['teachers'=>$teachers, 'tasks'=>$tasks, 'nowtasks'=>$nowtasks, 'histasks'=>$histasks ];
 
     	return response()->json($data);
     }

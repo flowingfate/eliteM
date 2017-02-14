@@ -12,8 +12,10 @@
 {
 	margin:30px 50px; position:relative;
 }
+.pickContain { position:absolute; z-index:10000; top:0; }
 </style>
 <template>
+	<div class="pickContain"></div>
 	<menu :menu="menu" :now-menu.sync="nowMenu"></menu>
 	<div class="v-teacher">
 		<component :is="nowMenu"  transition="panel"></component>

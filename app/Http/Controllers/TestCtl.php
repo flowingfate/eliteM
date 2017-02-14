@@ -18,7 +18,15 @@ class TestCtl extends Controller
 {
     public function index(Request $request)
     {
-        dd(isTest());
+        // dd(isTest());
+        $tasks = Task::all();
+        foreach ($tasks as $task) 
+        {
+            $task->deadline = '无';
+            $task->save();
+        }
+
+        dd("ok");
     }
     public function up(Request $request)
     {

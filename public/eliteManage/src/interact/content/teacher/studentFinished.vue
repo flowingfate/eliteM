@@ -78,7 +78,7 @@
 						<th>导师内容</th> 
 						<th width="80">导师时间</th> 
 						<th>学员任务</th> 
-						<th width="80">完成度</th> 
+						<th width="110">deadline</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -88,7 +88,7 @@
 						<td v-text="t.discribe"></td>
 						<td v-text="t.work_time*0.5+' h'"></td>
 						<td v-text="t.mission"></td>
-						<td v-text="t.progress?'完成':'未完成'"></td>
+						<td v-text="t.deadline"></td>
 					</tr>
 				</tbody>
 			</table>
@@ -107,7 +107,7 @@
 			[
 				{name:'张小蛋',school:'',direction:'',id:''},
 			],
-			tasks: [{dicribe:'',mission:'',progress:'',work_time:'',teacher:'',up_time:''}],
+			tasks: [{dicribe:'',mission:'',work_time:'',teacher:'',up_time:'',deadline:''}],
 			index:0  // 判断当前操作对象是谁
 		}},
 		vuex:
@@ -129,7 +129,7 @@
 				$.ajax(
 				{
 					type:'GET', url:route, data:data,
-					success:(data)=>{ _this.tasks = data; },
+					success:(data)=>{ _this.tasks = data;},
 					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }
 				});
 			},

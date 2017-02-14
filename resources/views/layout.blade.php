@@ -9,6 +9,7 @@
 	<link rel="stylesheet" href="{{asset('css/semantic.min.css')}}" />
 	<link rel="stylesheet" href="{{asset('css/header.css')}}" />
 	@yield('style')
+	
 	<script src="{{asset('js/jquery2.min.js')}}"></script>
 	<script src="{{asset('css/semantic.min.js')}}"></script>
 	@yield('script')

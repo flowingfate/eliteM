@@ -57,7 +57,6 @@ Route::group(['middleware' => ['web','cors']], function ()
 			Route::get('addTask','TaskCtl@add');
 			Route::get('removeTask','TaskCtl@remove');
 			Route::get('modifyTask','TaskCtl@modify');
-			Route::get('taskFinish','TaskCtl@finish');
 
 			Route::get('personalInfo','TeacherCtl@personalInfo')->middleware(["check:id,无权访问"]);
 			Route::get('modifyPersonalInfo','TeacherCtl@modifyPersonalInfo')->middleware(["check:id,无权访问"]);

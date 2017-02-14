@@ -2,6 +2,13 @@
 
 @section('title','菁英启航')
 
+@if($role=='teacher')
+    @section('style')
+        <link rel="stylesheet" href="{{asset('css/flatpickr.min.css')}}" />
+        <link rel="stylesheet" href="{{asset('css/dateTheme/dark.css')}}" />
+    @endsection
+@endif
+
 @section('content')
 	<div id="interact">
         <interact> </interact>

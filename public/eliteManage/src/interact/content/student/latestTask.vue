@@ -35,7 +35,7 @@
 		</div>
 	</div>
 	<div class="panel">
-		<h2 class="ui header attached top">最新任务 </h2>
+		<h2 class="ui header attached top">学习任务</h2>
 		<div class="ui segment attached">
 			<table class="ui orange center aligned selectable celled table">
 				<thead>
@@ -43,36 +43,15 @@
 						<th width="140">日期</th> 
 						<th width="120">导师</th> 
 						<th>任务内容</th> 
-						<th width="120">完成度</th> 
+						<th width="120">deadline</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="task in nowtasks">
+					<tr v-for="task in tasks">
 						<td v-text="task.up_time"></td>
 						<td v-text="task.teacher"></td>
 						<td class="left aligned" v-text="task.mission"></td>
-						<td v-text="task.progress?'完成':'未完成'"></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<h2 class="ui header attached">历史任务 </h2>
-		<div class="ui segment attached">
-			<table class="ui orange center aligned selectable celled table">
-				<thead>
-					<tr> 
-						<th width="140">日期</th> 
-						<th width="120">导师</th> 
-						<th>任务内容</th> 
-						<th width="120">完成度</th> 
-					</tr>
-				</thead>
-				<tbody>
-					<tr v-for="task in histasks">
-						<td v-text="task.up_time"></td>
-						<td v-text="task.teacher"></td>
-						<td class="left aligned" v-text="task.mission"></td>
-						<td v-text="task.progress?'完成':'未完成'"></td>
+						<td v-text="task.deadline"></td>
 					</tr>
 				</tbody>
 			</table>
@@ -87,8 +66,9 @@
 		data() {return {
 
 			teachers:[{name:'',school:'',laboratory:'',email:'',id:''}],
-			nowtasks:[{mission:'',progress:'',up_time:''}],
-			histasks:[{mission:'',progress:'',up_time:''}]
+			tasks:[{teacher:'',mission:'',up_time:'',deadline:''}],
+			nowtasks:[{mission:'',up_time:''}],
+			histasks:[{mission:'',up_time:''}]
 		}},
 		vuex:
 		{
@@ -117,8 +97,7 @@
 						return;
 					}
 					_this.teachers = data.teachers;
-					_this.nowtasks = data.nowtasks;
-					_this.histasks = data.histasks;
+					_this.tasks = data.tasks;
 				},
 				error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }
 			});
