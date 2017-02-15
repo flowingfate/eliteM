@@ -1,3 +1,3 @@
 <?php
 
-function isTest() {return true; }
+function isTest() {return false; }
