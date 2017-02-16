@@ -7,6 +7,7 @@
 		width:100%;box-shadow:0 0 10px rgba(0,0,0,0.1);padding:0;
 		background-color:white; border-radius:3px; margin-bottom:20px;
 	}
+	.ui.pointing.label:before { z-index:1;}
 }
 </style>
 <template>
