@@ -5,7 +5,7 @@
 <template>
 
 <div class="ui small modal" v-el:add>
-	<div class="header" @click="test">添加任务</div>
+	<div class="header">添加任务</div>
 	<div class="content">
 		<div class="ui form">
 			<div class="field">
@@ -110,7 +110,6 @@
 					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }
 				});
 			},
-			test() { console.log(this.task); }
 		},
 		events:
 		{
@@ -134,10 +133,10 @@
 				appendTo: $('.pickContain').get(0),
 			});
 
-			var D = new Date().fp_incr(7);
-			var arr = D.toLocaleDateString().split('/');
-			if(arr[1].length==1) arr[1]=0+arr[1];
-			if(arr[2].length==1) arr[2]=0+arr[2];
+			var D=new Date().fp_incr(7) , arr=[];
+			arr[0]=D.getFullYear();  arr[1]=D.getMonth()+1;  arr[2]=D.getDate();
+			if(arr[1]<10) arr[1]='0'+arr[1];
+			if(arr[2]<10) arr[2]='0'+arr[2];
 			this.task.deadline = arr.join('-');
 		}
 	}
