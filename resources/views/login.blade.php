@@ -1,6 +1,10 @@
 @extends('layout')
 
-@section('title','登录')
+<?php
+	$roleTitle = ['admin'=>'管理员','teacher'=>'导师','student'=>'学员','vindicator'=>'运营维护者'];
+?>
+
+@section('title','起航吧！【'.$roleTitle[$role].'】')
 
 @section('style')
 <style type="text/css">
@@ -94,10 +98,7 @@ body
 				<button class="ui animated fade orange fluid button" tabindex="0" type="submit">
 					<div class="visible content">登录账户</div>
 					<div class="hidden content">
-						<?php
-							$btn = ['admin'=>'管理员','teacher'=>'导师','student'=>'学员','vindicator'=>'运营维护者'];
-							echo $btn[$role];
-						?>
+						{{$roleTitle[$role]}}
 					</div>
 				</button>
 			</form>

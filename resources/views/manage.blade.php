@@ -1,6 +1,10 @@
 @extends('layout')
 
-@section('title','菁英启航')
+<?php
+    $roleTitle = ['admin'=>'管理员','teacher'=>'导师','student'=>'学员','vindicator'=>'运营'];
+?>
+
+@section('title','启航系统【'.$roleTitle[$role].'版】')
 
 @if($role=='teacher')
     @section('style')
