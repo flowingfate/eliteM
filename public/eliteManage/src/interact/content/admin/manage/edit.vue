@@ -43,6 +43,14 @@
 					<input type="text" v-model="teacher.qq">
 				</div>
 			</div>
+			<div class="field">
+				<label>论文经历</label>
+				<textarea v-model="teacher.paper"></textarea>
+			</div>
+			<div class="field">
+				<label>科研经历</label>
+				<textarea v-model="teacher.research"></textarea>
+			</div>
 		</div>
 
 		<div v-show="role=='student'" class="ui form">
@@ -112,7 +120,7 @@
 	{
 		data() {return {
 
-			teacher:{id:'',name:'',username:'',school:'',laboratory:'',stars:1,comment:'',email:'',qq:''},
+			teacher:{id:'',name:'',username:'',school:'',laboratory:'',stars:1,comment:'',email:'',qq:'',research:'',paper:''},
 			student:{id:'',name:'',username:'',school:'',direction:'',comment:'',email:'',qq:'',phone:'',wechat:''}
 		}},
 		vuex: {getters: {route: ({route})=>{return route;},}},

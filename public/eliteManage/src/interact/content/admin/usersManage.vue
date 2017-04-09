@@ -61,7 +61,7 @@
 						<th width="40">ID</th> 
 						<th width="80">姓名</th> 
 						<th>学校</th> 
-						<th>实验室</th> 
+						<th>研究方向</th> 
 						<th width="60">星级</th>
 						<th>备注</th> 
 						<th width="100">email</th> 

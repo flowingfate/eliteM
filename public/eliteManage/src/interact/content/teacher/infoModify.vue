@@ -42,13 +42,13 @@
 			</div>
 
 			<div class="eleven wide stretched column">
-				<h3 class="ui header attached top" style="text-align:center;">修改信息</h3>
+				<h3 class="ui header attached top" style="text-align:center;">修改基础信息</h3>
 				<div class="ui segment attached">
 					<div class="ui form">
 						<div class="two fields">
 							<div class="field">
 								<div class="ui labeled input">
-									<div class="ui basic label">姓&nbsp;&nbsp;&nbsp;名</div>
+									<div class="ui basic label">姓<i v-for="i in 6">&nbsp;</i>名</div>
 									<input type="text" v-model="infoInput.name" placeholder="your name">
 								</div>
 							</div>
@@ -62,7 +62,7 @@
 						<div class="two fields">
 							<div class="field">
 								<div class="ui labeled input">
-									<div class="ui basic label">实验室</div>
+									<div class="ui basic label">研究方向</div>
 									<input type="text" v-model="infoInput.laboratory" placeholder="your laboratory">
 								</div>
 							</div>
@@ -76,7 +76,7 @@
 						<div class="two fields">
 							<div class="field">
 								<div class="ui labeled input">
-									<div class="ui basic label">邮&nbsp;&nbsp;&nbsp;箱</div>
+									<div class="ui basic label">邮<i v-for="i in 6">&nbsp;</i>箱</div>
 									<input type="text" v-model="infoInput.email" placeholder="your email">
 								</div>
 							</div>
@@ -98,11 +98,39 @@
 				</div>
 				<div class="ui segment attached bottom">
 					<div class="ui two buttons">
-						<button class="ui button" @click="resetPersonalInfo">复原</button>
+						<button class="ui button" @click="resetInfo">复原</button>
 						<div class="or"></div>
-						<button class="ui orange button" @click="modifyPersonalInfo">确认修改</button>
+						<button class="ui orange button" @click="modifyInfo">确认修改</button>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel" style="padding:14px;">
+		<h3 class="ui header attached top" style="text-align:center;">研究背景修改</h3>
+		<div class="ui segment attached grid">
+			<div class="eight wide stretched column">
+				<div class="ui form">
+					<div class="field">
+						<label>论文经历</label>
+						<textarea v-model="infoInput.paper"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="eight wide stretched column">
+				<div class="ui form">
+					<div class="field">
+						<label>科研经历</label>
+						<textarea v-model="infoInput.research"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ui segment attached bottom">
+			<div class="ui two buttons">
+				<button class="ui button" @click="resetInfo">复原</button>
+				<div class="or"></div>
+				<button class="ui orange button" @click="modifyInfo">确认修改</button>
 			</div>
 		</div>
 	</div>
@@ -114,8 +142,8 @@
 	{
 		data() {return {
 			passInput: { origin:'', new:'', again:'' },
-			infoInput: { name:'',username:'',laboratory:'', school:'',email:'',qq:''},
-			infoOrigin: { name:'',username:'',laboratory:'', school:'',email:'',qq:''}
+			infoInput: { name:'',username:'',laboratory:'', school:'',email:'',qq:'',research:'',paper:''},
+			infoOrigin: { name:'',username:'',laboratory:'', school:'',email:'',qq:'',research:'',paper:''}
 		}},
 		vuex:
 		{
@@ -164,13 +192,13 @@
 					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }
 				});
 			},
-			resetPersonalInfo() 
+			resetInfo() 
 			{
 				Object.keys(this.infoInput).forEach((k)=>{
 					this.infoInput[k] = this.infoOrigin[k];
 				});
 			},
-			modifyPersonalInfo()
+			modifyInfo()
 			{
 				var o = this.infoOrigin;
 				var i = this.infoInput;
@@ -178,7 +206,7 @@
 				var flag = (i.name!='')&&(i.username!='')&&(i.laboratory!='')&&(i.school!='');
 				if(!flag)
 				{
-					this.$store.dispatch('newMessage',{type:'err',content:'姓名、用户名、实验室、学校 都不能为空'});
+					this.$store.dispatch('newMessage',{type:'err',content:'姓名、用户名、研究方向、学校 都不能为空'});
 					return;
 				}
 

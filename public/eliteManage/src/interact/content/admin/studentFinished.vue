@@ -58,7 +58,7 @@
 		{
 			filterBox:require('../filter.vue'),
 			info:require('./finished/info.vue'),
-			set:require('./progress/setTeacher.vue'),
+			set:require('./finished/setTeacher.vue'),
 		},
 		methods:
 		{

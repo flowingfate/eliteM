@@ -41,30 +41,59 @@
 	<div class="ui modal" v-el:info>
 		<div class="header">导师信息</div>
 		<div class="content" style="padding:21px 21px 0;">
-			<div class="ui horizontal list">
-				<div class="item">
-					<i class="sort numeric ascending circular icon"></i>
-					<div class="content"><span v-text="teachers[index].id"></span></div>
+			<div class="ui styled fluid accordion">
+				<div class="title">
+					<i class="dropdown icon"></i>
+					<div class="ui horizontal list">
+						<div class="item">
+							<i class="sort numeric ascending circular icon"></i>
+							<div class="content"><span v-text="teachers[index].id"></span></div>
+						</div>
+						<div class="item">
+							<i class="user circular icon"></i>
+							<div class="content"><span v-text="teachers[index].name"></span></div>
+						</div>
+						<div class="item">
+							<i class="university circular icon"></i>
+							<div class="content"><span v-text="teachers[index].school"></span></div>
+						</div>
+						<div class="item">
+							<i class="mail circular icon"></i>
+							<div class="content"><span v-text="teachers[index].email"></span></div>
+						</div>
+						<div class="item">
+							<i class="lab circular icon"></i>
+							<div class="content"><span v-text="teachers[index].laboratory"></span></div>
+						</div>
+					</div>
 				</div>
-				<div class="item">
-					<i class="user circular icon"></i>
-					<div class="content"><span v-text="teachers[index].name"></span></div>
-				</div>
-				<div class="item">
-					<i class="university circular icon"></i>
-					<div class="content"><span v-text="teachers[index].school"></span></div>
-				</div>
-				<div class="item">
-					<i class="mail circular icon"></i>
-					<div class="content"><span v-text="teachers[index].email"></span></div>
-				</div>
-				<div class="item">
-					<i class="lab circular icon"></i>
-					<div class="content"><span v-text="teachers[index].laboratory"></span></div>
+				<div class="content">
+					<div class="ui message">
+						<div class="header" style="border-bottom:1px solid #DFE6EF;padding: 0 0 8px">基础信息</div>
+						<ul class="list">
+							<li>导师姓名：{{teachers[index].name}}</li>
+							<li>导师学校：{{teachers[index].school}}</li>
+							<li>研究方向：{{teachers[index].laboratory}}</li>
+							<li>电子邮件：{{teachers[index].email}}</li>
+							<li>导师星级：<i class="star icon" :class="{olive:teachers[index].stars==2,green:teachers[index].stars==3,teal:teachers[index].stars>=4}"></i>{{teachers[index].stars}}</li>
+						</ul>
+					</div>
+					<div class="ui message" v-if="teachers[index].paper">
+						<div class="header" style="border-bottom:1px solid #DFE6EF;padding: 0 0 8px">论文背景</div>
+						<ul class="list">
+							<li track-by="$index" v-for="p in teachers[index].paper.split('\n')">{{p}}</li>
+						</ul>
+					</div>
+					<div class="ui message" v-if="teachers[index].research">
+						<div class="header" style="border-bottom:1px solid #DFE6EF;padding: 0 0 8px">科研背景</div>
+						<ul class="list">
+							<li track-by="$index" v-for="r in teachers[index].research.split('\n')">{{r}}</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
-		
+		<br/>
 		<h2 class="ui header">
 			<div class="content">学员进度</div>
 			<div @click="toggle($els.progress)" class="ui button right floated">展开/收起</div>
@@ -149,7 +178,7 @@
 		data() {return {
 
 			filter: { keyword:'', field:'name'},
-			teachers: [{name:'',id:'',email:'',school:'',laboratory:'',stars:1}],
+			teachers: [{name:'',id:'',email:'',school:'',laboratory:'',stars:1,research:'',paper:''}],
 			index:0,
 			students: 
 			{
@@ -214,6 +243,8 @@
 				success:(data)=>{_this.teachers = data;},
 				error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }
 			});
+
+			$('.ui.accordion').accordion();
 		}
 	}
 </script>

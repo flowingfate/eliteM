@@ -18,7 +18,7 @@ class TeacherCtl extends Controller
     // 获取导师列表
     public function teacherlist()
     {
-        $result = Teacher::select(['id','name','email','school','laboratory','stars'])->get()->toArray();
+        $result = Teacher::all(['id','name','email','school','laboratory','stars','research','paper'])->toArray();
 
         return response()->json($result);
     }
@@ -96,7 +96,7 @@ class TeacherCtl extends Controller
     {
         $id = $request->input('id');
 
-        $teacher = Teacher::select(['name','username','laboratory','school','qq','email'])->where('id',$id)->first();
+        $teacher = Teacher::where('id',$id)->first(['name','username','laboratory','school','qq','email','research','paper']);
         if(!$teacher) return response()->json(['type'=>'err','content'=>'没有找到该导师的信息']);
 
         return response()->json($teacher->toArray());

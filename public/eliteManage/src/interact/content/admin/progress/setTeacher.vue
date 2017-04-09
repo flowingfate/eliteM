@@ -25,7 +25,7 @@
 		</div>
 		<table class="ui orange selectable celled table">
 			<thead>
-				<tr> <th>姓名</th> <th>学校</th> <th>实验室</th> <th>邮箱</th> <th>指派</th> </tr>
+				<tr> <th>姓名</th> <th>学校</th> <th>研究方向</th> <th>邮箱</th> <th>指派</th> </tr>
 			</thead>
 			<tbody>
 				<tr v-for="teacher in teachers">
@@ -86,7 +86,6 @@
 				// 添加导师无条件允许
 				// 删除导师只能是没有发布过任务的老师
 				var data = {studentId:this.student.id,teacherIds:teacherIds};
-				console.dir(data);
 				var _this = this;
 				var route = this.route+'/setTeacher';
 

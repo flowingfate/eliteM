@@ -25,7 +25,7 @@
 		</div>
 		<table class="ui orange selectable celled table">
 			<thead>
-				<tr> <th>姓名</th> <th>学校</th> <th>实验室</th> <th>邮箱</th> <th>指派</th> </tr>
+				<tr> <th>姓名</th> <th>学校</th> <th>研究方向</th> <th>邮箱</th> <th>指派</th> </tr>
 			</thead>
 			<tbody>
 				<tr v-for="teacher in teachers">
@@ -93,7 +93,7 @@
 						if(data.type=='err') return;
 						setTimeout(()=>{_this.$parent.loadData();},2000);
 					},
-					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'});}
+					error:()=>{ _this.$store.dispatch('newMessage',{type:'err',content:'请求出错了！'}); }
 				});
 			},
 		},
