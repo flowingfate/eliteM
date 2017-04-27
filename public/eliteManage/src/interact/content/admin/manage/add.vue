@@ -41,7 +41,7 @@
 					<input type="text" v-model="teacher.school">
 				</div>
 				<div class="field">
-					<label>实验室</label>
+					<label>研究方向</label>
 					<input type="text" v-model="teacher.laboratory">
 				</div>
 			</div>
