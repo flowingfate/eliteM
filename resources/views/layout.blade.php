@@ -11,6 +11,11 @@
     <link rel="icon" href="{{asset('img/favicon/logo_62.png')}}" sizes="16x16" type="image/png">
     <link rel="icon" href="{{asset('img/favicon/logo_192.png')}}" sizes="16x16" type="image/png">
 
+	<!-- 模拟APP效果 -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="App Title">
+
 	{{-- reset should located first --}}
 	<link rel="stylesheet" href="{{asset('css/reset.css')}}" />
 	<link rel="stylesheet" href="{{asset('css/semantic.min.css')}}" />
