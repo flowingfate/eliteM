@@ -12,11 +12,13 @@
     <link rel="icon" href="{{asset('img/favicon/logo_192.png')}}" sizes="16x16" type="image/png">
 
 	<!-- 模拟APP效果 -->
-		<meta name="apple-mobile-web-app-capable" content="yes">
-		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-		<meta name="apple-mobile-web-app-title" content="App Title">
-
-	{{-- reset should located first --}}
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="菁英启航">
+	<!-- Touch Icons -->
+	<!-- In most cases, one 180×180px touch icon in the head is enough -->
+	<link rel="apple-touch-icon" href="{{asset('img/iosApp/icon.png')}}">
+	
 	<link rel="stylesheet" href="{{asset('css/reset.css')}}" />
 	<link rel="stylesheet" href="{{asset('css/semantic.min.css')}}" />
 	<link rel="stylesheet" href="{{asset('css/header.css')}}" />
